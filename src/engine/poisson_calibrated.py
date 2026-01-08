@@ -68,84 +68,80 @@ def get_underdog_correction(ratio: float) -> float:
     """
     Get the probability correction factor for underdog based on lambda ratio.
 
-    VERSION 2 - 2026-01-08: Refined after v1 testing on 117 matches.
+    VERSION 3 - 2026-01-08: Dual-bookmaker refinement (Sportybet + Bet9ja).
 
-    V1 RESULTS ANALYSIS:
-    - Balanced <1.15 (14 matches): Underdog MAE increased 7.7% (was overcorrected)
-    - Slight 1.15-1.5 (36 matches): Underdog MAE increased 41.4% (too aggressive)
-    - Moderate 1.5-2.0 (35 matches): Underdog MAE improved 16.6% ✓
-    - High 2.0-3.0 (24 matches): Underdog MAE improved 49.9% ✓✓
-    - Extreme >3.0 (8 matches): Underdog MAE worsened 8.4% (need more aggression)
+    V2 DUAL-BOOKMAKER ANALYSIS (117 matches vs both bookmakers):
+    - Balanced <1.15 (15 matches): UNDERPRICING ~12-13% on both sides
+    - Slight 1.15-1.5 (38 matches): UNDERPRICING ~9-11% on both sides
+    - Moderate 1.5-2.0 (36 matches): GOOD - only 3-5% off
+    - High 2.0-3.0 (21 matches): OVERPRICING underdogs +8% to +18%
+    - Extreme >3.0 (7 matches): Insufficient data (NaN)
 
-    V2 CHANGES:
-    - Gentler correction for ratio < 1.6 (was causing underpricing)
-    - Start correction earlier (1.05 vs 1.15) with minimal impact
-    - More aggressive for extreme ratios >3.2 (0.70-0.75 vs 0.75-0.82)
+    V3 CHANGES:
+    - Remove/minimize correction for ratio < 1.5 (causing underpricing)
+    - Keep moderate ratio corrections (working well)
+    - MORE aggressive for high ratios 2.0-3.0 (still overpricing by 8-18%)
+    - Keep extreme ratio aggression
 
     The correction REDUCES the underdog's 1UP probability to match market.
     """
     if ratio <= 1.0:
         return 1.0
 
-    # V2: Refined piecewise linear with gentler low-ratio corrections
-    if ratio <= 1.05:
-        # Very balanced: no correction
-        return 1.0
-    elif ratio <= 1.3:
-        # Balanced to slight: very gentle correction (1.00 -> 0.985)
-        # V1 had no correction until 1.15, causing underpricing
-        return 1.0 - 0.015 * (ratio - 1.05) / 0.25
-    elif ratio <= 1.6:
-        # Slight imbalance: light correction (0.985 -> 0.955)
-        # V1 was too aggressive (0.97-1.00), causing 41% error increase
-        return 0.985 - 0.03 * (ratio - 1.3) / 0.30
-    elif ratio <= 2.2:
-        # Moderate: standard correction (0.955 -> 0.90)
-        # V1 worked well here
-        return 0.955 - 0.055 * (ratio - 1.6) / 0.6
-    elif ratio <= 3.2:
-        # High: strong correction (0.90 -> 0.80)
-        # V1 worked very well (-50% error), keep similar
-        return 0.90 - 0.10 * (ratio - 2.2) / 1.0
+    # V3: Minimal correction for balanced, more aggressive for high imbalance
+    if ratio <= 1.5:
+        # Balanced to slight: MINIMAL correction
+        # V2 was underpricing by 9-13%, so barely touch these
+        return 1.0 - 0.005 * max(ratio - 1.2, 0.0) / 0.3
+    elif ratio <= 2.0:
+        # Moderate: light correction (0.995 -> 0.94)
+        # V2 worked well here (only 3-5% off), keep similar
+        return 0.995 - 0.055 * (ratio - 1.5) / 0.5
+    elif ratio <= 3.0:
+        # High: AGGRESSIVE correction (0.94 -> 0.82)
+        # V2 still overpricing by 8-18%, need MUCH more aggression
+        # Was 0.90->0.80, now 0.94->0.82 (same floor, earlier start)
+        return 0.94 - 0.12 * (ratio - 2.0) / 1.0
     else:
-        # Extreme: very aggressive correction (0.80 -> 0.70)
-        # V1 insufficient (0.75-0.82), need more aggression
-        ratio_scaled = min((ratio - 3.2) / 2.5, 1.0)
-        return 0.80 - 0.10 * ratio_scaled
+        # Extreme: very aggressive correction (0.82 -> 0.72)
+        # Keep V2's aggression, maybe slightly more
+        ratio_scaled = min((ratio - 3.0) / 2.5, 1.0)
+        return 0.82 - 0.10 * ratio_scaled
 
 
 def get_favorite_correction(ratio: float) -> float:
     """
     Get the probability correction factor for favorite based on lambda ratio.
 
-    VERSION 2 - 2026-01-08: Reduced strength by ~30% after v1 testing.
+    VERSION 3 - 2026-01-08: Even gentler after dual-bookmaker analysis.
 
-    V1 RESULTS ANALYSIS:
-    - ALL ratio bins showed favorite MAE increase of +20% to +48%
-    - Favorites were being UNDERPRICED across the board
-    - V1 correction was too aggressive (0.90-1.00 range)
+    V2 DUAL-BOOKMAKER ANALYSIS:
+    - Favorites STILL underpriced across ALL ratio bins
+    - Favorite bias: -8% to -13% across balanced/slight/moderate ratios
+    - V2 correction (0.94-1.00) was still too strong
 
-    V2 CHANGES:
-    - Reduce correction strength by ~30% across all ratios
-    - Gentler correction: 0.94-1.00 vs V1's 0.90-1.00
-    - Start correction at 1.1 (vs 1.15) to catch more cases
+    V3 CHANGES:
+    - Further reduce correction strength by ~50% vs V2
+    - Very gentle: 0.97-1.00 vs V2's 0.94-1.00
+    - Only apply to ratios >1.5 (balanced matches need no correction)
 
-    Markets are tighter than model predicts, but V1 overcorrected.
+    Markets are tighter than model, but favorites need minimal adjustment.
     """
     if ratio <= 1.0:
         return 1.0
 
-    if ratio <= 1.1:
-        # Very balanced: NO correction
+    if ratio <= 1.5:
+        # Balanced to slight: NO correction
+        # V2 was underpricing favorites by 9-13% in these ranges
         return 1.0
-    elif ratio <= 2.0:
-        # Balanced to moderate: gentle correction (1.00 -> 0.98)
-        # V1 was 0.97, too aggressive
-        return 1.0 - 0.02 * (ratio - 1.1) / 0.9
+    elif ratio <= 2.5:
+        # Moderate to high: very gentle correction (1.00 -> 0.985)
+        # V2 was 0.98, still too strong
+        return 1.0 - 0.015 * (ratio - 1.5) / 1.0
     else:
-        # High imbalance: stronger but still gentle (0.98 -> 0.94)
-        # V1 was 0.90-0.97, way too aggressive
-        return 0.98 - 0.04 * min((ratio - 2.0) / 2.5, 1.0)
+        # Very high imbalance: gentle correction (0.985 -> 0.97)
+        # V2 was 0.94, way too aggressive
+        return 0.985 - 0.015 * min((ratio - 2.5) / 2.0, 1.0)
 
 
 def correct_1up_probabilities(
