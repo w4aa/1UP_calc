@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sqlite3:*)",
+      "Bash(find:*)",
+      "Bash(dir /s \"c:\\\\Users\\\\loren\\\\Desktop\\\\betpawa\\\\1UP_calc\")",
+      "Bash(dir:*)",
+      "Bash(findstr:*)",
+      "Bash(del \"c:\\\\Users\\\\loren\\\\Desktop\\\\betpawa\\\\1UP_calc\\\\9ja-ebent.json\")",
+      "Bash(del \"c:\\\\Users\\\\loren\\\\Desktop\\\\betpawa\\\\1UP_calc\\\\9ja-tournament.json\")",
+      "Bash(del \"c:\\\\Users\\\\loren\\\\Desktop\\\\betpawa\\\\1UP_calc\\\\raw_bet9ja_707096003.json\")",
+      "Bash(del \"c:\\\\Users\\\\loren\\\\Desktop\\\\betpawa\\\\1UP_calc\\\\scripts\\\\test_bet9ja.py\")",
+      "Bash(del \"c:\\\\Users\\\\loren\\\\Desktop\\\\betpawa\\\\1UP_calc\\\\scripts\\\\test_bet9ja_upsert.py\")",
+      "Bash(del \"c:\\\\Users\\\\loren\\\\Desktop\\\\betpawa\\\\1UP_calc\\\\scripts\\\\dump_bet9ja_event.py\")",
+      "Bash(del \"c:\\\\Users\\\\loren\\\\Desktop\\\\betpawa\\\\1UP_calc\\\\scripts\\\\query_markets.py\")",
+      "Bash(del \"c:\\\\Users\\\\loren\\\\Desktop\\\\betpawa\\\\1UP_calc\\\\scripts\\\\query_first_team.py\")",
+      "Bash(del \"c:\\\\Users\\\\loren\\\\Desktop\\\\betpawa\\\\1UP_calc\\\\scripts\\\\check_first_team_bet9ja.py\")",
+      "Bash(del \"c:\\\\Users\\\\loren\\\\Desktop\\\\betpawa\\\\1UP_calc\\\\datas.db\")",
+      "Bash(python:*)"
+    ]
+  }
+}

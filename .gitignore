@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+*.egg
+dist/
+build/
+eggs/
+.eggs/
+
+# Virtual Environment
+.venv/
+venv/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Database
+data/*.db
+*.db
+*.db-journal
+
+# Reports
+reports/*.csv
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.log
+
+# Logs
+*.log
+
+# Playwright
+playwright-report/
+test-results/
+
+# Local config and data
+config/old/
+data/

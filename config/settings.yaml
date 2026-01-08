@@ -1,0 +1,26 @@
+# Sportybet Scraper Settings Configuration
+# Edit this file to configure scraper behavior and database settings
+
+# ============================================
+# Scraper Settings
+# ============================================
+scraper:
+  headless: true                   # Run browser in headless mode
+  max_retries: 2                   # Number of retries on failure
+  retry_delay: 1                   # Seconds between retries
+  page_load_timeout: 20000         # Milliseconds to wait for page load
+  delay_between_events: 0.3        # Seconds between event odds scraping
+  delay_between_tournaments: 0.5   # Seconds between tournament scraping
+
+  # Concurrency Settings
+  concurrency:
+    pawa: 10                       # Max concurrent HTTP requests for Betpawa
+    sporty: 10                     # Max concurrent browser pages for Sportybet
+    bet9ja: 10                     # Max concurrent HTTP requests for Bet9ja
+    tournaments: 3                 # Max tournaments to process in parallel
+
+# ============================================
+# Database Settings
+# ============================================
+database:
+  path: "data/datas.db"             # Unified database for all bookmakers

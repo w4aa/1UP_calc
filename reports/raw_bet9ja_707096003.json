@@ -1,0 +1,5826 @@
+[
+  {
+    "market_name": "2nd Half - 1X2 & Over/Under",
+    "specifier": "1.5",
+    "market_id": "S_1X22TOU",
+    "outcomes": [
+      {
+        "key": "XU2T",
+        "desc": "X & Under",
+        "odds": 4.8
+      },
+      {
+        "key": "1O2T",
+        "desc": "1 & Over",
+        "odds": 3.5
+      },
+      {
+        "key": "1U2T",
+        "desc": "1 & Under",
+        "odds": 4.55
+      },
+      {
+        "key": "2O2T",
+        "desc": "2 & Over",
+        "odds": 6.8
+      },
+      {
+        "key": "2U2T",
+        "desc": "2 & Under",
+        "odds": 6.6
+      },
+      {
+        "key": "XO2T",
+        "desc": "X & Over",
+        "odds": 5.1
+      }
+    ]
+  },
+  {
+    "market_name": "Chance Mix +",
+    "specifier": "",
+    "market_id": "S_CHANCEMIXN",
+    "outcomes": [
+      {
+        "key": "UHGGH",
+        "desc": "Un 1.5 HT or GG HT",
+        "odds": 1.13
+      },
+      {
+        "key": "22TGG2T",
+        "desc": "2 2HT or GG 2HT",
+        "odds": 1.86
+      },
+      {
+        "key": "X2TNG2T",
+        "desc": "X 2HT or NG 2HT",
+        "odds": 1.18
+      },
+      {
+        "key": "12TNG2T",
+        "desc": "1 2HT or NG 2HT",
+        "odds": 1.24
+      },
+      {
+        "key": "X2TGG2T",
+        "desc": "X 2HT or GG 2HT",
+        "odds": 1.82
+      },
+      {
+        "key": "U2TGG2T",
+        "desc": "Un 1.5 2HT or GG 2HT",
+        "odds": 1.17
+      },
+      {
+        "key": "XHGGH",
+        "desc": "X HT or GG HT",
+        "odds": 1.88
+      },
+      {
+        "key": "XHXFT",
+        "desc": "X HT or X FT",
+        "odds": 1.73
+      },
+      {
+        "key": "12TGG2T",
+        "desc": "1 2HT or GG 2HT",
+        "odds": 1.47
+      },
+      {
+        "key": "22TNG2T",
+        "desc": "2 2HT or NG 2HT",
+        "odds": 1.32
+      },
+      {
+        "key": "1H1FT",
+        "desc": "1 HT or 1 FT",
+        "odds": 1.48
+      },
+      {
+        "key": "1HGGH",
+        "desc": "1 HT or GG HT",
+        "odds": 1.7
+      },
+      {
+        "key": "2HGGH",
+        "desc": "2 HT or GG HT",
+        "odds": 2.19
+      },
+      {
+        "key": "GGHGG2T",
+        "desc": "GG HT or GG 2HT",
+        "odds": 1.89
+      },
+      {
+        "key": "1HNGH",
+        "desc": "1 HT or NG HT",
+        "odds": 1.17
+      },
+      {
+        "key": "1H0GH",
+        "desc": "1 HT or 0 Gol HT",
+        "odds": 1.32
+      },
+      {
+        "key": "2HNGH",
+        "desc": "2 HT or NG HT",
+        "odds": 1.21
+      },
+      {
+        "key": "2H0GH",
+        "desc": "2 HT or 0 Gol HT",
+        "odds": 1.75
+      },
+      {
+        "key": "12T0G2T",
+        "desc": "1 2HT or 0 Gol 2HT",
+        "odds": 1.4
+      },
+      {
+        "key": "2H2FT",
+        "desc": "2 HT or 2 FT",
+        "odds": 2.54
+      },
+      {
+        "key": "XHNGH",
+        "desc": "X HT or NG HT",
+        "odds": 1.09
+      },
+      {
+        "key": "22T0G2T",
+        "desc": "2 2HT or 0 Gol 2HT",
+        "odds": 2.01
+      }
+    ]
+  },
+  {
+    "market_name": "Over/Under Asian",
+    "specifier": "3.75",
+    "market_id": "S_OUA",
+    "outcomes": [
+      {
+        "key": "O",
+        "desc": "Over",
+        "odds": 2.72
+      },
+      {
+        "key": "U",
+        "desc": "Under",
+        "odds": 1.38
+      }
+    ]
+  },
+  {
+    "market_name": "Over/Under Asian",
+    "specifier": "2.75",
+    "market_id": "S_OUA",
+    "outcomes": [
+      {
+        "key": "O",
+        "desc": "Over",
+        "odds": 1.69
+      },
+      {
+        "key": "U",
+        "desc": "Under",
+        "odds": 2.04
+      }
+    ]
+  },
+  {
+    "market_name": "Over/Under Asian",
+    "specifier": "1.75",
+    "market_id": "S_OUA",
+    "outcomes": [
+      {
+        "key": "O",
+        "desc": "Over",
+        "odds": 1.19
+      },
+      {
+        "key": "U",
+        "desc": "Under",
+        "odds": 4.05
+      }
+    ]
+  },
+  {
+    "market_name": "Over/Under Asian",
+    "specifier": "3",
+    "market_id": "S_OUA",
+    "outcomes": [
+      {
+        "key": "U",
+        "desc": "Under",
+        "odds": 1.84
+      },
+      {
+        "key": "O",
+        "desc": "Over",
+        "odds": 1.87
+      }
+    ]
+  },
+  {
+    "market_name": "Over/Under Asian",
+    "specifier": "3.25",
+    "market_id": "S_OUA",
+    "outcomes": [
+      {
+        "key": "U",
+        "desc": "Under",
+        "odds": 1.67
+      },
+      {
+        "key": "O",
+        "desc": "Over",
+        "odds": 2.07
+      }
+    ]
+  },
+  {
+    "market_name": "Over/Under Asian",
+    "specifier": "4.25",
+    "market_id": "S_OUA",
+    "outcomes": [
+      {
+        "key": "U",
+        "desc": "Under",
+        "odds": 1.23
+      },
+      {
+        "key": "O",
+        "desc": "Over",
+        "odds": 3.6
+      }
+    ]
+  },
+  {
+    "market_name": "Over/Under Asian",
+    "specifier": "1",
+    "market_id": "S_OUA",
+    "outcomes": [
+      {
+        "key": "U",
+        "desc": "Under",
+        "odds": 11.5
+      }
+    ]
+  },
+  {
+    "market_name": "Over/Under Asian",
+    "specifier": "0.75",
+    "market_id": "S_OUA",
+    "outcomes": [
+      {
+        "key": "U",
+        "desc": "Under",
+        "odds": 12.25
+      }
+    ]
+  },
+  {
+    "market_name": "Over/Under Asian",
+    "specifier": "1.25",
+    "market_id": "S_OUA",
+    "outcomes": [
+      {
+        "key": "O",
+        "desc": "Over",
+        "odds": 1.07
+      },
+      {
+        "key": "U",
+        "desc": "Under",
+        "odds": 6.5
+      }
+    ]
+  },
+  {
+    "market_name": "Over/Under Asian",
+    "specifier": "2",
+    "market_id": "S_OUA",
+    "outcomes": [
+      {
+        "key": "O",
+        "desc": "Over",
+        "odds": 1.24
+      },
+      {
+        "key": "U",
+        "desc": "Under",
+        "odds": 3.7
+      }
+    ]
+  },
+  {
+    "market_name": "Over/Under Asian",
+    "specifier": "4",
+    "market_id": "S_OUA",
+    "outcomes": [
+      {
+        "key": "U",
+        "desc": "Under",
+        "odds": 1.27
+      },
+      {
+        "key": "O",
+        "desc": "Over",
+        "odds": 3.3
+      }
+    ]
+  },
+  {
+    "market_name": "Over/Under Asian",
+    "specifier": "2.25",
+    "market_id": "S_OUA",
+    "outcomes": [
+      {
+        "key": "U",
+        "desc": "Under",
+        "odds": 2.83
+      },
+      {
+        "key": "O",
+        "desc": "Over",
+        "odds": 1.38
+      }
+    ]
+  },
+  {
+    "market_name": "HT/FT & O/U",
+    "specifier": "4.5",
+    "market_id": "S_HTFTOU",
+    "outcomes": [
+      {
+        "key": "1/1U",
+        "desc": "1/1 & Under",
+        "odds": 3.95
+      },
+      {
+        "key": "1/1O",
+        "desc": "1/1 & Over",
+        "odds": 9.1
+      },
+      {
+        "key": "1/2U",
+        "desc": "1/2 & Under",
+        "odds": 43.0
+      },
+      {
+        "key": "1/2O",
+        "desc": "1/2 & Over",
+        "odds": 47.0
+      },
+      {
+        "key": "X/XU",
+        "desc": "X/X & Under",
+        "odds": 6.5
+      },
+      {
+        "key": "X/XO",
+        "desc": "X/X & Over",
+        "odds": 50.0
+      },
+      {
+        "key": "2/2U",
+        "desc": "2/2 & Under",
+        "odds": 7.9
+      },
+      {
+        "key": "2/2O",
+        "desc": "2/2 & Over",
+        "odds": 20.0
+      },
+      {
+        "key": "2/1U",
+        "desc": "2/1 & Under",
+        "odds": 33.0
+      },
+      {
+        "key": "2/1O",
+        "desc": "2/1 & Over",
+        "odds": 35.0
+      },
+      {
+        "key": "1/XU",
+        "desc": "1/X & Under",
+        "odds": 16.0
+      },
+      {
+        "key": "1/XO",
+        "desc": "1/X & Over",
+        "odds": 49.0
+      },
+      {
+        "key": "X/2O",
+        "desc": "X/2 & Over",
+        "odds": 34.0
+      },
+      {
+        "key": "X/2U",
+        "desc": "X/2 & Under",
+        "odds": 10.75
+      },
+      {
+        "key": "X/1O",
+        "desc": "X/1 & Over",
+        "odds": 21.0
+      },
+      {
+        "key": "X/1U",
+        "desc": "X/1 & Under",
+        "odds": 6.3
+      },
+      {
+        "key": "2/XU",
+        "desc": "2/X & Under",
+        "odds": 16.0
+      },
+      {
+        "key": "2/XO",
+        "desc": "2/X & Over",
+        "odds": 49.0
+      }
+    ]
+  },
+  {
+    "market_name": "HT/FT & O/U",
+    "specifier": "3.5",
+    "market_id": "S_HTFTOU",
+    "outcomes": [
+      {
+        "key": "1/XU",
+        "desc": "1/X & Under",
+        "odds": 27.0
+      },
+      {
+        "key": "1/XO",
+        "desc": "1/X & Over",
+        "odds": 24.0
+      },
+      {
+        "key": "2/2U",
+        "desc": "2/2 & Under",
+        "odds": 9.4
+      },
+      {
+        "key": "2/2O",
+        "desc": "2/2 & Over",
+        "odds": 13.75
+      },
+      {
+        "key": "2/1U",
+        "desc": "2/1 & Under",
+        "odds": 49.0
+      },
+      {
+        "key": "2/1O",
+        "desc": "2/1 & Over",
+        "odds": 30.0
+      },
+      {
+        "key": "X/2O",
+        "desc": "X/2 & Over",
+        "odds": 26.0
+      },
+      {
+        "key": "X/2U",
+        "desc": "X/2 & Under",
+        "odds": 11.5
+      },
+      {
+        "key": "X/1O",
+        "desc": "X/1 & Over",
+        "odds": 14.75
+      },
+      {
+        "key": "X/1U",
+        "desc": "X/1 & Under",
+        "odds": 7.2
+      },
+      {
+        "key": "2/XU",
+        "desc": "2/X & Under",
+        "odds": 27.0
+      },
+      {
+        "key": "2/XO",
+        "desc": "2/X & Over",
+        "odds": 24.0
+      },
+      {
+        "key": "1/1U",
+        "desc": "1/1 & Under",
+        "odds": 5.1
+      },
+      {
+        "key": "1/1O",
+        "desc": "1/1 & Over",
+        "odds": 5.7
+      },
+      {
+        "key": "1/2U",
+        "desc": "1/2 & Under",
+        "odds": 68.0
+      },
+      {
+        "key": "1/2O",
+        "desc": "1/2 & Over",
+        "odds": 42.0
+      },
+      {
+        "key": "X/XU",
+        "desc": "X/X & Under",
+        "odds": 7.9
+      },
+      {
+        "key": "X/XO",
+        "desc": "X/X & Over",
+        "odds": 20.0
+      }
+    ]
+  },
+  {
+    "market_name": "HT/FT & O/U",
+    "specifier": "2.5",
+    "market_id": "S_HTFTOU",
+    "outcomes": [
+      {
+        "key": "X/1O",
+        "desc": "X/1 & Over",
+        "odds": 8.6
+      },
+      {
+        "key": "X/1U",
+        "desc": "X/1 & Under",
+        "odds": 11.5
+      },
+      {
+        "key": "X/2O",
+        "desc": "X/2 & Over",
+        "odds": 14.75
+      },
+      {
+        "key": "X/2U",
+        "desc": "X/2 & Under",
+        "odds": 18.0
+      },
+      {
+        "key": "2/XU",
+        "desc": "2/X & Under",
+        "odds": 27.0
+      },
+      {
+        "key": "2/XO",
+        "desc": "2/X & Over",
+        "odds": 24.0
+      },
+      {
+        "key": "1/2O",
+        "desc": "1/2 & Over",
+        "odds": 32.0
+      },
+      {
+        "key": "1/1U",
+        "desc": "1/1 & Under",
+        "odds": 9.4
+      },
+      {
+        "key": "1/1O",
+        "desc": "1/1 & Over",
+        "odds": 3.85
+      },
+      {
+        "key": "X/XU",
+        "desc": "X/X & Under",
+        "odds": 7.9
+      },
+      {
+        "key": "X/XO",
+        "desc": "X/X & Over",
+        "odds": 20.0
+      },
+      {
+        "key": "1/XU",
+        "desc": "1/X & Under",
+        "odds": 27.0
+      },
+      {
+        "key": "1/XO",
+        "desc": "1/X & Over",
+        "odds": 24.0
+      },
+      {
+        "key": "2/2U",
+        "desc": "2/2 & Under",
+        "odds": 16.0
+      },
+      {
+        "key": "2/2O",
+        "desc": "2/2 & Over",
+        "odds": 8.7
+      },
+      {
+        "key": "2/1O",
+        "desc": "2/1 & Over",
+        "odds": 22.0
+      }
+    ]
+  },
+  {
+    "market_name": "HT/FT & O/U",
+    "specifier": "1.5",
+    "market_id": "S_HTFTOU",
+    "outcomes": [
+      {
+        "key": "X/XU",
+        "desc": "X/X & Under",
+        "odds": 14.0
+      },
+      {
+        "key": "X/XO",
+        "desc": "X/X & Over",
+        "odds": 8.9
+      },
+      {
+        "key": "1/1U",
+        "desc": "1/1 & Under",
+        "odds": 19.0
+      },
+      {
+        "key": "1/1O",
+        "desc": "1/1 & Over",
+        "odds": 3.1
+      },
+      {
+        "key": "1/2O",
+        "desc": "1/2 & Over",
+        "odds": 32.0
+      },
+      {
+        "key": "2/XO",
+        "desc": "2/X & Over",
+        "odds": 14.75
+      },
+      {
+        "key": "X/2O",
+        "desc": "X/2 & Over",
+        "odds": 12.5
+      },
+      {
+        "key": "X/2U",
+        "desc": "X/2 & Under",
+        "odds": 23.0
+      },
+      {
+        "key": "X/1U",
+        "desc": "X/1 & Under",
+        "odds": 15.0
+      },
+      {
+        "key": "X/1O",
+        "desc": "X/1 & Over",
+        "odds": 6.9
+      },
+      {
+        "key": "2/1O",
+        "desc": "2/1 & Over",
+        "odds": 22.0
+      },
+      {
+        "key": "2/2U",
+        "desc": "2/2 & Under",
+        "odds": 28.0
+      },
+      {
+        "key": "2/2O",
+        "desc": "2/2 & Over",
+        "odds": 7.1
+      },
+      {
+        "key": "1/XO",
+        "desc": "1/X & Over",
+        "odds": 15.0
+      }
+    ]
+  },
+  {
+    "market_name": "Away Score 1st Half",
+    "specifier": "",
+    "market_id": "S_2SCOREHT",
+    "outcomes": [
+      {
+        "key": "Y",
+        "desc": "Yes",
+        "odds": 2.14
+      },
+      {
+        "key": "N",
+        "desc": "No",
+        "odds": 1.63
+      }
+    ]
+  },
+  {
+    "market_name": "1st Half - Double Chance & Goal/No Goal",
+    "specifier": "",
+    "market_id": "S_DCGGNGHT",
+    "outcomes": [
+      {
+        "key": "1XNGHT",
+        "desc": "1X & NG",
+        "odds": 1.57
+      },
+      {
+        "key": "12GGHT",
+        "desc": "12 & GG",
+        "odds": 7.6
+      },
+      {
+        "key": "12NGHT",
+        "desc": "12 & NG",
+        "odds": 1.8
+      },
+      {
+        "key": "1XGGHT",
+        "desc": "1X & GG",
+        "odds": 4.3
+      },
+      {
+        "key": "X2GGHT",
+        "desc": "X2 & GG",
+        "odds": 5.0
+      },
+      {
+        "key": "X2NGHT",
+        "desc": "X2 & NG",
+        "odds": 2.03
+      }
+    ]
+  },
+  {
+    "market_name": "1X2 - 15 Minutes",
+    "specifier": "",
+    "market_id": "S_1X21ST15MIN",
+    "outcomes": [
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 4.5
+      },
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 6.6
+      },
+      {
+        "key": "X",
+        "desc": "X",
+        "odds": 1.3
+      }
+    ]
+  },
+  {
+    "market_name": "DC & Multi Goal 4-5",
+    "specifier": "",
+    "market_id": "S_DCMULTI4-5",
+    "outcomes": [
+      {
+        "key": "1X",
+        "desc": "1X",
+        "odds": 3.9
+      },
+      {
+        "key": "12",
+        "desc": "12",
+        "odds": 3.9
+      },
+      {
+        "key": "X2",
+        "desc": "X2",
+        "odds": 6.4
+      }
+    ]
+  },
+  {
+    "market_name": "European H. 1st Half",
+    "specifier": "1",
+    "market_id": "S_1X2HNDHT",
+    "outcomes": [
+      {
+        "key": "X",
+        "desc": "X",
+        "odds": 4.6
+      },
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 12.5
+      },
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 1.17
+      }
+    ]
+  },
+  {
+    "market_name": "European H. 1st Half",
+    "specifier": "-1",
+    "market_id": "S_1X2HNDHT",
+    "outcomes": [
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 1.46
+      },
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 6.3
+      },
+      {
+        "key": "X",
+        "desc": "X",
+        "odds": 3.65
+      }
+    ]
+  },
+  {
+    "market_name": "European H. 1st Half",
+    "specifier": "-2",
+    "market_id": "S_1X2HNDHT",
+    "outcomes": [
+      {
+        "key": "X",
+        "desc": "X",
+        "odds": 9.4
+      },
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 1.03
+      },
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 18.0
+      }
+    ]
+  },
+  {
+    "market_name": "2nd Half - Home/Away Over/Under",
+    "specifier": "2.5",
+    "market_id": "S_HA2HOU",
+    "outcomes": [
+      {
+        "key": "HU",
+        "desc": "Home Under",
+        "odds": 1.02
+      },
+      {
+        "key": "HO",
+        "desc": "Home Over",
+        "odds": 8.6
+      }
+    ]
+  },
+  {
+    "market_name": "2nd Half - Home/Away Over/Under",
+    "specifier": "1.5",
+    "market_id": "S_HA2HOU",
+    "outcomes": [
+      {
+        "key": "AU",
+        "desc": "Away Under",
+        "odds": 1.12
+      },
+      {
+        "key": "AO",
+        "desc": "Away Over",
+        "odds": 5.3
+      },
+      {
+        "key": "HO",
+        "desc": "Home Over",
+        "odds": 3.15
+      },
+      {
+        "key": "HU",
+        "desc": "Home Under",
+        "odds": 1.3
+      }
+    ]
+  },
+  {
+    "market_name": "2nd Half - Home/Away Over/Under",
+    "specifier": "0.5",
+    "market_id": "S_HA2HOU",
+    "outcomes": [
+      {
+        "key": "AO",
+        "desc": "Away Over",
+        "odds": 1.81
+      },
+      {
+        "key": "AU",
+        "desc": "Away Under",
+        "odds": 1.9
+      },
+      {
+        "key": "HU",
+        "desc": "Home Under",
+        "odds": 2.63
+      },
+      {
+        "key": "HO",
+        "desc": "Home Over",
+        "odds": 1.43
+      }
+    ]
+  },
+  {
+    "market_name": "HT / FT Correct Score",
+    "specifier": "",
+    "market_id": "S_HTFTCS",
+    "outcomes": [
+      {
+        "key": "3-0/4+",
+        "desc": "3-0 / 4+",
+        "odds": 35.0
+      },
+      {
+        "key": "0-0/2-0",
+        "desc": "0-0 / 2-0",
+        "odds": 29.0
+      },
+      {
+        "key": "0-0/2-1",
+        "desc": "0-0 / 2-1",
+        "odds": 36.0
+      },
+      {
+        "key": "0-3/4+",
+        "desc": "0-3 / 4+",
+        "odds": 86.0
+      },
+      {
+        "key": "0-1/0-3",
+        "desc": "0-1 / 0-3",
+        "odds": 88.0
+      },
+      {
+        "key": "0-1/0-1",
+        "desc": "0-1 / 0-1",
+        "odds": 28.0
+      },
+      {
+        "key": "0-1/0-2",
+        "desc": "0-1 / 0-2",
+        "odds": 40.0
+      },
+      {
+        "key": "2-0/3-0",
+        "desc": "2-0 / 3-0",
+        "odds": 43.0
+      },
+      {
+        "key": "0-0/0-2",
+        "desc": "0-0 / 0-2",
+        "odds": 57.0
+      },
+      {
+        "key": "0-0/0-3",
+        "desc": "0-0 / 0-3",
+        "odds": 133.0
+      },
+      {
+        "key": "0-0/0-0",
+        "desc": "0-0 / 0-0",
+        "odds": 14.0
+      },
+      {
+        "key": "0-0/0-1",
+        "desc": "0-0 / 0-1",
+        "odds": 23.0
+      },
+      {
+        "key": "0-1/4+",
+        "desc": "0-1 / 4+",
+        "odds": 19.0
+      },
+      {
+        "key": "2-0/4+",
+        "desc": "2-0 / 4+",
+        "odds": 16.0
+      },
+      {
+        "key": "1-0/2-1",
+        "desc": "1-0 / 2-1",
+        "odds": 26.0
+      },
+      {
+        "key": "1-0/2-0",
+        "desc": "1-0 / 2-0",
+        "odds": 19.0
+      },
+      {
+        "key": "1-0/4+",
+        "desc": "1-0 / 4+",
+        "odds": 13.5
+      },
+      {
+        "key": "1-2/4+",
+        "desc": "1-2 / 4+",
+        "odds": 25.0
+      },
+      {
+        "key": "1-1/2-1",
+        "desc": "1-1 / 2-1",
+        "odds": 31.0
+      },
+      {
+        "key": "0-3/0-3",
+        "desc": "0-3 / 0-3",
+        "odds": 166.0
+      },
+      {
+        "key": "0-2/0-2",
+        "desc": "0-2 / 0-2",
+        "odds": 78.0
+      },
+      {
+        "key": "0-2/0-3",
+        "desc": "0-2 / 0-3",
+        "odds": 100.0
+      },
+      {
+        "key": "0-1/2-1",
+        "desc": "0-1 / 2-1",
+        "odds": 49.0
+      },
+      {
+        "key": "0-0/1-1",
+        "desc": "0-0 / 1-1",
+        "odds": 20.0
+      },
+      {
+        "key": "0-0/1-2",
+        "desc": "0-0 / 1-2",
+        "odds": 51.0
+      },
+      {
+        "key": "0-0/1-0",
+        "desc": "0-0 / 1-0",
+        "odds": 15.0
+      },
+      {
+        "key": "0-2/4+",
+        "desc": "0-2 / 4+",
+        "odds": 34.0
+      },
+      {
+        "key": "2-1/2-1",
+        "desc": "2-1 / 2-1",
+        "odds": 62.0
+      },
+      {
+        "key": "2-0/2-0",
+        "desc": "2-0 / 2-0",
+        "odds": 42.0
+      },
+      {
+        "key": "2-0/2-1",
+        "desc": "2-0 / 2-1",
+        "odds": 59.0
+      },
+      {
+        "key": "0-0/4+",
+        "desc": "0-0 / 4+",
+        "odds": 24.0
+      },
+      {
+        "key": "4+/4+",
+        "desc": "4+ / 4+",
+        "odds": 13.0
+      },
+      {
+        "key": "2-1/4+",
+        "desc": "2-1 / 4+",
+        "odds": 17.0
+      },
+      {
+        "key": "1-1/1-1",
+        "desc": "1-1 / 1-1",
+        "odds": 30.0
+      },
+      {
+        "key": "1-1/1-2",
+        "desc": "1-1 / 1-2",
+        "odds": 45.0
+      },
+      {
+        "key": "1-0/3-0",
+        "desc": "1-0 / 3-0",
+        "odds": 35.0
+      },
+      {
+        "key": "3-0/3-0",
+        "desc": "3-0 / 3-0",
+        "odds": 104.0
+      },
+      {
+        "key": "1-0/1-2",
+        "desc": "1-0 / 1-2",
+        "odds": 68.0
+      },
+      {
+        "key": "1-0/1-0",
+        "desc": "1-0 / 1-0",
+        "odds": 19.0
+      },
+      {
+        "key": "1-0/1-1",
+        "desc": "1-0 / 1-1",
+        "odds": 27.0
+      },
+      {
+        "key": "0-2/1-2",
+        "desc": "0-2 / 1-2",
+        "odds": 78.0
+      },
+      {
+        "key": "0-0/3-0",
+        "desc": "0-0 / 3-0",
+        "odds": 68.0
+      },
+      {
+        "key": "1-1/4+",
+        "desc": "1-1 / 4+",
+        "odds": 11.75
+      },
+      {
+        "key": "0-1/1-2",
+        "desc": "0-1 / 1-2",
+        "odds": 37.0
+      },
+      {
+        "key": "0-1/1-1",
+        "desc": "0-1 / 1-1",
+        "odds": 27.0
+      },
+      {
+        "key": "1-2/1-2",
+        "desc": "1-2 / 1-2",
+        "odds": 83.0
+      }
+    ]
+  },
+  {
+    "market_name": "Handicap",
+    "specifier": "2",
+    "market_id": "S_1X2HND",
+    "outcomes": [
+      {
+        "key": "XH",
+        "desc": "X",
+        "odds": 7.7
+      },
+      {
+        "key": "2H",
+        "desc": "2",
+        "odds": 18.0
+      },
+      {
+        "key": "1H",
+        "desc": "1",
+        "odds": 1.05
+      }
+    ]
+  },
+  {
+    "market_name": "Handicap",
+    "specifier": "-2",
+    "market_id": "S_1X2HND",
+    "outcomes": [
+      {
+        "key": "1H",
+        "desc": "1",
+        "odds": 6.9
+      },
+      {
+        "key": "2H",
+        "desc": "2",
+        "odds": 1.31
+      },
+      {
+        "key": "XH",
+        "desc": "X",
+        "odds": 4.5
+      }
+    ]
+  },
+  {
+    "market_name": "Handicap",
+    "specifier": "-1",
+    "market_id": "S_1X2HND",
+    "outcomes": [
+      {
+        "key": "XH",
+        "desc": "X",
+        "odds": 3.35
+      },
+      {
+        "key": "2H",
+        "desc": "2",
+        "odds": 1.91
+      },
+      {
+        "key": "1H",
+        "desc": "1",
+        "odds": 3.3
+      }
+    ]
+  },
+  {
+    "market_name": "Handicap",
+    "specifier": "1",
+    "market_id": "S_1X2HND",
+    "outcomes": [
+      {
+        "key": "2H",
+        "desc": "2",
+        "odds": 8.6
+      },
+      {
+        "key": "1H",
+        "desc": "1",
+        "odds": 1.26
+      },
+      {
+        "key": "XH",
+        "desc": "X",
+        "odds": 4.5
+      }
+    ]
+  },
+  {
+    "market_name": "Handicap",
+    "specifier": "-3",
+    "market_id": "S_1X2HND",
+    "outcomes": [
+      {
+        "key": "XH",
+        "desc": "X",
+        "odds": 7.2
+      },
+      {
+        "key": "2H",
+        "desc": "2",
+        "odds": 1.08
+      },
+      {
+        "key": "1H",
+        "desc": "1",
+        "odds": 14.0
+      }
+    ]
+  },
+  {
+    "market_name": "Away Goals Exact",
+    "specifier": "",
+    "market_id": "S_GOALSAWAY",
+    "outcomes": [
+      {
+        "key": "3+",
+        "desc": "3+",
+        "odds": 6.2
+      },
+      {
+        "key": "0",
+        "desc": "0",
+        "odds": 3.25
+      },
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 3.8
+      },
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 2.52
+      }
+    ]
+  },
+  {
+    "market_name": "1X2 & Multi Goal 3-4",
+    "specifier": "",
+    "market_id": "S_1X2MULTI3-4",
+    "outcomes": [
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 7.9
+      },
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 3.95
+      },
+      {
+        "key": "X",
+        "desc": "X",
+        "odds": 12.75
+      }
+    ]
+  },
+  {
+    "market_name": "Double Chance Half Time/1X2 Full Time",
+    "specifier": "",
+    "market_id": "S_DCH1X2FT",
+    "outcomes": [
+      {
+        "key": "12X",
+        "desc": "12/X",
+        "odds": 8.0
+      },
+      {
+        "key": "121",
+        "desc": "12/1",
+        "odds": 2.64
+      },
+      {
+        "key": "122",
+        "desc": "12/2",
+        "odds": 5.5
+      },
+      {
+        "key": "X2X",
+        "desc": "X2/X",
+        "odds": 4.65
+      },
+      {
+        "key": "X22",
+        "desc": "X2/2",
+        "odds": 3.9
+      },
+      {
+        "key": "X21",
+        "desc": "X2/1",
+        "odds": 4.5
+      },
+      {
+        "key": "1XX",
+        "desc": "1X/X",
+        "odds": 4.65
+      },
+      {
+        "key": "1X1",
+        "desc": "1X/1",
+        "odds": 1.93
+      },
+      {
+        "key": "1X2",
+        "desc": "1X/2",
+        "odds": 7.6
+      }
+    ]
+  },
+  {
+    "market_name": "Total Goals 1st + 2nd Half",
+    "specifier": "",
+    "market_id": "S_TOTAL1T2T",
+    "outcomes": [
+      {
+        "key": "2+AND1+Y",
+        "desc": "2 or More and 1 or More - Yes",
+        "odds": 2.64
+      },
+      {
+        "key": "1-AND1-N",
+        "desc": "1 or Less and 1 or Less - No",
+        "odds": 1.26
+      },
+      {
+        "key": "2+AND1+N",
+        "desc": "2 or More and 1 or More - No",
+        "odds": 1.35
+      },
+      {
+        "key": "1-AND1-Y",
+        "desc": "1 or Less and 1 or Less - Yes",
+        "odds": 3.05
+      },
+      {
+        "key": "2+AND3+Y",
+        "desc": "2 or More and 3 or More - Yes",
+        "odds": 7.3
+      },
+      {
+        "key": "1-AND3-N",
+        "desc": "1 or Less and 3 or Less - No",
+        "odds": 1.9
+      },
+      {
+        "key": "2+AND3+N",
+        "desc": "2 or More and 3 or More - No",
+        "odds": 1.02
+      },
+      {
+        "key": "1-AND3-Y",
+        "desc": "1 or Less and 3 or Less - Yes",
+        "odds": 1.69
+      },
+      {
+        "key": "1+AND2+N",
+        "desc": "1 or More and 2 or More - No",
+        "odds": 1.47
+      },
+      {
+        "key": "1+AND2+Y",
+        "desc": "1 or More and 2 or More - Yes",
+        "odds": 2.27
+      },
+      {
+        "key": "2-AND1-Y",
+        "desc": "2 or Less and 1 or Less - Yes",
+        "odds": 2.24
+      },
+      {
+        "key": "2-AND3-Y",
+        "desc": "2 or Less and 3 or Less - Yes",
+        "odds": 1.22
+      },
+      {
+        "key": "2-AND1-N",
+        "desc": "2 or Less and 1 or Less - No",
+        "odds": 1.49
+      },
+      {
+        "key": "2-AND3-N",
+        "desc": "2 or Less and 3 or Less - No",
+        "odds": 3.35
+      },
+      {
+        "key": "2+AND2+Y",
+        "desc": "2 or More and 2 or More - Yes",
+        "odds": 4.0
+      },
+      {
+        "key": "1-AND2-N",
+        "desc": "1 or Less and 2 or Less - No",
+        "odds": 1.59
+      },
+      {
+        "key": "2+AND2+N",
+        "desc": "2 or More and 2 or More - No",
+        "odds": 1.15
+      },
+      {
+        "key": "1-AND2-Y",
+        "desc": "1 or Less and 2 or Less - Yes",
+        "odds": 2.03
+      },
+      {
+        "key": "1+AND3+N",
+        "desc": "1 or More and 3 or More - No",
+        "odds": 1.13
+      },
+      {
+        "key": "1+AND3+Y",
+        "desc": "1 or More and 3 or More - Yes",
+        "odds": 4.3
+      },
+      {
+        "key": "3-AND1-N",
+        "desc": "3 or Less and 1 or Less - No",
+        "odds": 1.63
+      },
+      {
+        "key": "1+AND1+N",
+        "desc": "1 or More and 1 or More - No",
+        "odds": 2.27
+      },
+      {
+        "key": "1+AND1+Y",
+        "desc": "1 or More and 1 or More - Yes",
+        "odds": 1.47
+      },
+      {
+        "key": "3-AND1-Y",
+        "desc": "3 or Less and 1 or Less - Yes",
+        "odds": 1.98
+      },
+      {
+        "key": "3+AND1+N",
+        "desc": "3 or More and 1 or More - No",
+        "odds": 1.05
+      },
+      {
+        "key": "3+AND1+Y",
+        "desc": "3 or More and 1 or More - Yes",
+        "odds": 5.9
+      },
+      {
+        "key": "2-AND2-N",
+        "desc": "2 or Less and 2 or Less - No",
+        "odds": 2.28
+      },
+      {
+        "key": "2-AND2-Y",
+        "desc": "2 or Less and 2 or Less - Yes",
+        "odds": 1.47
+      }
+    ]
+  },
+  {
+    "market_name": "1X2 + Goal/No Goal + Over/Under",
+    "specifier": "1.5",
+    "market_id": "S_3COMBO1",
+    "outcomes": [
+      {
+        "key": "1NGOV",
+        "desc": "1 + NG + Over",
+        "odds": 4.4
+      },
+      {
+        "key": "1GGO",
+        "desc": "1 + GG + Over",
+        "odds": 3.2
+      },
+      {
+        "key": "2NGOV",
+        "desc": "2 + NG + Over",
+        "odds": 12.25
+      },
+      {
+        "key": "1NGU",
+        "desc": "1 + NG + Under",
+        "odds": 9.8
+      },
+      {
+        "key": "XGGO",
+        "desc": "X + GG + Over",
+        "odds": 4.7
+      },
+      {
+        "key": "XNGU",
+        "desc": "X + NG + Under",
+        "odds": 14.0
+      },
+      {
+        "key": "2GGO",
+        "desc": "2 + GG + Over",
+        "odds": 6.0
+      },
+      {
+        "key": "2NGU",
+        "desc": "2 + NG + Under",
+        "odds": 15.0
+      }
+    ]
+  },
+  {
+    "market_name": "1X2 + Goal/No Goal + Over/Under",
+    "specifier": "2.5",
+    "market_id": "S_3COMBO1",
+    "outcomes": [
+      {
+        "key": "XGGO",
+        "desc": "X + GG + Over",
+        "odds": 9.7
+      },
+      {
+        "key": "XGGU",
+        "desc": "X + GG + Under",
+        "odds": 8.0
+      },
+      {
+        "key": "2GGO",
+        "desc": "2 + GG + Over",
+        "odds": 6.0
+      },
+      {
+        "key": "XNGU",
+        "desc": "X + NG + Under",
+        "odds": 14.0
+      },
+      {
+        "key": "2NGU",
+        "desc": "2 + NG + Under",
+        "odds": 9.8
+      },
+      {
+        "key": "1NGOV",
+        "desc": "1 + NG + Over",
+        "odds": 7.1
+      },
+      {
+        "key": "1GGO",
+        "desc": "1 + GG + Over",
+        "odds": 3.2
+      },
+      {
+        "key": "2NGOV",
+        "desc": "2 + NG + Over",
+        "odds": 25.0
+      },
+      {
+        "key": "1NGU",
+        "desc": "1 + NG + Under",
+        "odds": 5.5
+      }
+    ]
+  },
+  {
+    "market_name": "1X2 + Goal/No Goal + Over/Under",
+    "specifier": "3.5",
+    "market_id": "S_3COMBO1",
+    "outcomes": [
+      {
+        "key": "2NGU",
+        "desc": "2 + NG + Under",
+        "odds": 8.2
+      },
+      {
+        "key": "1GGO",
+        "desc": "1 + GG + Over",
+        "odds": 4.4
+      },
+      {
+        "key": "1GGU",
+        "desc": "1 + GG + Under",
+        "odds": 8.8
+      },
+      {
+        "key": "XGGO",
+        "desc": "X + GG + Over",
+        "odds": 9.2
+      },
+      {
+        "key": "XGGU",
+        "desc": "X + GG + Under",
+        "odds": 8.0
+      },
+      {
+        "key": "1NGU",
+        "desc": "1 + NG + Under",
+        "odds": 4.25
+      },
+      {
+        "key": "2NGOV",
+        "desc": "2 + NG + Over",
+        "odds": 63.0
+      },
+      {
+        "key": "1NGOV",
+        "desc": "1 + NG + Over",
+        "odds": 23.0
+      },
+      {
+        "key": "2GGU",
+        "desc": "2 + GG + Under",
+        "odds": 13.25
+      },
+      {
+        "key": "2GGO",
+        "desc": "2 + GG + Over",
+        "odds": 9.5
+      },
+      {
+        "key": "XNGU",
+        "desc": "X + NG + Under",
+        "odds": 14.0
+      }
+    ]
+  },
+  {
+    "market_name": "DC & Multi Goal 1-5",
+    "specifier": "",
+    "market_id": "S_DCMULTI1-5",
+    "outcomes": [
+      {
+        "key": "X2",
+        "desc": "X2",
+        "odds": 2.18
+      },
+      {
+        "key": "1X",
+        "desc": "1X",
+        "odds": 1.4
+      },
+      {
+        "key": "12",
+        "desc": "12",
+        "odds": 1.29
+      }
+    ]
+  },
+  {
+    "market_name": "Half 1st Goal Home",
+    "specifier": "",
+    "market_id": "S_1STGHTH",
+    "outcomes": [
+      {
+        "key": "2",
+        "desc": "Second Half",
+        "odds": 3.15
+      },
+      {
+        "key": "1",
+        "desc": "First Half",
+        "odds": 1.65
+      },
+      {
+        "key": "NG",
+        "desc": "No Goal Home",
+        "odds": 5.6
+      }
+    ]
+  },
+  {
+    "market_name": "First Team to Score",
+    "specifier": "",
+    "market_id": "S_1STGOAL",
+    "outcomes": [
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 2.4
+      },
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 1.63
+      },
+      {
+        "key": "X",
+        "desc": "No Goal",
+        "odds": 14.0
+      }
+    ]
+  },
+  {
+    "market_name": "Away to Score 3 in a Row",
+    "specifier": "",
+    "market_id": "S_SCOREA3R",
+    "outcomes": [
+      {
+        "key": "Y",
+        "desc": "Yes",
+        "odds": 12.0
+      }
+    ]
+  },
+  {
+    "market_name": "1st Half - Total Goals",
+    "specifier": "",
+    "market_id": "S_GOALS1T",
+    "outcomes": [
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 2.64
+      },
+      {
+        "key": "3",
+        "desc": "3",
+        "odds": 7.2
+      },
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 3.7
+      }
+    ]
+  },
+  {
+    "market_name": "Score 5 Minutes",
+    "specifier": "",
+    "market_id": "S_S5MIN",
+    "outcomes": [
+      {
+        "key": "NF5M",
+        "desc": "No",
+        "odds": 1.02
+      },
+      {
+        "key": "YF5M",
+        "desc": "Yes",
+        "odds": 6.9
+      }
+    ]
+  },
+  {
+    "market_name": "Asian Handicap",
+    "specifier": "-0.25",
+    "market_id": "S_AH",
+    "outcomes": [
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 2.26
+      },
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 1.57
+      }
+    ]
+  },
+  {
+    "market_name": "Asian Handicap",
+    "specifier": "0.25",
+    "market_id": "S_AH",
+    "outcomes": [
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 1.31
+      },
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 3.15
+      }
+    ]
+  },
+  {
+    "market_name": "Asian Handicap",
+    "specifier": "-2.25",
+    "market_id": "S_AH",
+    "outcomes": [
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 6.3
+      },
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 1.07
+      }
+    ]
+  },
+  {
+    "market_name": "Asian Handicap",
+    "specifier": "1.5",
+    "market_id": "S_AH",
+    "outcomes": [
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 1.05
+      },
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 8.6
+      }
+    ]
+  },
+  {
+    "market_name": "Asian Handicap",
+    "specifier": "-0.75",
+    "market_id": "S_AH",
+    "outcomes": [
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 2.11
+      },
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 1.65
+      }
+    ]
+  },
+  {
+    "market_name": "Asian Handicap",
+    "specifier": "0.5",
+    "market_id": "S_AH",
+    "outcomes": [
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 1.26
+      },
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 3.8
+      }
+    ]
+  },
+  {
+    "market_name": "Asian Handicap",
+    "specifier": "1",
+    "market_id": "S_AH",
+    "outcomes": [
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 7.4
+      },
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 1.06
+      }
+    ]
+  },
+  {
+    "market_name": "Asian Handicap",
+    "specifier": "-2",
+    "market_id": "S_AH",
+    "outcomes": [
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 5.8
+      },
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 1.09
+      }
+    ]
+  },
+  {
+    "market_name": "Asian Handicap",
+    "specifier": "1.25",
+    "market_id": "S_AH",
+    "outcomes": [
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 7.8
+      },
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 1.04
+      }
+    ]
+  },
+  {
+    "market_name": "Asian Handicap",
+    "specifier": "-1.75",
+    "market_id": "S_AH",
+    "outcomes": [
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 1.18
+      },
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 4.15
+      }
+    ]
+  },
+  {
+    "market_name": "Asian Handicap",
+    "specifier": "-0.5",
+    "market_id": "S_AH",
+    "outcomes": [
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 1.91
+      },
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 1.88
+      }
+    ]
+  },
+  {
+    "market_name": "Asian Handicap",
+    "specifier": "-1",
+    "market_id": "S_AH",
+    "outcomes": [
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 1.46
+      },
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 2.52
+      }
+    ]
+  },
+  {
+    "market_name": "Asian Handicap",
+    "specifier": "-2.5",
+    "market_id": "S_AH",
+    "outcomes": [
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 6.9
+      },
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 1.08
+      }
+    ]
+  },
+  {
+    "market_name": "Asian Handicap",
+    "specifier": "0.75",
+    "market_id": "S_AH",
+    "outcomes": [
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 4.9
+      },
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 1.14
+      }
+    ]
+  },
+  {
+    "market_name": "Asian Handicap",
+    "specifier": "-1.5",
+    "market_id": "S_AH",
+    "outcomes": [
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 3.3
+      },
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 1.31
+      }
+    ]
+  },
+  {
+    "market_name": "Asian Handicap",
+    "specifier": "0",
+    "market_id": "S_AH",
+    "outcomes": [
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 1.42
+      },
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 2.82
+      }
+    ]
+  },
+  {
+    "market_name": "Asian Handicap",
+    "specifier": "-1.25",
+    "market_id": "S_AH",
+    "outcomes": [
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 2.81
+      },
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 1.36
+      }
+    ]
+  },
+  {
+    "market_name": "Away Score 2nd Half",
+    "specifier": "",
+    "market_id": "S_2SCORE2T",
+    "outcomes": [
+      {
+        "key": "N",
+        "desc": "No",
+        "odds": 1.9
+      },
+      {
+        "key": "Y",
+        "desc": "Yes",
+        "odds": 1.81
+      }
+    ]
+  },
+  {
+    "market_name": "Score 20 Minutes",
+    "specifier": "",
+    "market_id": "S_S20MIN",
+    "outcomes": [
+      {
+        "key": "NS20M",
+        "desc": "No",
+        "odds": 1.53
+      },
+      {
+        "key": "YS20M",
+        "desc": "Yes",
+        "odds": 2.1
+      }
+    ]
+  },
+  {
+    "market_name": "1st Half - Double Chance",
+    "specifier": "",
+    "market_id": "S_DC1T",
+    "outcomes": [
+      {
+        "key": "X2",
+        "desc": "X2",
+        "odds": 1.46
+      },
+      {
+        "key": "12",
+        "desc": "12",
+        "odds": 1.47
+      },
+      {
+        "key": "1X",
+        "desc": "1X",
+        "odds": 1.17
+      }
+    ]
+  },
+  {
+    "market_name": "Half 1st Goal Away",
+    "specifier": "",
+    "market_id": "S_1STGHTA",
+    "outcomes": [
+      {
+        "key": "NG",
+        "desc": "No Goal Away",
+        "odds": 3.25
+      },
+      {
+        "key": "2",
+        "desc": "Second Half ",
+        "odds": 3.05
+      },
+      {
+        "key": "1",
+        "desc": "First Half",
+        "odds": 2.14
+      }
+    ]
+  },
+  {
+    "market_name": "At Least a Half X",
+    "specifier": "",
+    "market_id": "S_LEASTX",
+    "outcomes": [
+      {
+        "key": "N",
+        "desc": "No",
+        "odds": 2.23
+      },
+      {
+        "key": "Y",
+        "desc": "Yes",
+        "odds": 1.56
+      }
+    ]
+  },
+  {
+    "market_name": "1X2 Half Time/Double Chance Full Time",
+    "specifier": "",
+    "market_id": "S_1X2HDCFT",
+    "outcomes": [
+      {
+        "key": "1X2",
+        "desc": "1/X2",
+        "odds": 11.0
+      },
+      {
+        "key": "212",
+        "desc": "2/12",
+        "odds": 5.1
+      },
+      {
+        "key": "21X",
+        "desc": "2/1X",
+        "odds": 9.6
+      },
+      {
+        "key": "X12",
+        "desc": "X/12",
+        "odds": 3.55
+      },
+      {
+        "key": "X1X",
+        "desc": "X/1X",
+        "odds": 3.0
+      },
+      {
+        "key": "2X2",
+        "desc": "2/X2",
+        "odds": 4.6
+      },
+      {
+        "key": "112",
+        "desc": "1/12",
+        "odds": 2.74
+      },
+      {
+        "key": "11X",
+        "desc": "1/1X",
+        "odds": 2.5
+      },
+      {
+        "key": "XX2",
+        "desc": "X/X2",
+        "odds": 3.9
+      }
+    ]
+  },
+  {
+    "market_name": "1X2 & Goal/No Goal",
+    "specifier": "",
+    "market_id": "S_1X2GGNG",
+    "outcomes": [
+      {
+        "key": "2ANDGG",
+        "desc": "2 & GG",
+        "odds": 6.0
+      },
+      {
+        "key": "2ANDNG",
+        "desc": "2 & NG",
+        "odds": 7.8
+      },
+      {
+        "key": "XANDNG",
+        "desc": "X & NG",
+        "odds": 14.0
+      },
+      {
+        "key": "1ANDGG",
+        "desc": "1 & GG",
+        "odds": 3.2
+      },
+      {
+        "key": "1ANDNG",
+        "desc": "1 & NG",
+        "odds": 3.9
+      },
+      {
+        "key": "XANDGG",
+        "desc": "X & GG",
+        "odds": 4.7
+      }
+    ]
+  },
+  {
+    "market_name": "Team To Score",
+    "specifier": "",
+    "market_id": "S_SCORET",
+    "outcomes": [
+      {
+        "key": "NG",
+        "desc": "No Goal",
+        "odds": 14.0
+      },
+      {
+        "key": "1",
+        "desc": "Only Home",
+        "odds": 3.9
+      },
+      {
+        "key": "2",
+        "desc": "Only Away",
+        "odds": 7.8
+      },
+      {
+        "key": "GG",
+        "desc": "GG",
+        "odds": 1.52
+      }
+    ]
+  },
+  {
+    "market_name": "1X2 & Over/Under",
+    "specifier": "3.5",
+    "market_id": "S_1X2OU",
+    "outcomes": [
+      {
+        "key": "2O",
+        "desc": "2 & Over",
+        "odds": 9.5
+      },
+      {
+        "key": "1U",
+        "desc": "1 & Under",
+        "odds": 3.01
+      },
+      {
+        "key": "2U",
+        "desc": "2 & Under",
+        "odds": 5.4
+      },
+      {
+        "key": "1O",
+        "desc": "1 & Over",
+        "odds": 4.05
+      },
+      {
+        "key": "XO",
+        "desc": "X & Over",
+        "odds": 9.7
+      },
+      {
+        "key": "XU",
+        "desc": "X & Under",
+        "odds": 5.6
+      }
+    ]
+  },
+  {
+    "market_name": "1X2 & Over/Under",
+    "specifier": "1.5",
+    "market_id": "S_1X2OU",
+    "outcomes": [
+      {
+        "key": "2U",
+        "desc": "2 & Under",
+        "odds": 15.0
+      },
+      {
+        "key": "1U",
+        "desc": "1 & Under",
+        "odds": 9.8
+      },
+      {
+        "key": "1O",
+        "desc": "1 & Over",
+        "odds": 2.08
+      },
+      {
+        "key": "2O",
+        "desc": "2 & Over",
+        "odds": 4.45
+      },
+      {
+        "key": "XU",
+        "desc": "X & Under",
+        "odds": 14.0
+      },
+      {
+        "key": "XO",
+        "desc": "X & Over",
+        "odds": 4.7
+      }
+    ]
+  },
+  {
+    "market_name": "1X2 & Over/Under",
+    "specifier": "4.5",
+    "market_id": "S_1X2OU",
+    "outcomes": [
+      {
+        "key": "2U",
+        "desc": "2 & Under",
+        "odds": 4.5
+      },
+      {
+        "key": "1O",
+        "desc": "1 & Over",
+        "odds": 6.0
+      },
+      {
+        "key": "1U",
+        "desc": "1 & Under",
+        "odds": 2.33
+      },
+      {
+        "key": "2O",
+        "desc": "2 & Over",
+        "odds": 13.25
+      },
+      {
+        "key": "XU",
+        "desc": "X & Under",
+        "odds": 3.9
+      },
+      {
+        "key": "XO",
+        "desc": "X & Over",
+        "odds": 30.0
+      }
+    ]
+  },
+  {
+    "market_name": "1X2 & Over/Under",
+    "specifier": "2.5",
+    "market_id": "S_1X2OU",
+    "outcomes": [
+      {
+        "key": "XO",
+        "desc": "X & Over",
+        "odds": 9.7
+      },
+      {
+        "key": "XU",
+        "desc": "X & Under",
+        "odds": 5.6
+      },
+      {
+        "key": "2U",
+        "desc": "2 & Under",
+        "odds": 9.8
+      },
+      {
+        "key": "1U",
+        "desc": "1 & Under",
+        "odds": 5.5
+      },
+      {
+        "key": "2O",
+        "desc": "2 & Over",
+        "odds": 5.3
+      },
+      {
+        "key": "1O",
+        "desc": "1 & Over",
+        "odds": 2.51
+      }
+    ]
+  },
+  {
+    "market_name": "Half 1st Goal",
+    "specifier": "",
+    "market_id": "S_1STGHT",
+    "outcomes": [
+      {
+        "key": "1",
+        "desc": "First Half",
+        "odds": 1.24
+      },
+      {
+        "key": "2",
+        "desc": "Second Half",
+        "odds": 4.45
+      },
+      {
+        "key": "NG",
+        "desc": "No Goal",
+        "odds": 14.0
+      }
+    ]
+  },
+  {
+    "market_name": "Double Chance & Over/Under ",
+    "specifier": "2.5",
+    "market_id": "S_DCOU",
+    "outcomes": [
+      {
+        "key": "12U",
+        "desc": "12 & Under",
+        "odds": 3.7
+      },
+      {
+        "key": "12O",
+        "desc": "12 & Over",
+        "odds": 1.77
+      },
+      {
+        "key": "X2U",
+        "desc": "X2 & Under",
+        "odds": 3.75
+      },
+      {
+        "key": "X2O",
+        "desc": "X2 & Over",
+        "odds": 3.65
+      },
+      {
+        "key": "1XU",
+        "desc": "1X & Under",
+        "odds": 2.91
+      },
+      {
+        "key": "1XO",
+        "desc": "1X & Over",
+        "odds": 2.08
+      }
+    ]
+  },
+  {
+    "market_name": "Double Chance & Over/Under ",
+    "specifier": "4.5",
+    "market_id": "S_DCOU",
+    "outcomes": [
+      {
+        "key": "1XU",
+        "desc": "1X & Under",
+        "odds": 1.55
+      },
+      {
+        "key": "1XO",
+        "desc": "1X & Over",
+        "odds": 5.5
+      },
+      {
+        "key": "X2U",
+        "desc": "X2 & Under",
+        "odds": 2.24
+      },
+      {
+        "key": "X2O",
+        "desc": "X2 & Over",
+        "odds": 10.5
+      },
+      {
+        "key": "12O",
+        "desc": "12 & Over",
+        "odds": 4.5
+      },
+      {
+        "key": "12U",
+        "desc": "12 & Under",
+        "odds": 1.64
+      }
+    ]
+  },
+  {
+    "market_name": "Double Chance & Over/Under ",
+    "specifier": "1.5",
+    "market_id": "S_DCOU",
+    "outcomes": [
+      {
+        "key": "1XO",
+        "desc": "1X & Over",
+        "odds": 1.49
+      },
+      {
+        "key": "1XU",
+        "desc": "1X & Under",
+        "odds": 6.5
+      },
+      {
+        "key": "X2U",
+        "desc": "X2 & Under",
+        "odds": 8.3
+      },
+      {
+        "key": "X2O",
+        "desc": "X2 & Over",
+        "odds": 2.37
+      },
+      {
+        "key": "12U",
+        "desc": "12 & Under",
+        "odds": 6.3
+      },
+      {
+        "key": "12O",
+        "desc": "12 & Over",
+        "odds": 1.48
+      }
+    ]
+  },
+  {
+    "market_name": "Double Chance & Over/Under ",
+    "specifier": "3.5",
+    "market_id": "S_DCOU",
+    "outcomes": [
+      {
+        "key": "X2U",
+        "desc": "X2 & Under",
+        "odds": 2.89
+      },
+      {
+        "key": "X2O",
+        "desc": "X2 & Over",
+        "odds": 5.1
+      },
+      {
+        "key": "1XO",
+        "desc": "1X & Over",
+        "odds": 2.99
+      },
+      {
+        "key": "1XU",
+        "desc": "1X & Under",
+        "odds": 2.04
+      },
+      {
+        "key": "12U",
+        "desc": "12 & Under",
+        "odds": 2.02
+      },
+      {
+        "key": "12O",
+        "desc": "12 & Over",
+        "odds": 2.97
+      }
+    ]
+  },
+  {
+    "market_name": "1st Half - Over/Under",
+    "specifier": "2.5",
+    "market_id": "S_OU1T",
+    "outcomes": [
+      {
+        "key": "O",
+        "desc": "Over",
+        "odds": 5.1
+      },
+      {
+        "key": "U",
+        "desc": "Under",
+        "odds": 1.11
+      }
+    ]
+  },
+  {
+    "market_name": "1st Half - Over/Under",
+    "specifier": "1.5",
+    "market_id": "S_OU1T",
+    "outcomes": [
+      {
+        "key": "U",
+        "desc": "Under",
+        "odds": 1.55
+      },
+      {
+        "key": "O",
+        "desc": "Over",
+        "odds": 2.25
+      }
+    ]
+  },
+  {
+    "market_name": "1st Half - Over/Under",
+    "specifier": "0.5",
+    "market_id": "S_OU1T",
+    "outcomes": [
+      {
+        "key": "U",
+        "desc": "Under",
+        "odds": 3.45
+      },
+      {
+        "key": "O",
+        "desc": "Over",
+        "odds": 1.24
+      }
+    ]
+  },
+  {
+    "market_name": "Highest Scoring Half",
+    "specifier": "",
+    "market_id": "S_HIGHHALF",
+    "outcomes": [
+      {
+        "key": "E",
+        "desc": "Tie",
+        "odds": 3.9
+      },
+      {
+        "key": "1",
+        "desc": "1st",
+        "odds": 2.95
+      },
+      {
+        "key": "2",
+        "desc": "2nd",
+        "odds": 1.99
+      }
+    ]
+  },
+  {
+    "market_name": "1st Half - 1X2 & Over/Under",
+    "specifier": "1.5",
+    "market_id": "S_1X2HTOU",
+    "outcomes": [
+      {
+        "key": "XU1T",
+        "desc": "X & Under",
+        "odds": 3.45
+      },
+      {
+        "key": "XO1T",
+        "desc": "X & Over",
+        "odds": 5.8
+      },
+      {
+        "key": "1O1T",
+        "desc": "1 & Over",
+        "odds": 5.0
+      },
+      {
+        "key": "1U1T",
+        "desc": "1 & Under",
+        "odds": 3.9
+      },
+      {
+        "key": "2U1T",
+        "desc": "2 & Under",
+        "odds": 5.6
+      },
+      {
+        "key": "2O1T",
+        "desc": "2 & Over",
+        "odds": 9.4
+      }
+    ]
+  },
+  {
+    "market_name": "Odd/Even",
+    "specifier": "",
+    "market_id": "S_OE",
+    "outcomes": [
+      {
+        "key": "OD",
+        "desc": "Odd",
+        "odds": 1.9
+      },
+      {
+        "key": "EV",
+        "desc": "Even",
+        "odds": 1.87
+      }
+    ]
+  },
+  {
+    "market_name": "HT/FT & O/U 1,5 HT",
+    "specifier": "1.5",
+    "market_id": "S_HTFTOUHT",
+    "outcomes": [
+      {
+        "key": "2XO",
+        "desc": "2/X & Over HT",
+        "odds": 36.0
+      },
+      {
+        "key": "2XU",
+        "desc": "2/X & Under HT",
+        "odds": 21.0
+      },
+      {
+        "key": "12U",
+        "desc": "1/2 & Under HT",
+        "odds": 39.0
+      },
+      {
+        "key": "11U",
+        "desc": "1/1 & Under HT",
+        "odds": 6.25
+      },
+      {
+        "key": "11O",
+        "desc": "1/1 & Over HT",
+        "odds": 6.0
+      },
+      {
+        "key": "12O",
+        "desc": "1/2 & Over HT",
+        "odds": 58.0
+      },
+      {
+        "key": "X1U",
+        "desc": "X/1 & Under HT",
+        "odds": 8.6
+      },
+      {
+        "key": "X1O",
+        "desc": "X/1 & Over HT",
+        "odds": 15.0
+      },
+      {
+        "key": "X2U",
+        "desc": "X/2 & Under HT",
+        "odds": 14.5
+      },
+      {
+        "key": "X2O",
+        "desc": "X/2 & Over HT",
+        "odds": 23.0
+      },
+      {
+        "key": "1XU",
+        "desc": "1/X & Under HT",
+        "odds": 21.0
+      },
+      {
+        "key": "1XO",
+        "desc": "1/X & Over HT",
+        "odds": 36.0
+      },
+      {
+        "key": "22U",
+        "desc": "2/2 & Under HT",
+        "odds": 11.75
+      },
+      {
+        "key": "22O",
+        "desc": "2/2 & Over HT",
+        "odds": 13.5
+      },
+      {
+        "key": "21U",
+        "desc": "2/1 & Under HT",
+        "odds": 29.0
+      },
+      {
+        "key": "21O",
+        "desc": "2/1 & Over HT",
+        "odds": 48.0
+      },
+      {
+        "key": "XXU",
+        "desc": "X/X & Under HT",
+        "odds": 10.0
+      },
+      {
+        "key": "XXO",
+        "desc": "X/X & Over HT",
+        "odds": 17.0
+      }
+    ]
+  },
+  {
+    "market_name": "1X2 1UP",
+    "specifier": "",
+    "market_id": "S_1X21",
+    "outcomes": [
+      {
+        "key": "X1",
+        "desc": "X - 1UP",
+        "odds": 3.9
+      },
+      {
+        "key": "11",
+        "desc": "1 - 1UP",
+        "odds": 1.39
+      },
+      {
+        "key": "21",
+        "desc": "2 - 1UP",
+        "odds": 2.03
+      }
+    ]
+  },
+  {
+    "market_name": "Multi Goal Home",
+    "specifier": "",
+    "market_id": "S_TMGHO",
+    "outcomes": [
+      {
+        "key": "HO13",
+        "desc": "1-3 Goals",
+        "odds": 1.25
+      },
+      {
+        "key": "HO12",
+        "desc": "1-2 Goals",
+        "odds": 1.62
+      },
+      {
+        "key": "HO23",
+        "desc": "2-3 Goals",
+        "odds": 2.06
+      }
+    ]
+  },
+  {
+    "market_name": "DC & Multi Goal 1-3",
+    "specifier": "",
+    "market_id": "S_DCMULTI1-3",
+    "outcomes": [
+      {
+        "key": "X2",
+        "desc": "X2",
+        "odds": 3.2
+      },
+      {
+        "key": "1X",
+        "desc": "1X",
+        "odds": 2.15
+      },
+      {
+        "key": "12",
+        "desc": "12",
+        "odds": 2.02
+      }
+    ]
+  },
+  {
+    "market_name": "Goal Injury Time",
+    "specifier": "",
+    "market_id": "S_GIT",
+    "outcomes": [
+      {
+        "key": "Y",
+        "desc": "Yes",
+        "odds": 3.3
+      }
+    ]
+  },
+  {
+    "market_name": "Home/Away - Over/Under",
+    "specifier": "3.5",
+    "market_id": "S_HAOU",
+    "outcomes": [
+      {
+        "key": "UH",
+        "desc": "Home Under",
+        "odds": 1.04
+      },
+      {
+        "key": "OH",
+        "desc": "Home Over",
+        "odds": 6.8
+      }
+    ]
+  },
+  {
+    "market_name": "Home/Away - Over/Under",
+    "specifier": "2.5",
+    "market_id": "S_HAOU",
+    "outcomes": [
+      {
+        "key": "UA",
+        "desc": "Away Under",
+        "odds": 1.09
+      },
+      {
+        "key": "UH",
+        "desc": "Home Under",
+        "odds": 1.31
+      },
+      {
+        "key": "OA",
+        "desc": "Away Over",
+        "odds": 6.2
+      },
+      {
+        "key": "OH",
+        "desc": "Home Over",
+        "odds": 3.15
+      }
+    ]
+  },
+  {
+    "market_name": "Home/Away - Over/Under",
+    "specifier": "1.5",
+    "market_id": "S_HAOU",
+    "outcomes": [
+      {
+        "key": "UH",
+        "desc": "Home Under",
+        "odds": 2.09
+      },
+      {
+        "key": "UA",
+        "desc": "Away Under",
+        "odds": 1.47
+      },
+      {
+        "key": "OA",
+        "desc": "Away Over",
+        "odds": 2.5
+      },
+      {
+        "key": "OH",
+        "desc": "Home Over",
+        "odds": 1.66
+      }
+    ]
+  },
+  {
+    "market_name": "Home/Away - Over/Under",
+    "specifier": "0.5",
+    "market_id": "S_HAOU",
+    "outcomes": [
+      {
+        "key": "UH",
+        "desc": "Home Under",
+        "odds": 5.6
+      },
+      {
+        "key": "UA",
+        "desc": "Away Under",
+        "odds": 3.25
+      },
+      {
+        "key": "OH",
+        "desc": "Home Over",
+        "odds": 1.11
+      },
+      {
+        "key": "OA",
+        "desc": "Away Over",
+        "odds": 1.29
+      }
+    ]
+  },
+  {
+    "market_name": "Odd/Even Away",
+    "specifier": "",
+    "market_id": "S_OEAWAY",
+    "outcomes": [
+      {
+        "key": "EV",
+        "desc": "Even",
+        "odds": 1.76
+      },
+      {
+        "key": "OD",
+        "desc": "Odd",
+        "odds": 2.04
+      }
+    ]
+  },
+  {
+    "market_name": "Away Win Either Half",
+    "specifier": "",
+    "market_id": "S_AWAYWINHALF",
+    "outcomes": [
+      {
+        "key": "N",
+        "desc": "No",
+        "odds": 1.56
+      },
+      {
+        "key": "Y",
+        "desc": "Yes",
+        "odds": 2.23
+      }
+    ]
+  },
+  {
+    "market_name": "DC & Multi Goal 3-5",
+    "specifier": "",
+    "market_id": "S_DCMULTI3-5",
+    "outcomes": [
+      {
+        "key": "12",
+        "desc": "12",
+        "odds": 2.0
+      },
+      {
+        "key": "1X",
+        "desc": "1X",
+        "odds": 2.42
+      },
+      {
+        "key": "X2",
+        "desc": "X2",
+        "odds": 4.15
+      }
+    ]
+  },
+  {
+    "market_name": "Half Time/Full Time",
+    "specifier": "",
+    "market_id": "S_HTFT",
+    "outcomes": [
+      {
+        "key": "2/X",
+        "desc": "2/X",
+        "odds": 14.75
+      },
+      {
+        "key": "2/1",
+        "desc": "2/1",
+        "odds": 22.0
+      },
+      {
+        "key": "2/2",
+        "desc": "2/2",
+        "odds": 6.1
+      },
+      {
+        "key": "1/2",
+        "desc": "1/2",
+        "odds": 32.0
+      },
+      {
+        "key": "1/1",
+        "desc": "1/1",
+        "odds": 2.84
+      },
+      {
+        "key": "1/X",
+        "desc": "1/X",
+        "odds": 15.0
+      },
+      {
+        "key": "X/1",
+        "desc": "X/1",
+        "odds": 5.3
+      },
+      {
+        "key": "X/2",
+        "desc": "X/2",
+        "odds": 9.2
+      },
+      {
+        "key": "X/X",
+        "desc": "X/X",
+        "odds": 6.25
+      }
+    ]
+  },
+  {
+    "market_name": "1X2 2UP",
+    "specifier": "",
+    "market_id": "S_1X22",
+    "outcomes": [
+      {
+        "key": "22",
+        "desc": "2 - 2UP",
+        "odds": 3.65
+      },
+      {
+        "key": "12",
+        "desc": "1 - 2UP",
+        "odds": 1.83
+      },
+      {
+        "key": "X2",
+        "desc": "X - 2UP",
+        "odds": 3.9
+      }
+    ]
+  },
+  {
+    "market_name": "GG/NG 2+",
+    "specifier": "",
+    "market_id": "S_GGNG2PLUS",
+    "outcomes": [
+      {
+        "key": "NG",
+        "desc": "NG",
+        "odds": 1.16
+      },
+      {
+        "key": "GG",
+        "desc": "GG",
+        "odds": 4.35
+      }
+    ]
+  },
+  {
+    "market_name": "1X2 or Over/Under",
+    "specifier": "1.5",
+    "market_id": "S_CHANCEMIXOU",
+    "outcomes": [
+      {
+        "key": "XorUn",
+        "desc": "X Or Under",
+        "odds": 2.39
+      },
+      {
+        "key": "1orUn",
+        "desc": "1 Or Under",
+        "odds": 1.5
+      },
+      {
+        "key": "1orOv",
+        "desc": "1 Or Over",
+        "odds": 1.04
+      },
+      {
+        "key": "2orUn",
+        "desc": "2 Or Under",
+        "odds": 2.38
+      },
+      {
+        "key": "2orOv",
+        "desc": "2 Or Over",
+        "odds": 1.08
+      },
+      {
+        "key": "XorOv",
+        "desc": "X Or Over",
+        "odds": 1.08
+      }
+    ]
+  },
+  {
+    "market_name": "1X2 or Over/Under",
+    "specifier": "3.5",
+    "market_id": "S_CHANCEMIXOU",
+    "outcomes": [
+      {
+        "key": "XorUn",
+        "desc": "X Or Under",
+        "odds": 1.34
+      },
+      {
+        "key": "1orUn",
+        "desc": "1 Or Under",
+        "odds": 1.13
+      },
+      {
+        "key": "2orUn",
+        "desc": "2 Or Under",
+        "odds": 1.34
+      },
+      {
+        "key": "1orOv",
+        "desc": "1 Or Over",
+        "odds": 1.36
+      },
+      {
+        "key": "2orOv",
+        "desc": "2 Or Over",
+        "odds": 1.68
+      },
+      {
+        "key": "XorOv",
+        "desc": "X Or Over",
+        "odds": 1.69
+      }
+    ]
+  },
+  {
+    "market_name": "Goal / No Goal",
+    "specifier": "",
+    "market_id": "S_GGNG",
+    "outcomes": [
+      {
+        "key": "N",
+        "desc": "NG",
+        "odds": 2.49
+      },
+      {
+        "key": "Y",
+        "desc": "GG",
+        "odds": 1.52
+      }
+    ]
+  },
+  {
+    "market_name": "1X2 & Multi Goal 1-4",
+    "specifier": "",
+    "market_id": "S_1X2MULTI1-4",
+    "outcomes": [
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 4.5
+      },
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 2.33
+      },
+      {
+        "key": "X",
+        "desc": "X",
+        "odds": 5.0
+      }
+    ]
+  },
+  {
+    "market_name": "1X2 & Multi Goal 2-4",
+    "specifier": "",
+    "market_id": "S_1X2MULTI2-4",
+    "outcomes": [
+      {
+        "key": "X",
+        "desc": "X",
+        "odds": 5.0
+      },
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 3.0
+      },
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 6.2
+      }
+    ]
+  },
+  {
+    "market_name": "1st Half - 1X2",
+    "specifier": "",
+    "market_id": "S_1X21T",
+    "outcomes": [
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 3.9
+      },
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 2.36
+      },
+      {
+        "key": "X",
+        "desc": "X",
+        "odds": 2.33
+      }
+    ]
+  },
+  {
+    "market_name": "DC & Multi Goal 2-3",
+    "specifier": "",
+    "market_id": "S_DCMULTI2-3",
+    "outcomes": [
+      {
+        "key": "12",
+        "desc": "12",
+        "odds": 2.72
+      },
+      {
+        "key": "X2",
+        "desc": "X2",
+        "odds": 4.0
+      },
+      {
+        "key": "1X",
+        "desc": "1X",
+        "odds": 2.72
+      }
+    ]
+  },
+  {
+    "market_name": "2nd Half - 1X2 & Goal/No Goal",
+    "specifier": "",
+    "market_id": "S_2HT1X2GGNG",
+    "outcomes": [
+      {
+        "key": "22HTANDNG",
+        "desc": "2 & NG",
+        "odds": 5.0
+      },
+      {
+        "key": "X2HTANDGG",
+        "desc": "X & GG",
+        "odds": 5.1
+      },
+      {
+        "key": "22HTANDGG",
+        "desc": "2 & GG",
+        "odds": 10.75
+      },
+      {
+        "key": "X2HTANDNG",
+        "desc": "X & NG",
+        "odds": 4.8
+      },
+      {
+        "key": "12HTANDNG",
+        "desc": "1 & NG",
+        "odds": 2.89
+      },
+      {
+        "key": "12HTANDGG",
+        "desc": "1 & GG",
+        "odds": 6.7
+      }
+    ]
+  },
+  {
+    "market_name": "A Team Score 3 in a Row",
+    "specifier": "",
+    "market_id": "S_SCORE3R",
+    "outcomes": [
+      {
+        "key": "N",
+        "desc": "No",
+        "odds": 1.21
+      },
+      {
+        "key": "Y",
+        "desc": "Yes",
+        "odds": 3.6
+      }
+    ]
+  },
+  {
+    "market_name": "Double Chance Half Time/Full Time ",
+    "specifier": "",
+    "market_id": "S_DCHTFT",
+    "outcomes": [
+      {
+        "key": "1X12",
+        "desc": "1X/12",
+        "odds": 1.42
+      },
+      {
+        "key": "1X1X",
+        "desc": "1X/1X",
+        "odds": 1.25
+      },
+      {
+        "key": "X2X2",
+        "desc": "X2/X2",
+        "odds": 1.98
+      },
+      {
+        "key": "1212",
+        "desc": "12/12",
+        "odds": 1.65
+      },
+      {
+        "key": "121X",
+        "desc": "12/1X",
+        "odds": 1.85
+      },
+      {
+        "key": "X212",
+        "desc": "X2/12",
+        "odds": 1.95
+      },
+      {
+        "key": "X21X",
+        "desc": "X2/1X",
+        "odds": 2.15
+      },
+      {
+        "key": "1XX2",
+        "desc": "1X/X2",
+        "odds": 2.76
+      },
+      {
+        "key": "12X2",
+        "desc": "12/X2",
+        "odds": 3.1
+      }
+    ]
+  },
+  {
+    "market_name": "1st Half - 1X2 & Goal/No Goal",
+    "specifier": "",
+    "market_id": "S_1X2HTGGNG",
+    "outcomes": [
+      {
+        "key": "2HTANDGG",
+        "desc": "2 & GG",
+        "odds": 15.0
+      },
+      {
+        "key": "2HTANDNG",
+        "desc": "2 & NG",
+        "odds": 4.75
+      },
+      {
+        "key": "1HTANDGG",
+        "desc": "1 & GG",
+        "odds": 10.0
+      },
+      {
+        "key": "1HTANDNG",
+        "desc": "1 & NG",
+        "odds": 2.85
+      },
+      {
+        "key": "XHTANDGG",
+        "desc": "X & GG",
+        "odds": 5.8
+      },
+      {
+        "key": "XHTANDNG",
+        "desc": "X & NG",
+        "odds": 3.45
+      }
+    ]
+  },
+  {
+    "market_name": "GG/NG & Over/Under 3.5",
+    "specifier": "3.5",
+    "market_id": "S_GGNGOUN",
+    "outcomes": [
+      {
+        "key": "NGO",
+        "desc": "NG & Over",
+        "odds": 22.0
+      },
+      {
+        "key": "NGU",
+        "desc": "NG & Under",
+        "odds": 2.57
+      },
+      {
+        "key": "GGU",
+        "desc": "GG & Under",
+        "odds": 3.4
+      },
+      {
+        "key": "GGO",
+        "desc": "GG & Over",
+        "odds": 2.49
+      }
+    ]
+  },
+  {
+    "market_name": "Double Chance & Goal / No Goal",
+    "specifier": "",
+    "market_id": "S_DCGGNG",
+    "outcomes": [
+      {
+        "key": "1XGG",
+        "desc": "1X & GG",
+        "odds": 1.92
+      },
+      {
+        "key": "X2NG",
+        "desc": "X2 & NG",
+        "odds": 5.8
+      },
+      {
+        "key": "X2GG",
+        "desc": "X2 & GG",
+        "odds": 2.71
+      },
+      {
+        "key": "1XNG",
+        "desc": "1X & NG",
+        "odds": 3.25
+      },
+      {
+        "key": "12GG",
+        "desc": "12 & GG",
+        "odds": 2.13
+      },
+      {
+        "key": "12NG",
+        "desc": "12 & NG",
+        "odds": 2.76
+      }
+    ]
+  },
+  {
+    "market_name": "European H. 2nd Half",
+    "specifier": "1",
+    "market_id": "S_1X2HND2TN",
+    "outcomes": [
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 1.19
+      },
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 10.75
+      },
+      {
+        "key": "X",
+        "desc": "X",
+        "odds": 5.3
+      }
+    ]
+  },
+  {
+    "market_name": "European H. 2nd Half",
+    "specifier": "-2",
+    "market_id": "S_1X2HND2TN",
+    "outcomes": [
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 1.09
+      },
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 13.5
+      },
+      {
+        "key": "X",
+        "desc": "X",
+        "odds": 7.9
+      }
+    ]
+  },
+  {
+    "market_name": "European H. 2nd Half",
+    "specifier": "-1",
+    "market_id": "S_1X2HND2TN",
+    "outcomes": [
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 1.55
+      },
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 5.0
+      },
+      {
+        "key": "X",
+        "desc": "X",
+        "odds": 3.65
+      }
+    ]
+  },
+  {
+    "market_name": "2nd Half - Double Chance & Goal/No Goal",
+    "specifier": "",
+    "market_id": "S_DCGGNG2T",
+    "outcomes": [
+      {
+        "key": "12GG2T",
+        "desc": "12 & GG",
+        "odds": 4.8
+      },
+      {
+        "key": "X2GG2T",
+        "desc": "X2 & GG",
+        "odds": 3.9
+      },
+      {
+        "key": "X2NG2T",
+        "desc": "X2 & NG",
+        "odds": 2.54
+      },
+      {
+        "key": "1XGG2T",
+        "desc": "1X & GG",
+        "odds": 3.2
+      },
+      {
+        "key": "12NG2T",
+        "desc": "12 & NG",
+        "odds": 1.86
+      },
+      {
+        "key": "1XNG2T",
+        "desc": "1X & NG",
+        "odds": 1.83
+      }
+    ]
+  },
+  {
+    "market_name": "Home Goals Exact",
+    "specifier": "",
+    "market_id": "S_GOALSHOME",
+    "outcomes": [
+      {
+        "key": "3+",
+        "desc": "3+",
+        "odds": 3.15
+      },
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 3.25
+      },
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 3.1
+      },
+      {
+        "key": "0",
+        "desc": "0",
+        "odds": 5.6
+      }
+    ]
+  },
+  {
+    "market_name": "1st Half - Correct Score",
+    "specifier": "",
+    "market_id": "S_CS1T",
+    "outcomes": [
+      {
+        "key": "OTH",
+        "desc": "Any Other Score",
+        "odds": 9.9
+      },
+      {
+        "key": "2:1",
+        "desc": "2:1",
+        "odds": 13.0
+      },
+      {
+        "key": "2:0",
+        "desc": "2:0",
+        "odds": 8.7
+      },
+      {
+        "key": "2:2",
+        "desc": "2:2",
+        "odds": 28.0
+      },
+      {
+        "key": "0:1",
+        "desc": "0:1",
+        "odds": 5.6
+      },
+      {
+        "key": "0:0",
+        "desc": "0:0",
+        "odds": 3.45
+      },
+      {
+        "key": "0:2",
+        "desc": "0:2",
+        "odds": 16.0
+      },
+      {
+        "key": "1:0",
+        "desc": "1:0",
+        "odds": 3.9
+      },
+      {
+        "key": "1:2",
+        "desc": "1:2",
+        "odds": 17.0
+      },
+      {
+        "key": "1:1",
+        "desc": "1:1",
+        "odds": 6.3
+      }
+    ]
+  },
+  {
+    "market_name": "Winning Margins",
+    "specifier": "",
+    "market_id": "S_WINMARGIN",
+    "outcomes": [
+      {
+        "key": "AT2",
+        "desc": "Away by 2",
+        "odds": 7.7
+      },
+      {
+        "key": "AT1",
+        "desc": "Away by 1",
+        "odds": 4.5
+      },
+      {
+        "key": "X",
+        "desc": "Draw",
+        "odds": 3.9
+      },
+      {
+        "key": "HT>2",
+        "desc": "Home by > 2",
+        "odds": 6.9
+      },
+      {
+        "key": "AT>2",
+        "desc": "Away by > 2",
+        "odds": 12.75
+      },
+      {
+        "key": "HT1",
+        "desc": "Home by 1",
+        "odds": 3.35
+      },
+      {
+        "key": "HT2",
+        "desc": "Home by 2",
+        "odds": 4.5
+      }
+    ]
+  },
+  {
+    "market_name": "2nd Half - Odd/Even",
+    "specifier": "",
+    "market_id": "S_OE2T",
+    "outcomes": [
+      {
+        "key": "EV",
+        "desc": "Even",
+        "odds": 1.77
+      },
+      {
+        "key": "OD",
+        "desc": "Odd",
+        "odds": 1.91
+      }
+    ]
+  },
+  {
+    "market_name": "1st Half - Double Chance & Over/Under",
+    "specifier": "1.5",
+    "market_id": "S_HTDCOU",
+    "outcomes": [
+      {
+        "key": "X2U",
+        "desc": "X2 And Under",
+        "odds": 2.27
+      },
+      {
+        "key": "X2O",
+        "desc": "X2 And Over",
+        "odds": 4.0
+      },
+      {
+        "key": "12O",
+        "desc": "12 And Over",
+        "odds": 3.25
+      },
+      {
+        "key": "1XU",
+        "desc": "1X And Under",
+        "odds": 1.94
+      },
+      {
+        "key": "1XO",
+        "desc": "1X And Over",
+        "odds": 2.82
+      }
+    ]
+  },
+  {
+    "market_name": "2nd Half - Double Chance",
+    "specifier": "",
+    "market_id": "S_DC2T",
+    "outcomes": [
+      {
+        "key": "X2",
+        "desc": "X2",
+        "odds": 1.55
+      },
+      {
+        "key": "1X",
+        "desc": "1X",
+        "odds": 1.19
+      },
+      {
+        "key": "12",
+        "desc": "12",
+        "odds": 1.36
+      }
+    ]
+  },
+  {
+    "market_name": "DC & Multi Goal 3-4",
+    "specifier": "",
+    "market_id": "S_DCMULTI3-4",
+    "outcomes": [
+      {
+        "key": "X2",
+        "desc": "X2",
+        "odds": 5.0
+      },
+      {
+        "key": "12",
+        "desc": "12",
+        "odds": 2.69
+      },
+      {
+        "key": "1X",
+        "desc": "1X",
+        "odds": 3.05
+      }
+    ]
+  },
+  {
+    "market_name": "Multi C.Score (1)",
+    "specifier": "",
+    "market_id": "S_MCS3",
+    "outcomes": [
+      {
+        "key": "414243",
+        "desc": "4-1 / 4-2 / 4-3",
+        "odds": 12.25
+      },
+      {
+        "key": "223344",
+        "desc": "2-2 / 3-3 / 4-4",
+        "odds": 8.8
+      },
+      {
+        "key": "4004O",
+        "desc": "4-0 / 0-4 / Other",
+        "odds": 10.0
+      },
+      {
+        "key": "0011",
+        "desc": "0-0 / 1-1",
+        "odds": 5.6
+      },
+      {
+        "key": "102021",
+        "desc": "1-0 / 2-0 / 2-1",
+        "odds": 3.35
+      },
+      {
+        "key": "010212",
+        "desc": "0-1 / 0-2 / 1-2",
+        "odds": 5.5
+      },
+      {
+        "key": "031323",
+        "desc": "0-3 / 1-3 / 2-3",
+        "odds": 11.0
+      },
+      {
+        "key": "142434",
+        "desc": "1-4 / 2-4 / 3-4",
+        "odds": 23.0
+      },
+      {
+        "key": "303132",
+        "desc": "3-0 / 3-1 / 3-2",
+        "odds": 5.7
+      }
+    ]
+  },
+  {
+    "market_name": "Goal/No Goal & Over/Under",
+    "specifier": "2.5",
+    "market_id": "S_GGNGOU",
+    "outcomes": [
+      {
+        "key": "GGOVER",
+        "desc": "GG & Over",
+        "odds": 1.73
+      },
+      {
+        "key": "NGOVER",
+        "desc": "NG & Over",
+        "odds": 9.6
+      },
+      {
+        "key": "NGUNDER",
+        "desc": "NG & Under",
+        "odds": 3.0
+      },
+      {
+        "key": "GGUNDER",
+        "desc": "GG & Under",
+        "odds": 8.0
+      }
+    ]
+  },
+  {
+    "market_name": "1st Half - Multi Goal",
+    "specifier": "",
+    "market_id": "S_MGOAL1T",
+    "outcomes": [
+      {
+        "key": "12",
+        "desc": "1-2",
+        "odds": 1.5
+      },
+      {
+        "key": "13",
+        "desc": "1-3",
+        "odds": 1.26
+      },
+      {
+        "key": "23",
+        "desc": "2-3",
+        "odds": 2.46
+      }
+    ]
+  },
+  {
+    "market_name": "Clean Sheet Home",
+    "specifier": "",
+    "market_id": "S_CLEANSH",
+    "outcomes": [
+      {
+        "key": "N",
+        "desc": "No",
+        "odds": 1.29
+      },
+      {
+        "key": "Y",
+        "desc": "Yes",
+        "odds": 3.25
+      }
+    ]
+  },
+  {
+    "market_name": "Chance Mix",
+    "specifier": "2.5",
+    "market_id": "S_CHANCEMIXGGOU",
+    "outcomes": [
+      {
+        "key": "XorOv",
+        "desc": "X Or Over",
+        "odds": 1.24
+      },
+      {
+        "key": "XorUn",
+        "desc": "X Or Under",
+        "odds": 1.92
+      },
+      {
+        "key": "2orOv",
+        "desc": "2 Or Over",
+        "odds": 1.36
+      },
+      {
+        "key": "1orOv",
+        "desc": "1 Or Over",
+        "odds": 1.23
+      },
+      {
+        "key": "1orUn",
+        "desc": "1 Or Under",
+        "odds": 1.25
+      },
+      {
+        "key": "2orUn",
+        "desc": "2 Or Under",
+        "odds": 1.66
+      },
+      {
+        "key": "GGOU",
+        "desc": "GG Or Under",
+        "odds": 1.02
+      },
+      {
+        "key": "GGOO",
+        "desc": "GG Or Over",
+        "odds": 1.31
+      },
+      {
+        "key": "NGOO",
+        "desc": "NG Or Over",
+        "odds": 1.04
+      },
+      {
+        "key": "NGOU",
+        "desc": "NG Or Under",
+        "odds": 1.89
+      }
+    ]
+  },
+  {
+    "market_name": "Correct Score",
+    "specifier": "",
+    "market_id": "S_CSFT",
+    "outcomes": [
+      {
+        "key": "4:2",
+        "desc": "4:2",
+        "odds": 38.0
+      },
+      {
+        "key": "4:1",
+        "desc": "4:1",
+        "odds": 28.0
+      },
+      {
+        "key": "4:0",
+        "desc": "4:0",
+        "odds": 40.0
+      },
+      {
+        "key": "4:4",
+        "desc": "4:4",
+        "odds": 151.0
+      },
+      {
+        "key": "4:3",
+        "desc": "4:3",
+        "odds": 73.0
+      },
+      {
+        "key": "2:4",
+        "desc": "2:4",
+        "odds": 76.0
+      },
+      {
+        "key": "2:3",
+        "desc": "2:3",
+        "odds": 29.0
+      },
+      {
+        "key": "2:2",
+        "desc": "2:2",
+        "odds": 12.75
+      },
+      {
+        "key": "2:1",
+        "desc": "2:1",
+        "odds": 8.8
+      },
+      {
+        "key": "2:0",
+        "desc": "2:0",
+        "odds": 11.5
+      },
+      {
+        "key": "OTH",
+        "desc": "Any Other Score",
+        "odds": 15.0
+      },
+      {
+        "key": "0:4",
+        "desc": "0:4",
+        "odds": 134.0
+      },
+      {
+        "key": "0:3",
+        "desc": "0:3",
+        "odds": 58.0
+      },
+      {
+        "key": "0:2",
+        "desc": "0:2",
+        "odds": 25.0
+      },
+      {
+        "key": "0:1",
+        "desc": "0:1",
+        "odds": 15.0
+      },
+      {
+        "key": "0:0",
+        "desc": "0:0",
+        "odds": 14.0
+      },
+      {
+        "key": "3:3",
+        "desc": "3:3",
+        "odds": 40.0
+      },
+      {
+        "key": "3:2",
+        "desc": "3:2",
+        "odds": 19.0
+      },
+      {
+        "key": "3:1",
+        "desc": "3:1",
+        "odds": 13.75
+      },
+      {
+        "key": "3:0",
+        "desc": "3:0",
+        "odds": 19.0
+      },
+      {
+        "key": "3:4",
+        "desc": "3:4",
+        "odds": 99.0
+      },
+      {
+        "key": "1:4",
+        "desc": "1:4",
+        "odds": 81.0
+      },
+      {
+        "key": "1:3",
+        "desc": "1:3",
+        "odds": 30.0
+      },
+      {
+        "key": "1:2",
+        "desc": "1:2",
+        "odds": 13.25
+      },
+      {
+        "key": "1:1",
+        "desc": "1:1",
+        "odds": 8.0
+      },
+      {
+        "key": "1:0",
+        "desc": "1:0",
+        "odds": 9.8
+      }
+    ]
+  },
+  {
+    "market_name": "2nd Half - Over/Under",
+    "specifier": "0.5",
+    "market_id": "S_OU2T",
+    "outcomes": [
+      {
+        "key": "U",
+        "desc": "Under",
+        "odds": 4.8
+      },
+      {
+        "key": "O",
+        "desc": "Over",
+        "odds": 1.14
+      }
+    ]
+  },
+  {
+    "market_name": "2nd Half - Over/Under",
+    "specifier": "2.5",
+    "market_id": "S_OU2T",
+    "outcomes": [
+      {
+        "key": "O",
+        "desc": "Over",
+        "odds": 3.35
+      },
+      {
+        "key": "U",
+        "desc": "Under",
+        "odds": 1.26
+      }
+    ]
+  },
+  {
+    "market_name": "2nd Half - Over/Under",
+    "specifier": "1.5",
+    "market_id": "S_OU2T",
+    "outcomes": [
+      {
+        "key": "O",
+        "desc": "Over",
+        "odds": 1.75
+      },
+      {
+        "key": "U",
+        "desc": "Under",
+        "odds": 1.93
+      }
+    ]
+  },
+  {
+    "market_name": "Double Chance",
+    "specifier": "",
+    "market_id": "S_DC",
+    "outcomes": [
+      {
+        "key": "12",
+        "desc": "12",
+        "odds": 1.25
+      },
+      {
+        "key": "1X",
+        "desc": "1X",
+        "odds": 1.26
+      },
+      {
+        "key": "X2",
+        "desc": "X2",
+        "odds": 1.91
+      }
+    ]
+  },
+  {
+    "market_name": "Multi Goal",
+    "specifier": "",
+    "market_id": "S_NGOALS",
+    "outcomes": [
+      {
+        "key": "5-6",
+        "desc": "5-6",
+        "odds": 5.1
+      },
+      {
+        "key": "3-4",
+        "desc": "3-4",
+        "odds": 2.36
+      },
+      {
+        "key": "3-6",
+        "desc": "3-6",
+        "odds": 1.63
+      },
+      {
+        "key": "3-5",
+        "desc": "3-5",
+        "odds": 1.83
+      },
+      {
+        "key": "1-2",
+        "desc": "1-2",
+        "odds": 2.58
+      },
+      {
+        "key": "1-4",
+        "desc": "1-4",
+        "odds": 1.24
+      },
+      {
+        "key": "1-3",
+        "desc": "1-3",
+        "odds": 1.62
+      },
+      {
+        "key": "1-5",
+        "desc": "1-5",
+        "odds": 1.08
+      },
+      {
+        "key": "4-5",
+        "desc": "4-5 ",
+        "odds": 3.15
+      },
+      {
+        "key": "4-6",
+        "desc": "4-6",
+        "odds": 2.61
+      },
+      {
+        "key": "2-3",
+        "desc": "2-3 ",
+        "odds": 2.15
+      },
+      {
+        "key": "2-5",
+        "desc": "2-5",
+        "odds": 1.29
+      },
+      {
+        "key": "2-4",
+        "desc": "2-4",
+        "odds": 1.54
+      },
+      {
+        "key": "2-6",
+        "desc": "2-6",
+        "odds": 1.19
+      }
+    ]
+  },
+  {
+    "market_name": "1X2 Or Goal/No Goal Or Over/Under",
+    "specifier": "2.5",
+    "market_id": "S_3CM",
+    "outcomes": [
+      {
+        "key": "2GGOV",
+        "desc": "2 Or GG Or Over",
+        "odds": 1.08
+      },
+      {
+        "key": "1NGUN",
+        "desc": "1 Or NG Or Under",
+        "odds": 1.11
+      },
+      {
+        "key": "2NGUN",
+        "desc": "2 Or NG or Under",
+        "odds": 1.35
+      }
+    ]
+  },
+  {
+    "market_name": "Multi C.Score(2)",
+    "specifier": "",
+    "market_id": "S_MCS4",
+    "outcomes": [
+      {
+        "key": "44O",
+        "desc": "4-4 / other",
+        "odds": 12.75
+      },
+      {
+        "key": "22233233",
+        "desc": "2-2 / 2-3 / 3-2 / 3-3",
+        "odds": 5.4
+      },
+      {
+        "key": "04142434",
+        "desc": "0-4 / 1-4 / 2-4 / 3-4",
+        "odds": 21.0
+      },
+      {
+        "key": "20213031",
+        "desc": "2-0 / 2-1 / 3-0 / 3-1",
+        "odds": 3.2
+      },
+      {
+        "key": "00110110",
+        "desc": "0-0 / 1-1 / 0-1 / 1-0",
+        "odds": 2.91
+      },
+      {
+        "key": "40414243",
+        "desc": "4-0 / 4-1 / 4-2 / 4-3",
+        "odds": 9.9
+      },
+      {
+        "key": "02120313",
+        "desc": "0-2 / 1-2 / 0-3 / 1-3",
+        "odds": 6.2
+      }
+    ]
+  },
+  {
+    "market_name": "1X2 & Multi Goal 1-3",
+    "specifier": "",
+    "market_id": "S_1X2MULTI1-3",
+    "outcomes": [
+      {
+        "key": "X",
+        "desc": "X",
+        "odds": 8.0
+      },
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 3.01
+      },
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 5.4
+      }
+    ]
+  },
+  {
+    "market_name": "Odd/Even Home",
+    "specifier": "",
+    "market_id": "S_OEHOME",
+    "outcomes": [
+      {
+        "key": "EV",
+        "desc": "Even",
+        "odds": 1.85
+      },
+      {
+        "key": "OD",
+        "desc": "Odd",
+        "odds": 1.93
+      }
+    ]
+  },
+  {
+    "market_name": "Home Win to Nil",
+    "specifier": "",
+    "market_id": "S_HOMEWINNIL",
+    "outcomes": [
+      {
+        "key": "N",
+        "desc": "No",
+        "odds": 1.19
+      },
+      {
+        "key": "Y",
+        "desc": "Yes",
+        "odds": 3.9
+      }
+    ]
+  },
+  {
+    "market_name": "Away Win Both Halves",
+    "specifier": "",
+    "market_id": "S_AWAYWINBOTH",
+    "outcomes": [
+      {
+        "key": "Y",
+        "desc": "Yes",
+        "odds": 12.75
+      }
+    ]
+  },
+  {
+    "market_name": "DC & Multi Goal 2-4",
+    "specifier": "",
+    "market_id": "S_DCMULTI2-4",
+    "outcomes": [
+      {
+        "key": "1X",
+        "desc": "1X",
+        "odds": 1.89
+      },
+      {
+        "key": "12",
+        "desc": "12",
+        "odds": 2.04
+      },
+      {
+        "key": "X2",
+        "desc": "X2",
+        "odds": 2.82
+      }
+    ]
+  },
+  {
+    "market_name": "1st Half - Draw No Bet",
+    "specifier": "",
+    "market_id": "S_DNB1T",
+    "outcomes": [
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 2.45
+      },
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 1.47
+      }
+    ]
+  },
+  {
+    "market_name": "2nd Half - Correct Score",
+    "specifier": "",
+    "market_id": "S_CS2T",
+    "outcomes": [
+      {
+        "key": "0:1",
+        "desc": "0:1",
+        "odds": 6.6
+      },
+      {
+        "key": "0:2",
+        "desc": "0:2",
+        "odds": 16.0
+      },
+      {
+        "key": "0:0",
+        "desc": "0:0",
+        "odds": 4.8
+      },
+      {
+        "key": "OTH",
+        "desc": "Any Other Score",
+        "odds": 6.4
+      },
+      {
+        "key": "2:0",
+        "desc": "2:0",
+        "odds": 8.5
+      },
+      {
+        "key": "2:1",
+        "desc": "2:1",
+        "odds": 10.5
+      },
+      {
+        "key": "2:2",
+        "desc": "2:2",
+        "odds": 23.0
+      },
+      {
+        "key": "1:0",
+        "desc": "1:0",
+        "odds": 4.55
+      },
+      {
+        "key": "1:1",
+        "desc": "1:1",
+        "odds": 6.0
+      },
+      {
+        "key": "1:2",
+        "desc": "1:2",
+        "odds": 15.0
+      }
+    ]
+  },
+  {
+    "market_name": "Draw No Bet",
+    "specifier": "",
+    "market_id": "S_DNB",
+    "outcomes": [
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 1.42
+      },
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 2.82
+      }
+    ]
+  },
+  {
+    "market_name": "Highest Scoring Half Away Team",
+    "specifier": "",
+    "market_id": "S_AWAYHIGHHALF",
+    "outcomes": [
+      {
+        "key": "E",
+        "desc": "Tie",
+        "odds": 2.23
+      },
+      {
+        "key": "2",
+        "desc": "2nd",
+        "odds": 2.57
+      },
+      {
+        "key": "1",
+        "desc": "1st",
+        "odds": 3.5
+      }
+    ]
+  },
+  {
+    "market_name": "Home To Score",
+    "specifier": "",
+    "market_id": "S_HTS",
+    "outcomes": [
+      {
+        "key": "Y",
+        "desc": "Yes",
+        "odds": 1.11
+      },
+      {
+        "key": "N",
+        "desc": "No",
+        "odds": 5.6
+      }
+    ]
+  },
+  {
+    "market_name": "DC & Multi Goal 1-2",
+    "specifier": "",
+    "market_id": "S_DCMULTI1-2",
+    "outcomes": [
+      {
+        "key": "X2",
+        "desc": "X2",
+        "odds": 4.4
+      },
+      {
+        "key": "12",
+        "desc": "12",
+        "odds": 3.7
+      },
+      {
+        "key": "1X",
+        "desc": "1X",
+        "odds": 3.25
+      }
+    ]
+  },
+  {
+    "market_name": "1X2",
+    "specifier": "",
+    "market_id": "S_1X2",
+    "outcomes": [
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 1.88
+      },
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 3.8
+      },
+      {
+        "key": "X",
+        "desc": "X",
+        "odds": 3.9
+      }
+    ]
+  },
+  {
+    "market_name": "2nd Half - Double Chance & Over/Under",
+    "specifier": "1.5",
+    "market_id": "S_2TDCOU",
+    "outcomes": [
+      {
+        "key": "1XO",
+        "desc": "1X & Over",
+        "odds": 2.2
+      },
+      {
+        "key": "1XU",
+        "desc": "1X & Under",
+        "odds": 2.49
+      },
+      {
+        "key": "12O",
+        "desc": "12 & Over",
+        "odds": 2.43
+      },
+      {
+        "key": "X2U",
+        "desc": "X2 & Under",
+        "odds": 2.99
+      },
+      {
+        "key": "X2O",
+        "desc": "X2 & Over",
+        "odds": 3.2
+      }
+    ]
+  },
+  {
+    "market_name": "Total Goals (Exact)",
+    "specifier": "",
+    "market_id": "S_EXACTGOAL",
+    "outcomes": [
+      {
+        "key": "5",
+        "desc": "5",
+        "odds": 7.2
+      },
+      {
+        "key": "6",
+        "desc": "6",
+        "odds": 11.5
+      },
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 5.9
+      },
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 4.15
+      },
+      {
+        "key": "3",
+        "desc": "3",
+        "odds": 4.1
+      },
+      {
+        "key": "4",
+        "desc": "4",
+        "odds": 5.0
+      }
+    ]
+  },
+  {
+    "market_name": "Away Win to Nil 2HT",
+    "specifier": "",
+    "market_id": "S_AWAY02T",
+    "outcomes": [
+      {
+        "key": "Y",
+        "desc": "Yes",
+        "odds": 5.0
+      },
+      {
+        "key": "N",
+        "desc": "No",
+        "odds": 1.11
+      }
+    ]
+  },
+  {
+    "market_name": "First Goal & 1X2",
+    "specifier": "",
+    "market_id": "S_MATCHOVERFLOW",
+    "outcomes": [
+      {
+        "key": "NOGOAL",
+        "desc": "None Goal (0-0)",
+        "odds": 14.0
+      },
+      {
+        "key": "2-1STGOALX",
+        "desc": "2-1st Goal & X",
+        "odds": 8.2
+      },
+      {
+        "key": "2-1STGOAL2",
+        "desc": "2-1st Goal & 2",
+        "odds": 4.2
+      },
+      {
+        "key": "2-1STGOAL1",
+        "desc": "2-1st Goal & 1",
+        "odds": 8.9
+      },
+      {
+        "key": "1-1STGOALX",
+        "desc": "1-1st Goal & X",
+        "odds": 8.2
+      },
+      {
+        "key": "1-1STGOAL2",
+        "desc": "1-1st Goal & 2",
+        "odds": 14.75
+      },
+      {
+        "key": "1-1STGOAL1",
+        "desc": "1-1st Goal & 1",
+        "odds": 2.05
+      }
+    ]
+  },
+  {
+    "market_name": "Away Win to 0 1st Half",
+    "specifier": "",
+    "market_id": "S_AWAY0HT",
+    "outcomes": [
+      {
+        "key": "Y",
+        "desc": "Yes",
+        "odds": 4.75
+      },
+      {
+        "key": "N",
+        "desc": "No",
+        "odds": 1.13
+      }
+    ]
+  },
+  {
+    "market_name": "2nd Half - Goal/No Goal",
+    "specifier": "",
+    "market_id": "S_GGNG2T",
+    "outcomes": [
+      {
+        "key": "N",
+        "desc": "NG",
+        "odds": 1.42
+      },
+      {
+        "key": "Y",
+        "desc": "GG",
+        "odds": 2.67
+      }
+    ]
+  },
+  {
+    "market_name": "DC & Multi Goal 2-5",
+    "specifier": "",
+    "market_id": "S_DCMULTI2-5",
+    "outcomes": [
+      {
+        "key": "X2",
+        "desc": "X2",
+        "odds": 2.53
+      },
+      {
+        "key": "12",
+        "desc": "12",
+        "odds": 1.62
+      },
+      {
+        "key": "1X",
+        "desc": "1X",
+        "odds": 1.63
+      }
+    ]
+  },
+  {
+    "market_name": "2nd Half - Total Goals",
+    "specifier": "",
+    "market_id": "S_GOALS2T",
+    "outcomes": [
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 3.4
+      },
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 3.0
+      },
+      {
+        "key": "3",
+        "desc": "3",
+        "odds": 5.4
+      }
+    ]
+  },
+  {
+    "market_name": "1St Own Goal",
+    "specifier": "",
+    "market_id": "S_1OG",
+    "outcomes": [
+      {
+        "key": "Y",
+        "desc": "Yes",
+        "odds": 25.0
+      }
+    ]
+  },
+  {
+    "market_name": "Home to Score 3 in a Row",
+    "specifier": "",
+    "market_id": "S_SCOREH3R",
+    "outcomes": [
+      {
+        "key": "Y",
+        "desc": "Yes",
+        "odds": 4.75
+      },
+      {
+        "key": "N",
+        "desc": "No",
+        "odds": 1.12
+      }
+    ]
+  },
+  {
+    "market_name": "1X2 & Multi Goal 3-5",
+    "specifier": "",
+    "market_id": "S_1X2MULTI3-5",
+    "outcomes": [
+      {
+        "key": "X",
+        "desc": "X",
+        "odds": 12.75
+      },
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 2.96
+      },
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 6.0
+      }
+    ]
+  },
+  {
+    "market_name": "1X2 - 20 Minutes",
+    "specifier": "",
+    "market_id": "S_1X21ST20MIN",
+    "outcomes": [
+      {
+        "key": "X",
+        "desc": "X",
+        "odds": 1.43
+      },
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 3.8
+      },
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 5.6
+      }
+    ]
+  },
+  {
+    "market_name": "1st Half - Goal / No Goal",
+    "specifier": "",
+    "market_id": "S_GGNG1T",
+    "outcomes": [
+      {
+        "key": "N",
+        "desc": "NG",
+        "odds": 1.25
+      },
+      {
+        "key": "Y",
+        "desc": "GG",
+        "odds": 3.6
+      }
+    ]
+  },
+  {
+    "market_name": "Home To Score 2 in a Row",
+    "specifier": "",
+    "market_id": "S_HOMES2R",
+    "outcomes": [
+      {
+        "key": "N",
+        "desc": "No",
+        "odds": 1.69
+      },
+      {
+        "key": "Y",
+        "desc": "Yes",
+        "odds": 1.97
+      }
+    ]
+  },
+  {
+    "market_name": "Home No Bet",
+    "specifier": "",
+    "market_id": "S_HOMENOBET",
+    "outcomes": [
+      {
+        "key": "X",
+        "desc": "X",
+        "odds": 1.89
+      },
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 1.84
+      }
+    ]
+  },
+  {
+    "market_name": "Home Score Both Halves",
+    "specifier": "",
+    "market_id": "S_HOMESCOREBOTH",
+    "outcomes": [
+      {
+        "key": "Y",
+        "desc": "Yes",
+        "odds": 2.51
+      },
+      {
+        "key": "N",
+        "desc": "No",
+        "odds": 1.47
+      }
+    ]
+  },
+  {
+    "market_name": "DC & Multi Goal 1-4",
+    "specifier": "",
+    "market_id": "S_DCMULTI1-4",
+    "outcomes": [
+      {
+        "key": "X2",
+        "desc": "X2",
+        "odds": 2.4
+      },
+      {
+        "key": "1X",
+        "desc": "1X",
+        "odds": 1.6
+      },
+      {
+        "key": "12",
+        "desc": "12",
+        "odds": 1.64
+      }
+    ]
+  },
+  {
+    "market_name": "1X2 & Multi Goal 4-5",
+    "specifier": "",
+    "market_id": "S_1X2MULTI4-5",
+    "outcomes": [
+      {
+        "key": "X",
+        "desc": "X",
+        "odds": 12.75
+      },
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 11.75
+      },
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 5.4
+      }
+    ]
+  },
+  {
+    "market_name": "A Team Score 2 in a Row",
+    "specifier": "",
+    "market_id": "S_SCORE2R",
+    "outcomes": [
+      {
+        "key": "Y",
+        "desc": "Yes",
+        "odds": 1.47
+      },
+      {
+        "key": "N",
+        "desc": "No",
+        "odds": 2.39
+      }
+    ]
+  },
+  {
+    "market_name": "1X2 Or Goal/No Goal",
+    "specifier": "",
+    "market_id": "S_CHANCEMIX",
+    "outcomes": [
+      {
+        "key": "1orGG",
+        "desc": "1 Or GG",
+        "odds": 1.11
+      },
+      {
+        "key": "XorGG",
+        "desc": "X Or GG",
+        "odds": 1.4
+      },
+      {
+        "key": "2orGG",
+        "desc": "2 Or GG",
+        "odds": 1.29
+      },
+      {
+        "key": "XorNG",
+        "desc": "X Or NG",
+        "odds": 1.64
+      },
+      {
+        "key": "2orNG",
+        "desc": "2 Or NG",
+        "odds": 1.78
+      },
+      {
+        "key": "1orNG",
+        "desc": "1 Or NG",
+        "odds": 1.41
+      }
+    ]
+  },
+  {
+    "market_name": "2nd Half - 1X2",
+    "specifier": "",
+    "market_id": "S_1X22T",
+    "outcomes": [
+      {
+        "key": "X",
+        "desc": "X",
+        "odds": 2.66
+      },
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 3.7
+      },
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 2.15
+      }
+    ]
+  },
+  {
+    "market_name": "Clean Sheet Away",
+    "specifier": "",
+    "market_id": "S_CLEANSA",
+    "outcomes": [
+      {
+        "key": "N",
+        "desc": "No",
+        "odds": 1.11
+      },
+      {
+        "key": "Y",
+        "desc": "Yes",
+        "odds": 5.6
+      }
+    ]
+  },
+  {
+    "market_name": "Away to Score 2 in a Row",
+    "specifier": "",
+    "market_id": "S_SCOREA2R",
+    "outcomes": [
+      {
+        "key": "Y",
+        "desc": "Yes",
+        "odds": 3.5
+      },
+      {
+        "key": "N",
+        "desc": "No",
+        "odds": 1.23
+      }
+    ]
+  },
+  {
+    "market_name": "Score 30 Minutes",
+    "specifier": "",
+    "market_id": "S_S30MIN",
+    "outcomes": [
+      {
+        "key": "YS30M",
+        "desc": "Yes",
+        "odds": 1.54
+      },
+      {
+        "key": "NS30M",
+        "desc": "No",
+        "odds": 2.08
+      }
+    ]
+  },
+  {
+    "market_name": "1st Half - Home/Away Over/Under",
+    "specifier": "0.5",
+    "market_id": "S_HA1HOU",
+    "outcomes": [
+      {
+        "key": "AU",
+        "desc": "Away Under",
+        "odds": 1.63
+      },
+      {
+        "key": "AO",
+        "desc": "Away Over",
+        "odds": 2.14
+      },
+      {
+        "key": "HO",
+        "desc": "Home Over",
+        "odds": 1.65
+      },
+      {
+        "key": "HU",
+        "desc": "Home Under",
+        "odds": 2.11
+      }
+    ]
+  },
+  {
+    "market_name": "1st Half - Home/Away Over/Under",
+    "specifier": "1.5",
+    "market_id": "S_HA1HOU",
+    "outcomes": [
+      {
+        "key": "HO",
+        "desc": "Home Over",
+        "odds": 4.5
+      },
+      {
+        "key": "HU",
+        "desc": "Home Under",
+        "odds": 1.16
+      },
+      {
+        "key": "AO",
+        "desc": "Away Over",
+        "odds": 7.8
+      },
+      {
+        "key": "AU",
+        "desc": "Away Under",
+        "odds": 1.04
+      }
+    ]
+  },
+  {
+    "market_name": "1X2 & Multi Goal 2-3",
+    "specifier": "",
+    "market_id": "S_1X2MULTI2-3",
+    "outcomes": [
+      {
+        "key": "X",
+        "desc": "X",
+        "odds": 8.0
+      },
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 7.7
+      },
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 4.05
+      }
+    ]
+  },
+  {
+    "market_name": "1X2 & Multi Goal 1-5",
+    "specifier": "",
+    "market_id": "S_1X2MULTI1-5",
+    "outcomes": [
+      {
+        "key": "X",
+        "desc": "X",
+        "odds": 5.0
+      },
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 3.8
+      },
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 1.94
+      }
+    ]
+  },
+  {
+    "market_name": "1X2 & Multi Goal 2-5",
+    "specifier": "",
+    "market_id": "S_1X2MULTI2-5",
+    "outcomes": [
+      {
+        "key": "X",
+        "desc": "X",
+        "odds": 5.0
+      },
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 4.95
+      },
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 2.39
+      }
+    ]
+  },
+  {
+    "market_name": "Goal/No Goal HT / Goal/No Goal 2HT",
+    "specifier": "",
+    "market_id": "S_GNGFSH",
+    "outcomes": [
+      {
+        "key": "GGANDGG",
+        "desc": "GG/GG",
+        "odds": 9.0
+      },
+      {
+        "key": "NGANDGG",
+        "desc": "NG/GG",
+        "odds": 3.4
+      },
+      {
+        "key": "GGANDNG",
+        "desc": "GG/NG",
+        "odds": 5.1
+      },
+      {
+        "key": "NGANDNG",
+        "desc": "NG/NG",
+        "odds": 1.83
+      }
+    ]
+  },
+  {
+    "market_name": "2nd Half - Multi Goal",
+    "specifier": "",
+    "market_id": "S_MGOAL2T",
+    "outcomes": [
+      {
+        "key": "13",
+        "desc": "1-3",
+        "odds": 1.22
+      },
+      {
+        "key": "12",
+        "desc": "1-2",
+        "odds": 1.56
+      },
+      {
+        "key": "23",
+        "desc": "2-3",
+        "odds": 2.07
+      }
+    ]
+  },
+  {
+    "market_name": "1X2 - 5 Minutes",
+    "specifier": "",
+    "market_id": "S_1X21ST5MIN",
+    "outcomes": [
+      {
+        "key": "X",
+        "desc": "X",
+        "odds": 1.03
+      },
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 11.0
+      },
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 15.0
+      }
+    ]
+  },
+  {
+    "market_name": "Multi Goal Away",
+    "specifier": "",
+    "market_id": "S_TMGAW",
+    "outcomes": [
+      {
+        "key": "AW23",
+        "desc": "2-3 Goals",
+        "odds": 2.75
+      },
+      {
+        "key": "AW13",
+        "desc": "1-3 Goals",
+        "odds": 1.33
+      },
+      {
+        "key": "AW12",
+        "desc": "1-2 Goals",
+        "odds": 1.55
+      }
+    ]
+  },
+  {
+    "market_name": "2nd Half - Draw No Bet",
+    "specifier": "",
+    "market_id": "S_DNB2T",
+    "outcomes": [
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 2.52
+      },
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 1.44
+      }
+    ]
+  },
+  {
+    "market_name": "Away Win to Nil",
+    "specifier": "",
+    "market_id": "S_AWAYWINNIL",
+    "outcomes": [
+      {
+        "key": "N",
+        "desc": "No",
+        "odds": 1.04
+      },
+      {
+        "key": "Y",
+        "desc": "Yes",
+        "odds": 7.8
+      }
+    ]
+  },
+  {
+    "market_name": "Over / Under",
+    "specifier": "3.5",
+    "market_id": "S_OU",
+    "outcomes": [
+      {
+        "key": "U",
+        "desc": "Under",
+        "odds": 1.55
+      },
+      {
+        "key": "O",
+        "desc": "Over",
+        "odds": 2.36
+      }
+    ]
+  },
+  {
+    "market_name": "Over / Under",
+    "specifier": "2.5",
+    "market_id": "S_OU",
+    "outcomes": [
+      {
+        "key": "U",
+        "desc": "Under",
+        "odds": 2.37
+      },
+      {
+        "key": "O",
+        "desc": "Over",
+        "odds": 1.57
+      }
+    ]
+  },
+  {
+    "market_name": "Over / Under",
+    "specifier": "1.5",
+    "market_id": "S_OU",
+    "outcomes": [
+      {
+        "key": "U",
+        "desc": "Under",
+        "odds": 4.65
+      },
+      {
+        "key": "O",
+        "desc": "Over",
+        "odds": 1.17
+      }
+    ]
+  },
+  {
+    "market_name": "Over / Under",
+    "specifier": "0.5",
+    "market_id": "S_OU",
+    "outcomes": [
+      {
+        "key": "O",
+        "desc": "Over",
+        "odds": 1.01
+      },
+      {
+        "key": "U",
+        "desc": "Under",
+        "odds": 14.0
+      }
+    ]
+  },
+  {
+    "market_name": "1X2 - 30 Minutes",
+    "specifier": "",
+    "market_id": "S_1X21ST30MIN",
+    "outcomes": [
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 2.88
+      },
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 4.5
+      },
+      {
+        "key": "X",
+        "desc": "X",
+        "odds": 1.77
+      }
+    ]
+  },
+  {
+    "market_name": "1st Half - Odd/Even",
+    "specifier": "",
+    "market_id": "S_OE1T",
+    "outcomes": [
+      {
+        "key": "EV",
+        "desc": "Even",
+        "odds": 1.71
+      },
+      {
+        "key": "OD",
+        "desc": "Odd",
+        "odds": 1.98
+      }
+    ]
+  },
+  {
+    "market_name": "1X2 & Multi Goal 1-2",
+    "specifier": "",
+    "market_id": "S_1X2MULTI1-2",
+    "outcomes": [
+      {
+        "key": "X",
+        "desc": "X",
+        "odds": 8.0
+      },
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 9.8
+      },
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 5.5
+      }
+    ]
+  },
+  {
+    "market_name": "Highest Scoring Half Home Team",
+    "specifier": "",
+    "market_id": "S_HOMEHIGHHALF",
+    "outcomes": [
+      {
+        "key": "1",
+        "desc": "1st",
+        "odds": 3.15
+      },
+      {
+        "key": "2",
+        "desc": "2nd",
+        "odds": 2.23
+      },
+      {
+        "key": "E",
+        "desc": "Tie",
+        "odds": 2.79
+      }
+    ]
+  },
+  {
+    "market_name": "1X2 - 10 Minutes",
+    "specifier": "",
+    "market_id": "S_1X21ST10MIN",
+    "outcomes": [
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 6.5
+      },
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 9.3
+      },
+      {
+        "key": "X",
+        "desc": "X",
+        "odds": 1.14
+      }
+    ]
+  },
+  {
+    "market_name": "Home Win Both Halves",
+    "specifier": "",
+    "market_id": "S_HOMEWINBOTH",
+    "outcomes": [
+      {
+        "key": "N",
+        "desc": "No",
+        "odds": 1.08
+      },
+      {
+        "key": "Y",
+        "desc": "Yes",
+        "odds": 5.1
+      }
+    ]
+  },
+  {
+    "market_name": "Home Win Either Half",
+    "specifier": "",
+    "market_id": "S_HOMEWINHALF",
+    "outcomes": [
+      {
+        "key": "N",
+        "desc": "No",
+        "odds": 2.56
+      },
+      {
+        "key": "Y",
+        "desc": "Yes",
+        "odds": 1.43
+      }
+    ]
+  },
+  {
+    "market_name": "Last Team to Score",
+    "specifier": "",
+    "market_id": "S_LASTSCORE",
+    "outcomes": [
+      {
+        "key": "N",
+        "desc": "No Goals",
+        "odds": 14.0
+      },
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 1.63
+      },
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 2.4
+      }
+    ]
+  },
+  {
+    "market_name": "Home Score 2nd Half",
+    "specifier": "",
+    "market_id": "S_1SCORE2T",
+    "outcomes": [
+      {
+        "key": "Y",
+        "desc": "Yes",
+        "odds": 1.43
+      },
+      {
+        "key": "N",
+        "desc": "No",
+        "odds": 2.63
+      }
+    ]
+  },
+  {
+    "market_name": "Own Goal",
+    "specifier": "",
+    "market_id": "S_OG",
+    "outcomes": [
+      {
+        "key": "Y",
+        "desc": "Yes",
+        "odds": 10.0
+      }
+    ]
+  },
+  {
+    "market_name": "Home Score 1st Half",
+    "specifier": "",
+    "market_id": "S_1SCOREHT",
+    "outcomes": [
+      {
+        "key": "N",
+        "desc": "No",
+        "odds": 2.11
+      },
+      {
+        "key": "Y",
+        "desc": "Yes",
+        "odds": 1.65
+      }
+    ]
+  },
+  {
+    "market_name": "1X2 - 60 Minutes",
+    "specifier": "",
+    "market_id": "S_1X21ST60MIN",
+    "outcomes": [
+      {
+        "key": "2",
+        "desc": "2",
+        "odds": 3.65
+      },
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 2.06
+      },
+      {
+        "key": "X",
+        "desc": "X",
+        "odds": 2.78
+      }
+    ]
+  },
+  {
+    "market_name": "Home Win to 0 1st Half",
+    "specifier": "",
+    "market_id": "S_HOME0HT",
+    "outcomes": [
+      {
+        "key": "N",
+        "desc": "No",
+        "odds": 1.33
+      },
+      {
+        "key": "Y",
+        "desc": "Yes",
+        "odds": 2.85
+      }
+    ]
+  },
+  {
+    "market_name": "Home Win to Nil 2HT",
+    "specifier": "",
+    "market_id": "S_HOME02T",
+    "outcomes": [
+      {
+        "key": "Y",
+        "desc": "Yes",
+        "odds": 2.89
+      },
+      {
+        "key": "N",
+        "desc": "No",
+        "odds": 1.33
+      }
+    ]
+  },
+  {
+    "market_name": "Away Score Both Halves",
+    "specifier": "",
+    "market_id": "S_AWAYSCOREBOTH",
+    "outcomes": [
+      {
+        "key": "Y",
+        "desc": "Yes",
+        "odds": 4.05
+      },
+      {
+        "key": "N",
+        "desc": "No",
+        "odds": 1.19
+      }
+    ]
+  },
+  {
+    "market_name": "Away No Bet",
+    "specifier": "",
+    "market_id": "S_AWAYNOBET",
+    "outcomes": [
+      {
+        "key": "X",
+        "desc": "X",
+        "odds": 2.87
+      },
+      {
+        "key": "1",
+        "desc": "1",
+        "odds": 1.39
+      }
+    ]
+  },
+  {
+    "market_name": "Away to Score",
+    "specifier": "",
+    "market_id": "S_AWAYSCORE",
+    "outcomes": [
+      {
+        "key": "Y",
+        "desc": "Yes",
+        "odds": 1.29
+      },
+      {
+        "key": "N",
+        "desc": "No",
+        "odds": 3.25
+      }
+    ]
+  }
+]

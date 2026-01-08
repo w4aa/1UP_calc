@@ -1,0 +1,126 @@
+# Sportybet Tournaments Configuration
+# Edit this file to configure which tournaments to scrape
+# Set enabled: false to skip a tournament
+# pawa_category_id + pawa_competition_id are used to match with Betpawa
+# Optional: add `bet9ja_group_id` to enable mapping to Bet9ja GROUPID for
+# fetching Bet9ja events (e.g., 170880 for Premier League).
+
+tournaments:
+  # ============================================
+  # International Football
+  # ============================================
+  - id: "sr:tournament:270"
+    name: "Africa Cup of Nations"
+    sport: "football"
+    sport_id: "sr:sport:1"
+    category_id: "sr:category:4"
+    pawa_category_id: "2"           # Football
+    pawa_competition_id: "15598"    # AFCON
+    bet9ja_group_id: "1966396"
+    enabled: true
+
+  - id: "sr:tournament:295"
+    name: "World Cup Qualification Africa"
+    sport: "football"
+    sport_id: "sr:sport:1"
+    category_id: "sr:category:4"
+    pawa_category_id: "2"
+    pawa_competition_id: null       # TODO: Find Betpawa ID
+    enabled: false
+
+  # ============================================
+  # England
+  # ============================================
+  - id: "sr:tournament:17"
+    name: "Premier League"
+    sport: "football"
+    sport_id: "sr:sport:1"
+    category_id: "sr:category:1"
+    pawa_category_id: "2"
+    pawa_competition_id: 11965
+    bet9ja_group_id: 170880
+    enabled: true
+
+  - id: "sr:tournament:18"
+    name: "Championship"
+    sport: "football"
+    sport_id: "sr:sport:1"
+    category_id: "sr:category:1"
+    pawa_category_id: "2"
+    pawa_competition_id: null
+    enabled: false
+
+  # ============================================
+  # Spain
+  # ============================================
+  - id: "sr:tournament:8"
+    name: "La Liga"
+    sport: "football"
+    sport_id: "sr:sport:1"
+    category_id: "sr:category:32"
+    pawa_category_id: "2"
+    pawa_competition_id: 12039
+    bet9ja_group_id: 180928
+    enabled: true
+
+  # ============================================
+  # Italy
+  # ============================================
+  - id: "sr:tournament:23"
+    name: "Serie A"
+    sport: "football"
+    sport_id: "sr:sport:1"
+    category_id: "sr:category:31"
+    pawa_category_id: "2"
+    pawa_competition_id: 12097
+    bet9ja_group_id: 167856
+    enabled: true
+
+  # ============================================
+  # Germany
+  # ============================================
+  - id: "sr:tournament:35"
+    name: "Bundesliga"
+    sport: "football"
+    sport_id: "sr:sport:1"
+    category_id: "sr:category:30"
+    pawa_category_id: "2"
+    pawa_competition_id: 12110
+    bet9ja_group_id: 180923
+    enabled: true
+
+  # ============================================
+  # France
+  # ============================================
+  - id: "sr:tournament:34"
+    name: "Ligue 1"
+    sport: "football"
+    sport_id: "sr:sport:1"
+    category_id: "sr:category:7"
+    pawa_category_id: "2"
+    pawa_competition_id: 12127      
+    bet9ja_group_id: 950503
+    enabled: true
+
+  # ============================================
+  # UEFA Competitions
+  # ============================================
+  - id: "sr:tournament:7"
+    name: "UEFA Champions League"
+    sport: "football"
+    sport_id: "sr:sport:1"
+    category_id: "sr:category:393"
+    pawa_category_id: "2"
+    pawa_competition_id: 12541      
+    bet9ja_group_id: 5468459
+    enabled: true
+
+  - id: "sr:tournament:679"
+    name: "UEFA Europa League"
+    sport: "football"
+    sport_id: "sr:sport:1"
+    category_id: "sr:category:393"
+    pawa_category_id: "2"
+    pawa_competition_id: 12546      
+    bet9ja_group_id: 5472998
+    enabled: true

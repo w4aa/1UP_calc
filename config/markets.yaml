@@ -1,0 +1,184 @@
+# Unified Markets Configuration
+# Maps Sportybet market IDs to Betpawa market IDs
+# Set enabled: false to skip a market type
+#
+# Pawa handicap scaling: handicap / 4 = goal line
+# e.g., pawa handicap=10 means 2.5 goals (10/4 = 2.5)
+
+markets:
+  # ============================================
+  # 1X2 Markets
+  # ============================================
+  - sporty_id: "1"
+    pawa_id: "3743"
+    name: "1X2"
+    description: "Match result Full Time (Home/Draw/Away)"
+    has_specifier: false
+    enabled: true
+
+  - sporty_id: "60200"
+    pawa_id: null
+    name: "1X2 - 1UP"
+    description: "1X2 with 1UP boost (Sportybet only)"
+    has_specifier: false
+    enabled: true
+
+  - sporty_id: "60100"
+    pawa_id: null
+    name: "1X2 - 2UP"
+    description: "1X2 with 2UP boost (Sportybet only)"
+    has_specifier: false
+    enabled: true
+
+  # ============================================
+  # Over/Under Markets (Total Goals)
+  # ============================================
+  - sporty_id: "18"
+    pawa_id: "5000"
+    name: "Over/Under"
+    description: "Total goals over/under (all lines)"
+    has_specifier: true
+    specifier_key: "total"
+    pawa_handicap_scale: 4  # pawa_handicap / 4 = goal_line
+    enabled: true
+
+  - sporty_id: "19"
+    pawa_id: "5006"
+    name: "Home O/U"
+    description: "Home team goals over/under (all lines)"
+    has_specifier: true
+    specifier_key: "total"
+    pawa_handicap_scale: 4
+    enabled: true
+
+  - sporty_id: "20"
+    pawa_id: "5003"
+    name: "Away O/U"
+    description: "Away team goals over/under (all lines)"
+    has_specifier: true
+    specifier_key: "total"
+    pawa_handicap_scale: 4
+    enabled: true
+
+  # ============================================
+  # Both Teams To Score
+  # ============================================
+  - sporty_id: "29"
+    pawa_id: "3795"
+    name: "BTTS"
+    description: "Both Teams To Score (GG/NG)"
+    has_specifier: false
+    enabled: true
+
+  # ============================================
+  # Handicap Markets
+  # ============================================
+  - sporty_id: "16"
+    pawa_id: "3774"
+    name: "Asian Handicap"
+    description: "Asian Handicap (all lines)"
+    has_specifier: true
+    specifier_key: "hcp"
+    pawa_handicap_scale: 4
+    enabled: true
+
+  # ============================================
+  # Double Chance
+  # ============================================
+  - sporty_id: "10"
+    pawa_id: "4693"
+    name: "Double Chance"
+    description: "Double Chance (1X, 12, X2)"
+    has_specifier: false
+    enabled: false
+
+  # ============================================
+  # Half Time Markets
+  # ============================================
+  - sporty_id: "60"
+    pawa_id: "3668"
+    name: "1X2 1st Half"
+    description: "1X2 First Half result"
+    has_specifier: false
+    enabled: false
+
+  - sporty_id: "68"
+    pawa_id: "4958"
+    name: "O/U 1st Half"
+    description: "Over/Under First Half"
+    has_specifier: true
+    specifier_key: "total"
+    pawa_handicap_scale: 4
+    enabled: false
+
+  # ============================================
+  # Correct Score
+  # ============================================
+  - sporty_id: "41"
+    pawa_id: "4429"
+    name: "Correct Score"
+    description: "Correct Score Full Time"
+    has_specifier: false
+    enabled: false  # Many outcomes, disabled by default
+
+  # ============================================
+  # Draw No Bet
+  # ============================================
+  - sporty_id: "14"
+    pawa_id: "4703"
+    name: "Draw No Bet"
+    description: "Draw No Bet Full Time"
+    has_specifier: false
+    enabled: false
+
+  # ============================================
+  # Sportybet Only Markets (no Pawa equivalent)
+  # ============================================
+  - sporty_id: "8"
+    pawa_id: null
+    name: "First Team to Score"
+    description: "First Team to Score (Sportybet only)"
+    has_specifier: false
+    enabled: true
+
+  - sporty_id: "60300"
+    pawa_id: null
+    name: "Any Team Lead by 1"
+    description: "Any Team to lead by 1 Goal (Sportybet only)"
+    has_specifier: false
+    enabled: true
+
+  - sporty_id: "60301"
+    pawa_id: null
+    name: "Any Team Lead by 2"
+    description: "Any Team to lead by 2 Goals (Sportybet only)"
+    has_specifier: false
+    enabled: true
+
+  - sporty_id: "60303"
+    pawa_id: null
+    name: "Home Team Lead by 1"
+    description: "Home Team to lead by 1 Goal (Sportybet only)"
+    has_specifier: false
+    enabled: true
+
+  - sporty_id: "60304"
+    pawa_id: null
+    name: "Home Team Lead by 2"
+    description: "Home Team to lead by 2 Goals (Sportybet only)"
+    has_specifier: false
+    enabled: true
+
+  - sporty_id: "60306"
+    pawa_id: null
+    name: "Away Team Lead by 1"
+    description: "Away Team to lead by 1 Goal (Sportybet only)"
+    has_specifier: false
+    enabled: true
+
+  - sporty_id: "60307"
+    pawa_id: null
+    name: "Away Team Lead by 2"
+    description: "Away Team to lead by 2 Goals (Sportybet only)"
+    has_specifier: false
+    enabled: true
