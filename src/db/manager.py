@@ -264,12 +264,7 @@ class DatabaseManager:
                 fair_home REAL,
                 fair_away REAL,
                 fair_draw REAL,
-                
-                -- Actual Sportybet 1UP odds (for comparison)
-                actual_home REAL,
-                actual_away REAL,
-                actual_draw REAL,
-                
+
                 -- Metadata
                 calculated_at TEXT DEFAULT CURRENT_TIMESTAMP,
                 
@@ -1366,10 +1361,6 @@ class DatabaseManager:
         fair_away: float,
         fair_draw: float,
         scraping_history_id: int = None,
-        # Backwards-compatible Sportybet actuals (keeps original column)
-        actual_home: float = None,
-        actual_away: float = None,
-        actual_draw: float = None,
         # Explicit per-source actual 1UP odds
         actual_sporty_home: float = None,
         actual_sporty_draw: float = None,
@@ -1380,11 +1371,11 @@ class DatabaseManager:
     ) -> int:
         """
         Insert an engine calculation result.
-        
+
         Args:
             sportradar_id: Event ID
             engine_name: Name of the engine (e.g., 'Poisson', 'FirstGoal')
-            bookmaker: Source of input odds ('sporty' or 'pawa')
+            bookmaker: Source of input odds ('sporty', 'pawa', or 'bet9ja')
             lambda_home: Inferred home team expected goals
             lambda_away: Inferred away team expected goals
             lambda_total: Total expected goals
@@ -1394,10 +1385,13 @@ class DatabaseManager:
             fair_away: Fair odds for away 1UP
             fair_draw: Draw odds (unchanged from 1X2)
             scraping_history_id: Links to specific market snapshot
-            actual_home: Sportybet actual home 1UP odds
-            actual_away: Sportybet actual away 1UP odds
-            actual_draw: Sportybet actual draw 1UP odds
-            
+            actual_sporty_home: Sportybet actual home 1UP odds
+            actual_sporty_draw: Sportybet actual draw 1UP odds
+            actual_sporty_away: Sportybet actual away 1UP odds
+            actual_bet9ja_home: Bet9ja actual home 1UP odds
+            actual_bet9ja_draw: Bet9ja actual draw 1UP odds
+            actual_bet9ja_away: Bet9ja actual away 1UP odds
+
         Returns:
             ID of inserted calculation
         """
@@ -1408,17 +1402,15 @@ class DatabaseManager:
                 lambda_home, lambda_away, lambda_total,
                 p_home_1up, p_away_1up,
                 fair_home, fair_away, fair_draw,
-                actual_home, actual_away, actual_draw,
                 actual_sporty_home, actual_sporty_draw, actual_sporty_away,
                 actual_bet9ja_home, actual_bet9ja_draw, actual_bet9ja_away,
                 calculated_at
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
         """, (
             sportradar_id, scraping_history_id, engine_name, bookmaker,
             lambda_home, lambda_away, lambda_total,
             p_home_1up, p_away_1up,
             fair_home, fair_away, fair_draw,
-            actual_home, actual_away, actual_draw,
             actual_sporty_home, actual_sporty_draw, actual_sporty_away,
             actual_bet9ja_home, actual_bet9ja_draw, actual_bet9ja_away,
         ))
@@ -1462,26 +1454,26 @@ class DatabaseManager:
     def get_engine_accuracy_stats(self, margin: float = 0.06) -> list[dict]:
         """
         Calculate accuracy statistics for each engine at a given margin.
-        
+
         Args:
             margin: Margin to apply to fair odds for comparison
-            
+
         Returns:
             List of stats per engine/bookmaker
         """
         cursor = self.conn.cursor()
         cursor.execute("""
-            SELECT 
+            SELECT
                 engine_name,
                 bookmaker,
                 COUNT(*) as n_events,
-                AVG(ABS(fair_home * (1 - ?) - actual_home)) as mae_home,
-                AVG(ABS(fair_away * (1 - ?) - actual_away)) as mae_away,
-                AVG((ABS(fair_home * (1 - ?) - actual_home) + ABS(fair_away * (1 - ?) - actual_away)) / 2) as mae_total
+                AVG(ABS(fair_home * (1 - ?) - actual_sporty_home)) as mae_home,
+                AVG(ABS(fair_away * (1 - ?) - actual_sporty_away)) as mae_away,
+                AVG((ABS(fair_home * (1 - ?) - actual_sporty_home) + ABS(fair_away * (1 - ?) - actual_sporty_away)) / 2) as mae_total
             FROM engine_calculations
-            WHERE actual_home IS NOT NULL
+            WHERE actual_sporty_home IS NOT NULL
             GROUP BY engine_name, bookmaker
             ORDER BY mae_total ASC
         """, (margin, margin, margin, margin))
-        
+
         return [dict(row) for row in cursor.fetchall()]

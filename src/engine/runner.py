@@ -120,7 +120,6 @@ class EngineRunner:
                     sporty_actual = actual_1up.get('sporty', (None, None, None))
                     bet9ja_actual = actual_1up.get('bet9ja', (None, None, None))
 
-                    # Keep legacy `actual_home/away/draw` mapped to Sportybet for compatibility
                     results.append({
                         'sportradar_id': sportradar_id,
                         'engine_name': result['engine'],
@@ -133,9 +132,6 @@ class EngineRunner:
                         'fair_home': result['1up_home_fair'],
                         'fair_away': result['1up_away_fair'],
                         'fair_draw': result['1up_draw'],
-                        'actual_home': sporty_actual[0],
-                        'actual_away': sporty_actual[2],
-                        'actual_draw': sporty_actual[1],
                         'actual_sporty_home': sporty_actual[0],
                         'actual_sporty_draw': sporty_actual[1],
                         'actual_sporty_away': sporty_actual[2],
@@ -182,9 +178,6 @@ class EngineRunner:
                 fair_home=calc['fair_home'],
                 fair_away=calc['fair_away'],
                 fair_draw=calc['fair_draw'],
-                actual_home=calc.get('actual_home'),
-                actual_away=calc.get('actual_away'),
-                actual_draw=calc.get('actual_draw'),
                 actual_sporty_home=calc.get('actual_sporty_home'),
                 actual_sporty_draw=calc.get('actual_sporty_draw'),
                 actual_sporty_away=calc.get('actual_sporty_away'),
@@ -341,15 +334,12 @@ class EngineRunner:
                         fair_home=calc['fair_home'],
                         fair_away=calc['fair_away'],
                         fair_draw=calc['fair_draw'],
-                            actual_home=calc.get('actual_home'),
-                            actual_away=calc.get('actual_away'),
-                            actual_draw=calc.get('actual_draw'),
-                            actual_sporty_home=calc.get('actual_sporty_home'),
-                            actual_sporty_draw=calc.get('actual_sporty_draw'),
-                            actual_sporty_away=calc.get('actual_sporty_away'),
-                            actual_bet9ja_home=calc.get('actual_bet9ja_home'),
-                            actual_bet9ja_draw=calc.get('actual_bet9ja_draw'),
-                            actual_bet9ja_away=calc.get('actual_bet9ja_away'),
+                        actual_sporty_home=calc.get('actual_sporty_home'),
+                        actual_sporty_draw=calc.get('actual_sporty_draw'),
+                        actual_sporty_away=calc.get('actual_sporty_away'),
+                        actual_bet9ja_home=calc.get('actual_bet9ja_home'),
+                        actual_bet9ja_draw=calc.get('actual_bet9ja_draw'),
+                        actual_bet9ja_away=calc.get('actual_bet9ja_away'),
                     )
         
         logger.info(f"Engine calculations complete: {events_processed} events, {total_calculations} calculations")
@@ -488,15 +478,12 @@ class EngineRunner:
                         fair_home=calc['fair_home'],
                         fair_away=calc['fair_away'],
                         fair_draw=calc['fair_draw'],
-                            actual_home=calc.get('actual_home'),
-                            actual_away=calc.get('actual_away'),
-                            actual_draw=calc.get('actual_draw'),
-                            actual_sporty_home=calc.get('actual_sporty_home'),
-                            actual_sporty_draw=calc.get('actual_sporty_draw'),
-                            actual_sporty_away=calc.get('actual_sporty_away'),
-                            actual_bet9ja_home=calc.get('actual_bet9ja_home'),
-                            actual_bet9ja_draw=calc.get('actual_bet9ja_draw'),
-                            actual_bet9ja_away=calc.get('actual_bet9ja_away'),
+                        actual_sporty_home=calc.get('actual_sporty_home'),
+                        actual_sporty_draw=calc.get('actual_sporty_draw'),
+                        actual_sporty_away=calc.get('actual_sporty_away'),
+                        actual_bet9ja_home=calc.get('actual_bet9ja_home'),
+                        actual_bet9ja_draw=calc.get('actual_bet9ja_draw'),
+                        actual_bet9ja_away=calc.get('actual_bet9ja_away'),
                     )
         
         logger.info(f"Snapshot processing complete: {len(sessions)} sessions, {events_processed} events, {total_calculations} calculations")

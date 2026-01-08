@@ -201,9 +201,9 @@ class EngineAnalyzer:
                 ec.fair_home,
                 ec.fair_away,
                 ec.fair_draw,
-                ec.actual_home,
-                ec.actual_away,
-                ec.actual_draw
+                ec.actual_sporty_home,
+                ec.actual_sporty_away,
+                ec.actual_sporty_draw
             FROM engine_calculations ec
             LEFT JOIN events ev ON ec.sportradar_id = ev.sportradar_id
             WHERE 1=1
@@ -252,12 +252,12 @@ class EngineAnalyzer:
                 fair_home,
                 fair_away,
                 fair_draw,
-                actual_home,
-                actual_away,
-                actual_draw
+                actual_sporty_home,
+                actual_sporty_away,
+                actual_sporty_draw
             ) = calc
 
-            actual_fair_home, actual_fair_away = self._actual_to_fair(actual_home, actual_away)
+            actual_fair_home, actual_fair_away = self._actual_to_fair(actual_sporty_home, actual_sporty_away)
 
             # Also fetch Bet9ja actual 1UP for dual comparison
             bet9ja_1up = self._get_bet9ja_1up_odds(sportradar_id, scraping_history_id)
@@ -284,9 +284,9 @@ class EngineAnalyzer:
                 'fair_away': round(fair_away, 3) if fair_away else None,
                 'pawa_draw': round(fair_draw, 3) if fair_draw else None,
                 # Sportybet actual 1UP comparison
-                'sporty_h_1up': round(actual_home, 3) if actual_home else None,
-                'sporty_a_1up': round(actual_away, 3) if actual_away else None,
-                'draw': round(actual_draw, 3) if actual_draw else None,
+                'sporty_h_1up': round(actual_sporty_home, 3) if actual_sporty_home else None,
+                'sporty_a_1up': round(actual_sporty_away, 3) if actual_sporty_away else None,
+                'draw': round(actual_sporty_draw, 3) if actual_sporty_draw else None,
                 'sporty_fair_h': round(actual_fair_home, 3) if actual_fair_home else None,
                 'sporty_fair_a': round(actual_fair_away, 3) if actual_fair_away else None,
                 'home_fair_diff': round(fair_home - actual_fair_home, 3) if fair_home and actual_fair_home else None,
@@ -307,8 +307,8 @@ class EngineAnalyzer:
                 pawa_home, pawa_away = self._apply_margin_to_1up(p_home_1up, p_away_1up, margin)
                 result[f'pawa_{pct}_home'] = round(pawa_home, 3) if pawa_home else None
                 result[f'pawa_{pct}_away'] = round(pawa_away, 3) if pawa_away else None
-                result[f'pawa_{pct}_home_diff'] = round((pawa_home - actual_home), 3) if pawa_home and actual_home else None
-                result[f'pawa_{pct}_away_diff'] = round((pawa_away - actual_away), 3) if pawa_away and actual_away else None
+                result[f'pawa_{pct}_home_diff'] = round((pawa_home - actual_sporty_home), 3) if pawa_home and actual_sporty_home else None
+                result[f'pawa_{pct}_away_diff'] = round((pawa_away - actual_sporty_away), 3) if pawa_away and actual_sporty_away else None
 
             # Pivot market snapshots into per-row columns (market_specifier_1_odd, _2_odd, _3_odd)
             try:

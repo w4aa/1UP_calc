@@ -116,7 +116,7 @@ class EngineReportGenerator:
         """Get all engine calculations from database with event info."""
         cursor = self.db.conn.cursor()
         cursor.execute("""
-            SELECT 
+            SELECT
                 ec.id,
                 ec.sportradar_id,
                 ec.scraping_history_id,
@@ -130,9 +130,9 @@ class EngineReportGenerator:
                 ec.fair_home,
                 ec.fair_away,
                 ec.fair_draw,
-                ec.actual_home,
-                ec.actual_away,
-                ec.actual_draw,
+                ec.actual_sporty_home,
+                ec.actual_sporty_away,
+                ec.actual_sporty_draw,
                 ec.calculated_at,
                 e.home_team,
                 e.away_team,
@@ -248,11 +248,11 @@ class EngineReportGenerator:
             if i % 100 == 0:
                 print(f"  Processing {i}/{len(calculations)}...")
             
-            if not calc['actual_home'] or not calc['actual_away']:
+            if not calc['actual_sporty_home'] or not calc['actual_sporty_away']:
                 continue
-            
+
             actual_fair_home, actual_fair_away = get_actual_fair_odds(
-                calc['actual_home'], calc['actual_away']
+                calc['actual_sporty_home'], calc['actual_sporty_away']
             )
             
             if not actual_fair_home or not actual_fair_away:
