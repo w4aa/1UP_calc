@@ -70,7 +70,7 @@ class EngineRunner:
             HandicapEngine,
             BTTSEngine,
             SupremacyPoissonEngine,
-            CalibratedSupremacyPoissonEngine,
+            # CalibratedSupremacyPoissonEngine,  # Temporarily disabled
         )
         all_engines = {
             'PoissonEngine': PoissonEngine,
@@ -80,7 +80,7 @@ class EngineRunner:
             'HandicapEngine': HandicapEngine,
             'BTTSEngine': BTTSEngine,
             'SupremacyPoissonEngine': SupremacyPoissonEngine,
-            'CalibratedSupremacyPoissonEngine': CalibratedSupremacyPoissonEngine,
+            # 'CalibratedSupremacyPoissonEngine': CalibratedSupremacyPoissonEngine,  # Temporarily disabled
         }
         enabled_engine_names = self.config.get_enabled_engines()
         self.engines = [all_engines[name](**engine_params) for name in enabled_engine_names if name in all_engines]

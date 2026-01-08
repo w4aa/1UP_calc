@@ -28,7 +28,9 @@ from .handicap import HandicapEngine
 
 from .btts import BTTSEngine
 from .supremacy_poisson import SupremacyPoissonEngine
-from .calibrated_supremacy_poisson import CalibratedSupremacyPoissonEngine
+# NOTE: CalibratedSupremacyPoissonEngine temporarily disabled due to dependency on removed empirical_underdog_correction
+# TODO: Update to use new probability-level correction approach from CalibratedPoissonEngine
+# from .calibrated_supremacy_poisson import CalibratedSupremacyPoissonEngine
 
 __all__ = [
     'devig_two_way',
@@ -42,5 +44,5 @@ __all__ = [
     'HandicapEngine',
     'BTTSEngine',
     'SupremacyPoissonEngine',
-    'CalibratedSupremacyPoissonEngine',
+    # 'CalibratedSupremacyPoissonEngine',  # Temporarily disabled
 ]

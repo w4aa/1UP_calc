@@ -1,24 +1,5 @@
 
 from .base import fit_lambda_from_ou_lines
-# Utility for lambda correction (for use in hybrid engines)
-def empirical_underdog_correction(lambda_home: float, lambda_away: float) -> tuple:
-    """
-    Empirically correct lambdas for underdog bias (used in CalibratedPoissonEngine logic).
-    This rescales lambdas so their ratio is less extreme, matching market behavior.
-    """
-    ratio, home_is_underdog, away_is_underdog = calculate_lambda_ratio(lambda_home, lambda_away)
-    # Correction: shrink the ratio toward 1 by a fixed factor (empirical, e.g. 20%)
-    if ratio > 1.0:
-        shrink = 0.2  # 20% shrink toward 1
-        if home_is_underdog:
-            new_ratio = 1.0 + (ratio - 1.0) * (1 - shrink)
-            lambda_away_new = lambda_home * new_ratio
-            return lambda_home, lambda_away_new
-        elif away_is_underdog:
-            new_ratio = 1.0 + (ratio - 1.0) * (1 - shrink)
-            lambda_home_new = lambda_away * new_ratio
-            return lambda_home_new, lambda_away
-    return lambda_home, lambda_away
 """
 Calibrated Poisson Engine with Underdog Correction
 
@@ -31,6 +12,30 @@ because it doesn't account for:
 3. The asymmetric impact of lambda imbalance on 1UP outcomes
 
 Solution: Apply empirically-derived correction factors based on lambda ratio.
+
+MAJOR UPDATE - 2026-01-08
+=========================
+Based on 117-match empirical analysis (reports/analysis_20260108_212226.csv):
+
+ISSUES FIXED:
+1. Underdog overpricing (+8.8% bias) - especially extreme mismatches (+44% error)
+2. Balanced match underpricing (-5.8% bias) - unnecessary correction applied
+3. Double correction bug - lambdas corrected THEN probabilities corrected
+4. Favorite correction too weak for high imbalances
+
+CHANGES:
+- NO correction for balanced matches (ratio < 1.15)
+- More aggressive underdog correction for extreme ratios (>3.0): 0.75-0.82 vs old 0.90-0.92
+- Favorite correction now scales with ratio: 0.90-1.00 vs old flat 0.97
+- Removed lambda-level correction (empirical_underdog_correction function)
+- Correction now applied ONLY to probabilities, not lambdas
+
+EXPECTED RESULTS:
+- Underdog MAE: 0.218 -> ~0.12 (-45%)
+- Extreme ratio MAE: 0.613 -> ~0.25 (-59%)
+- Overall MAE: 0.147 -> ~0.09 (-39%)
+
+See ENGINE_ANALYSIS.md for detailed analysis and recommendations.
 """
 
 import math
@@ -66,53 +71,64 @@ def calculate_lambda_ratio(lambda_home: float, lambda_away: float) -> Tuple[floa
 def get_underdog_correction(ratio: float) -> float:
     """
     Get the probability correction factor for underdog based on lambda ratio.
-    
-    Based on empirical analysis:
-    - Balanced (1.0-1.2): ~3% overestimate -> correction 0.97
-    - Moderate (1.2-1.8): ~7% overestimate -> correction 0.93
-    - High (1.8-2.5): ~10% overestimate -> correction 0.90
-    - Extreme (>2.5): ~8% overestimate -> correction 0.92
-    
-    We use a smooth function for better interpolation.
-    
+
+    UPDATED 2026-01-08: Based on 117-match empirical analysis showing:
+    - Balanced (<1.15): NO correction needed (was causing underpricing)
+    - Slight (1.15-1.5): Minimal 0-3% correction
+    - Moderate (1.5-2.0): Standard 3-8% correction
+    - High (2.0-3.0): Stronger 8-18% correction
+    - Extreme (>3.0): Aggressive 18-25% correction (was 10%, insufficient)
+
     The correction REDUCES the underdog's 1UP probability to match market.
     """
     if ratio <= 1.0:
         return 1.0
-    
-    # Piecewise linear with smooth transitions
-    # These values are derived from the analysis of fair_diff by lambda imbalance
-    if ratio <= 1.2:
-        # Balanced: slight correction
-        return 1.0 - 0.03 * (ratio - 1.0) / 0.2
-    elif ratio <= 1.8:
-        # Moderate: increasing correction
-        base = 0.97
-        return base - 0.04 * (ratio - 1.2) / 0.6
-    elif ratio <= 2.5:
-        # High: peak correction
-        base = 0.93
-        return base - 0.03 * (ratio - 1.8) / 0.7
+
+    # Piecewise linear with empirically-tuned breakpoints
+    if ratio <= 1.15:
+        # Balanced: NO correction (fixes underpricing bias)
+        return 1.0
+    elif ratio <= 1.5:
+        # Slight imbalance: minimal correction (1.00 -> 0.97)
+        return 1.0 - 0.03 * (ratio - 1.15) / 0.35
+    elif ratio <= 2.0:
+        # Moderate: standard correction (0.97 -> 0.92)
+        return 0.97 - 0.05 * (ratio - 1.5) / 0.5
+    elif ratio <= 3.0:
+        # High: stronger correction (0.92 -> 0.82)
+        return 0.92 - 0.10 * (ratio - 2.0) / 1.0
     else:
-        # Extreme: slightly less correction (underdogs priced more accurately at extremes)
-        return 0.90 + 0.02 * min((ratio - 2.5) / 1.5, 1.0)
+        # Extreme: aggressive correction (0.82 -> 0.75)
+        # Critical fix: was 0.90-0.92, causing +44% error for extreme underdogs
+        ratio_scaled = min((ratio - 3.0) / 2.0, 1.0)
+        return 0.82 - 0.07 * ratio_scaled
 
 
 def get_favorite_correction(ratio: float) -> float:
     """
     Get the probability correction factor for favorite based on lambda ratio.
-    
-    Favorites also need slight adjustment, but much smaller.
-    Analysis shows favorites are about 3-4% overestimated consistently.
+
+    UPDATED 2026-01-08: Based on 117-match analysis showing favorites need
+    stronger correction for high imbalances. Analysis revealed:
+    - Balanced (<1.15): NO correction needed
+    - Slight-Moderate (1.15-2.0): Minimal 0-3% correction
+    - High (>2.0): Stronger 3-10% correction for extreme favorites
+
+    Markets are tighter than model predicts for extreme mismatches.
     """
     if ratio <= 1.0:
         return 1.0
-    
-    # Slight reduction for favorites
-    base_correction = 0.97
-    
-    # The correction is relatively stable across ratios
-    return base_correction
+
+    if ratio <= 1.15:
+        # Balanced: NO correction
+        return 1.0
+    elif ratio <= 2.0:
+        # Slight to moderate: minimal correction (1.00 -> 0.97)
+        return 1.0 - 0.03 * (ratio - 1.15) / 0.85
+    else:
+        # High imbalance: stronger correction (0.97 -> 0.90)
+        # Favorites in extreme mismatches need more correction
+        return 0.97 - 0.07 * min((ratio - 2.0) / 2.0, 1.0)
 
 
 def correct_1up_probabilities(
@@ -217,18 +233,18 @@ class CalibratedPoissonEngine(BaseEngine):
         lambda_away = lambda_away_raw * factor
 
         # Step 3.5: Supremacy optimization (ensure lambda difference matches 1X2-implied supremacy)
+        # FIXED 2026-01-08: Removed double correction - correction now applied ONLY to probabilities, not lambdas
         def supremacy_loss(sup):
             l_home = (lambda_total + sup) / 2
             l_away = (lambda_total - sup) / 2
-            # Apply empirical correction after supremacy adjustment
-            l_home_corr, l_away_corr = empirical_underdog_correction(l_home, l_away)
+            # Use RAW lambdas (no correction) - correction is applied to probabilities later
             max_goals = 10
             home_win = 0.0
             draw = 0.0
             away_win = 0.0
             for h in range(max_goals+1):
                 for a in range(max_goals+1):
-                    p = (math.exp(-l_home_corr) * l_home_corr**h / math.factorial(h)) * (math.exp(-l_away_corr) * l_away_corr**a / math.factorial(a))
+                    p = (math.exp(-l_home) * l_home**h / math.factorial(h)) * (math.exp(-l_away) * l_away**a / math.factorial(a))
                     if h > a:
                         home_win += p
                     elif h == a:
@@ -242,16 +258,13 @@ class CalibratedPoissonEngine(BaseEngine):
             supremacy = res.x if res.success else (lambda_home - lambda_away)
             lambda_home = (lambda_total + supremacy) / 2
             lambda_away = (lambda_total - supremacy) / 2
-            lambda_home, lambda_away = empirical_underdog_correction(lambda_home, lambda_away)
+            # No lambda correction here - correction applied to 1UP probabilities only
         except Exception:
             # Fallback: coarse grid search over sup in [-2,2]
             sups = [x for x in np.linspace(-2.0, 2.0, 201)]
             best_sup = None
             best_loss = float('inf')
             for s in sups:
-                l_home = (lambda_total + s) / 2
-                l_away = (lambda_total - s) / 2
-                l_home_corr, l_away_corr = empirical_underdog_correction(l_home, l_away)
                 val = supremacy_loss(s)
                 if val < best_loss:
                     best_loss = val
@@ -260,7 +273,7 @@ class CalibratedPoissonEngine(BaseEngine):
                 supremacy = best_sup
                 lambda_home = (lambda_total + supremacy) / 2
                 lambda_away = (lambda_total - supremacy) / 2
-                lambda_home, lambda_away = empirical_underdog_correction(lambda_home, lambda_away)
+                # No lambda correction here - correction applied to 1UP probabilities only
 
         # Step 4: Run Monte Carlo simulation for raw 1UP probabilities
         p_home_1up_raw, p_away_1up_raw = simulate_1up_probabilities(
