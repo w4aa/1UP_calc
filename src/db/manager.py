@@ -358,6 +358,23 @@ class DatabaseManager:
             except Exception as e:
                 logger.debug(f"Column scraping_history_id may already exist: {e}")
         
+        # Add columns to store actual 1UP odds from both Sportybet and Bet9ja
+        new_ec_cols = [
+            ("actual_sporty_home", "REAL"),
+            ("actual_sporty_draw", "REAL"),
+            ("actual_sporty_away", "REAL"),
+            ("actual_bet9ja_home", "REAL"),
+            ("actual_bet9ja_draw", "REAL"),
+            ("actual_bet9ja_away", "REAL"),
+        ]
+        for col_name, col_type in new_ec_cols:
+            if col_name not in ec_columns:
+                try:
+                    cursor.execute(f"ALTER TABLE engine_calculations ADD COLUMN {col_name} {col_type}")
+                    logger.info(f"Added column engine_calculations.{col_name}")
+                except Exception as e:
+                    logger.debug(f"Column {col_name} may already exist: {e}")
+        
         self.conn.commit()
 
         # Add Bet9ja columns to markets table if missing
@@ -1349,9 +1366,17 @@ class DatabaseManager:
         fair_away: float,
         fair_draw: float,
         scraping_history_id: int = None,
+        # Backwards-compatible Sportybet actuals (keeps original column)
         actual_home: float = None,
         actual_away: float = None,
         actual_draw: float = None,
+        # Explicit per-source actual 1UP odds
+        actual_sporty_home: float = None,
+        actual_sporty_draw: float = None,
+        actual_sporty_away: float = None,
+        actual_bet9ja_home: float = None,
+        actual_bet9ja_draw: float = None,
+        actual_bet9ja_away: float = None,
     ) -> int:
         """
         Insert an engine calculation result.
@@ -1384,14 +1409,18 @@ class DatabaseManager:
                 p_home_1up, p_away_1up,
                 fair_home, fair_away, fair_draw,
                 actual_home, actual_away, actual_draw,
+                actual_sporty_home, actual_sporty_draw, actual_sporty_away,
+                actual_bet9ja_home, actual_bet9ja_draw, actual_bet9ja_away,
                 calculated_at
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
         """, (
             sportradar_id, scraping_history_id, engine_name, bookmaker,
             lambda_home, lambda_away, lambda_total,
             p_home_1up, p_away_1up,
             fair_home, fair_away, fair_draw,
             actual_home, actual_away, actual_draw,
+            actual_sporty_home, actual_sporty_draw, actual_sporty_away,
+            actual_bet9ja_home, actual_bet9ja_draw, actual_bet9ja_away,
         ))
         self.conn.commit()
         return cursor.lastrowid
