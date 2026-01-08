@@ -16,7 +16,8 @@
       "Bash(del \"c:\\\\Users\\\\loren\\\\Desktop\\\\betpawa\\\\1UP_calc\\\\scripts\\\\query_first_team.py\")",
       "Bash(del \"c:\\\\Users\\\\loren\\\\Desktop\\\\betpawa\\\\1UP_calc\\\\scripts\\\\check_first_team_bet9ja.py\")",
       "Bash(del \"c:\\\\Users\\\\loren\\\\Desktop\\\\betpawa\\\\1UP_calc\\\\datas.db\")",
-      "Bash(python:*)"
+      "Bash(python:*)",
+      "Bash(git commit:*)"
     ]
   }
 }

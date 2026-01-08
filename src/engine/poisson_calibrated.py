@@ -13,29 +13,25 @@ because it doesn't account for:
 
 Solution: Apply empirically-derived correction factors based on lambda ratio.
 
-MAJOR UPDATE - 2026-01-08
-=========================
-Based on 117-match empirical analysis (reports/analysis_20260108_212226.csv):
+MAJOR UPDATES - 2026-01-08
+==========================
 
-ISSUES FIXED:
-1. Underdog overpricing (+8.8% bias) - especially extreme mismatches (+44% error)
-2. Balanced match underpricing (-5.8% bias) - unnecessary correction applied
-3. Double correction bug - lambdas corrected THEN probabilities corrected
-4. Favorite correction too weak for high imbalances
+VERSION 1 (Initial Fix):
+- Fixed double correction bug (lambdas + probabilities -> probabilities only)
+- Aggressive corrections based on pre-bug analysis
+- Results: Underdog bias eliminated (-95%), but overcorrected balanced matches
 
-CHANGES:
-- NO correction for balanced matches (ratio < 1.15)
-- More aggressive underdog correction for extreme ratios (>3.0): 0.75-0.82 vs old 0.90-0.92
-- Favorite correction now scales with ratio: 0.90-1.00 vs old flat 0.97
-- Removed lambda-level correction (empirical_underdog_correction function)
-- Correction now applied ONLY to probabilities, not lambdas
+VERSION 2 (Refined - Current):
+- Gentler corrections for ratio < 1.6 (was causing underpricing in v1)
+- Reduced favorite correction by ~30% (was too aggressive in v1)
+- More aggressive for extreme ratios >3.2 (0.70-0.75 vs v1's 0.75-0.82)
+- Start corrections earlier (1.05/1.1 vs 1.15) with minimal impact
 
-EXPECTED RESULTS:
-- Underdog MAE: 0.218 -> ~0.12 (-45%)
-- Extreme ratio MAE: 0.613 -> ~0.25 (-59%)
-- Overall MAE: 0.147 -> ~0.09 (-39%)
+V2 CORRECTION RANGES:
+- Underdog: 0.70-1.00 (gentle for <1.6, aggressive for >3.2)
+- Favorite: 0.94-1.00 (30% less aggressive than v1)
 
-See ENGINE_ANALYSIS.md for detailed analysis and recommendations.
+See ENGINE_ANALYSIS.md and CALIBRATION_RESULTS.md for full details.
 """
 
 import math
@@ -72,63 +68,84 @@ def get_underdog_correction(ratio: float) -> float:
     """
     Get the probability correction factor for underdog based on lambda ratio.
 
-    UPDATED 2026-01-08: Based on 117-match empirical analysis showing:
-    - Balanced (<1.15): NO correction needed (was causing underpricing)
-    - Slight (1.15-1.5): Minimal 0-3% correction
-    - Moderate (1.5-2.0): Standard 3-8% correction
-    - High (2.0-3.0): Stronger 8-18% correction
-    - Extreme (>3.0): Aggressive 18-25% correction (was 10%, insufficient)
+    VERSION 2 - 2026-01-08: Refined after v1 testing on 117 matches.
+
+    V1 RESULTS ANALYSIS:
+    - Balanced <1.15 (14 matches): Underdog MAE increased 7.7% (was overcorrected)
+    - Slight 1.15-1.5 (36 matches): Underdog MAE increased 41.4% (too aggressive)
+    - Moderate 1.5-2.0 (35 matches): Underdog MAE improved 16.6% ✓
+    - High 2.0-3.0 (24 matches): Underdog MAE improved 49.9% ✓✓
+    - Extreme >3.0 (8 matches): Underdog MAE worsened 8.4% (need more aggression)
+
+    V2 CHANGES:
+    - Gentler correction for ratio < 1.6 (was causing underpricing)
+    - Start correction earlier (1.05 vs 1.15) with minimal impact
+    - More aggressive for extreme ratios >3.2 (0.70-0.75 vs 0.75-0.82)
 
     The correction REDUCES the underdog's 1UP probability to match market.
     """
     if ratio <= 1.0:
         return 1.0
 
-    # Piecewise linear with empirically-tuned breakpoints
-    if ratio <= 1.15:
-        # Balanced: NO correction (fixes underpricing bias)
+    # V2: Refined piecewise linear with gentler low-ratio corrections
+    if ratio <= 1.05:
+        # Very balanced: no correction
         return 1.0
-    elif ratio <= 1.5:
-        # Slight imbalance: minimal correction (1.00 -> 0.97)
-        return 1.0 - 0.03 * (ratio - 1.15) / 0.35
-    elif ratio <= 2.0:
-        # Moderate: standard correction (0.97 -> 0.92)
-        return 0.97 - 0.05 * (ratio - 1.5) / 0.5
-    elif ratio <= 3.0:
-        # High: stronger correction (0.92 -> 0.82)
-        return 0.92 - 0.10 * (ratio - 2.0) / 1.0
+    elif ratio <= 1.3:
+        # Balanced to slight: very gentle correction (1.00 -> 0.985)
+        # V1 had no correction until 1.15, causing underpricing
+        return 1.0 - 0.015 * (ratio - 1.05) / 0.25
+    elif ratio <= 1.6:
+        # Slight imbalance: light correction (0.985 -> 0.955)
+        # V1 was too aggressive (0.97-1.00), causing 41% error increase
+        return 0.985 - 0.03 * (ratio - 1.3) / 0.30
+    elif ratio <= 2.2:
+        # Moderate: standard correction (0.955 -> 0.90)
+        # V1 worked well here
+        return 0.955 - 0.055 * (ratio - 1.6) / 0.6
+    elif ratio <= 3.2:
+        # High: strong correction (0.90 -> 0.80)
+        # V1 worked very well (-50% error), keep similar
+        return 0.90 - 0.10 * (ratio - 2.2) / 1.0
     else:
-        # Extreme: aggressive correction (0.82 -> 0.75)
-        # Critical fix: was 0.90-0.92, causing +44% error for extreme underdogs
-        ratio_scaled = min((ratio - 3.0) / 2.0, 1.0)
-        return 0.82 - 0.07 * ratio_scaled
+        # Extreme: very aggressive correction (0.80 -> 0.70)
+        # V1 insufficient (0.75-0.82), need more aggression
+        ratio_scaled = min((ratio - 3.2) / 2.5, 1.0)
+        return 0.80 - 0.10 * ratio_scaled
 
 
 def get_favorite_correction(ratio: float) -> float:
     """
     Get the probability correction factor for favorite based on lambda ratio.
 
-    UPDATED 2026-01-08: Based on 117-match analysis showing favorites need
-    stronger correction for high imbalances. Analysis revealed:
-    - Balanced (<1.15): NO correction needed
-    - Slight-Moderate (1.15-2.0): Minimal 0-3% correction
-    - High (>2.0): Stronger 3-10% correction for extreme favorites
+    VERSION 2 - 2026-01-08: Reduced strength by ~30% after v1 testing.
 
-    Markets are tighter than model predicts for extreme mismatches.
+    V1 RESULTS ANALYSIS:
+    - ALL ratio bins showed favorite MAE increase of +20% to +48%
+    - Favorites were being UNDERPRICED across the board
+    - V1 correction was too aggressive (0.90-1.00 range)
+
+    V2 CHANGES:
+    - Reduce correction strength by ~30% across all ratios
+    - Gentler correction: 0.94-1.00 vs V1's 0.90-1.00
+    - Start correction at 1.1 (vs 1.15) to catch more cases
+
+    Markets are tighter than model predicts, but V1 overcorrected.
     """
     if ratio <= 1.0:
         return 1.0
 
-    if ratio <= 1.15:
-        # Balanced: NO correction
+    if ratio <= 1.1:
+        # Very balanced: NO correction
         return 1.0
     elif ratio <= 2.0:
-        # Slight to moderate: minimal correction (1.00 -> 0.97)
-        return 1.0 - 0.03 * (ratio - 1.15) / 0.85
+        # Balanced to moderate: gentle correction (1.00 -> 0.98)
+        # V1 was 0.97, too aggressive
+        return 1.0 - 0.02 * (ratio - 1.1) / 0.9
     else:
-        # High imbalance: stronger correction (0.97 -> 0.90)
-        # Favorites in extreme mismatches need more correction
-        return 0.97 - 0.07 * min((ratio - 2.0) / 2.0, 1.0)
+        # High imbalance: stronger but still gentle (0.98 -> 0.94)
+        # V1 was 0.90-0.97, way too aggressive
+        return 0.98 - 0.04 * min((ratio - 2.0) / 2.5, 1.0)
 
 
 def correct_1up_probabilities(
