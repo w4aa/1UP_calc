@@ -6,6 +6,7 @@ Compares V2 calibrated fair odds against BOTH Sportybet and Bet9ja actual 1UP od
 import sqlite3
 import pandas as pd
 import numpy as np
+from datetime import datetime
 
 # Database connection
 conn = sqlite3.connect('data/datas.db')
@@ -44,10 +45,13 @@ df = pd.read_sql_query(query, conn)
 conn.close()
 
 print(f"\n{'='*80}")
-print(f"DUAL-BOOKMAKER ANALYSIS: V2 Calibrated Poisson Engine")
+print(f"DUAL-BOOKMAKER ANALYSIS: Calibrated Poisson Engine (DE-VIGGED)")
 print(f"{'='*80}")
+print(f"Analysis run: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 print(f"Total matches: {len(df)}")
 print(f"Date range: {df['start_time'].min()} to {df['start_time'].max()}")
+print(f"\nIMPORTANT: Comparing our FAIR odds vs bookmaker DE-VIGGED fair odds")
+print(f"(Bookmaker margins removed using proportional de-vig method)")
 
 # Helper: De-vig two-way market
 def devig_two_way(odds_a: float, odds_b: float):
@@ -61,16 +65,32 @@ def devig_two_way(odds_a: float, odds_b: float):
     fair_b = odds_b * total
     return fair_a, fair_b
 
-# Calculate fair odds from both bookmakers
+# Calculate de-vigged fair odds from both bookmakers
 def calc_fair(row, bookie_prefix):
-    """Calculate fair odds for a bookmaker (sporty or bet9ja)"""
+    """
+    De-vig bookmaker's actual 1UP odds to get their fair odds.
+    This removes the bookmaker's margin to get true probabilities.
+    """
     h_col = f'actual_{bookie_prefix}_home'
     a_col = f'actual_{bookie_prefix}_away'
 
     if pd.isna(row[h_col]) or pd.isna(row[a_col]):
         return pd.Series([np.nan, np.nan])
 
-    fair_h, fair_a = devig_two_way(row[h_col], row[a_col])
+    # De-vig using proportional method
+    # Convert odds to implied probabilities
+    p_h = 1 / row[h_col]
+    p_a = 1 / row[a_col]
+    total = p_h + p_a  # This is > 1.0 due to margin
+
+    # Remove margin proportionally
+    fair_p_h = p_h / total
+    fair_p_a = p_a / total
+
+    # Convert back to fair odds
+    fair_h = 1 / fair_p_h
+    fair_a = 1 / fair_p_a
+
     return pd.Series([fair_h, fair_a])
 
 # Calculate Sportybet fair odds
