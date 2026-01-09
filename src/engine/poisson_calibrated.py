@@ -68,89 +68,89 @@ def get_underdog_correction(ratio: float) -> float:
     """
     Get the probability correction factor for underdog based on lambda ratio.
 
-    VERSION 6 - 2026-01-09: Multi-payout market correction (2-way de-vig).
+    VERSION 7 - 2026-01-09: FINAL CORRECT direction (V6 was inverted!).
 
-    KEY INSIGHT: 1UP is a multi-payout market where multiple outcomes can pay on
-    the same match. Bookmaker applies margin ONLY to home/away (draw = 1X2 draw).
-    We de-vig home/away as 2-way market and calibrate fair vs de-vigged fair.
+    KEY INSIGHT: Negative bias = our odds TOO LOW = underpricing
+    To fix: INCREASE odds = DECREASE probability (multiply by <1.0)
 
     V3 RESULTS (117 pawa matches, 2-way de-vigged vs Sportybet):
-    - Balanced <1.5: Underdog -28%, Favorite -18% (BOTH underestimating)
-    - Moderate 1.5-2.0: Underdog -9%, Favorite -23% (underestimating)
-    - High 2.0-3.0: Underdog +40%, Favorite -15% (overestimating underdog)
-    - Extreme >3.0: Underdog +171%, Favorite -9% (MASSIVE overestimation)
+    - Balanced <1.5: Underdog bias -28% (our odds too low, underpricing)
+    - Moderate 1.5-2.0: Underdog bias -9% (our odds too low, underpricing)
+    - High 2.0-3.0: Underdog bias +40% (our odds too high, overpricing)
+    - Extreme >3.0: Underdog bias +171% (our odds WAY too high, overpricing)
 
-    V6 CORRECTIONS:
-    - Balanced <1.5: INCREASE prob by 25-30% (1.25-1.30) - we underestimate
-    - Moderate 1.5-2.0: INCREASE slightly (1.05-1.10)
-    - High 2.0-3.0: DECREASE prob by 30% (0.70) - we overestimate
-    - Extreme >3.0: MASSIVE DECREASE (0.35-0.40) - we drastically overestimate
+    V7 CORRECTIONS (CORRECT direction):
+    - Balanced <1.5: DECREASE prob by 20-25% (0.75-0.80) → RAISE odds
+    - Moderate 1.5-2.0: DECREASE slightly (0.90-0.95) → RAISE odds
+    - High 2.0-3.0: INCREASE prob by 25-30% (1.25-1.30) → LOWER odds
+    - Extreme >3.0: MASSIVE INCREASE prob by 60-100% (1.60-2.00) → SLASH odds
 
     The correction multiplies raw probability to adjust final odds.
     """
     if ratio <= 1.0:
         return 1.0
 
-    # V6: Correct direction based on multi-payout market understanding
+    # V7: FINAL correct direction
     if ratio <= 1.5:
-        # Balanced/Slight: INCREASE probability (we're underestimating by 28%)
-        # Multiply by 1.25-1.30 to boost probability
-        return 1.25 + 0.05 * (ratio - 1.0) / 0.5
+        # Balanced/Slight: DECREASE probability → INCREASE odds (fix underpricing)
+        # Bias -28%, so decrease prob by 20-25%
+        return 0.80 - 0.05 * (ratio - 1.0) / 0.5  # 0.80 → 0.75
     elif ratio <= 2.0:
-        # Moderate: INCREASE slightly (1.30 -> 1.10)
-        # We're still underestimating by 9%, so boost
-        return 1.30 - 0.20 * (ratio - 1.5) / 0.5
+        # Moderate: DECREASE slightly (0.75 → 0.90) → slight increase in odds
+        # Bias -9%, so decrease prob by 10%
+        return 0.75 + 0.15 * (ratio - 1.5) / 0.5
     elif ratio <= 3.0:
-        # High: DECREASE probability (1.10 -> 0.70)
-        # We're overestimating by 40%, need to reduce
-        return 1.10 - 0.40 * (ratio - 2.0) / 1.0
+        # High: INCREASE probability (0.90 → 1.30) → LOWER odds (fix overpricing)
+        # Bias +40%, so increase prob by 25-30%
+        return 0.90 + 0.40 * (ratio - 2.0) / 1.0
     else:
-        # Extreme: MASSIVE DECREASE (0.70 -> 0.40)
-        # We're overestimating by 171%, slash probability
+        # Extreme: MASSIVE INCREASE (1.30 → 2.00) → slash odds drastically
+        # Bias +171%, double probability to cut odds in half
         ratio_scaled = min((ratio - 3.0) / 3.0, 1.0)
-        return 0.70 - 0.30 * ratio_scaled
+        return 1.30 + 0.70 * ratio_scaled
 
 
 def get_favorite_correction(ratio: float) -> float:
     """
     Get the probability correction factor for favorite based on lambda ratio.
 
-    VERSION 6 - 2026-01-09: Multi-payout market correction (2-way de-vig).
+    VERSION 7 - 2026-01-09: FINAL CORRECT direction (V6 was inverted!).
 
     V3 RESULTS (117 pawa matches, 2-way de-vigged vs Sportybet):
-    - Balanced <1.5: Favorite -18% (underestimating)
-    - Moderate 1.5-2.0: Favorite -23% (underestimating)
-    - High 2.0-3.0: Favorite -15% (underestimating)
-    - Extreme >3.0: Favorite -9% (underestimating)
+    - Balanced <1.5: Favorite bias -18% (our odds too low, underpricing)
+    - Moderate 1.5-2.0: Favorite bias -23% (our odds too low, underpricing)
+    - High 2.0-3.0: Favorite bias -15% (our odds too low, underpricing)
+    - Extreme >3.0: Favorite bias -9% (our odds too low, underpricing)
 
-    V6 CORRECTIONS:
-    - Balanced <1.5: INCREASE prob by 18-20% (1.18-1.20)
-    - Moderate 1.5-2.0: INCREASE prob by 20-23% (1.20-1.23)
-    - High 2.0-3.0: INCREASE prob by 15% (1.15)
-    - Extreme >3.0: INCREASE slightly (1.09)
+    V7 CORRECTIONS (CORRECT direction):
+    - Balanced <1.5: DECREASE prob by 15-18% (0.82-0.85) → RAISE odds
+    - Moderate 1.5-2.0: DECREASE prob by 18-20% (0.77-0.80) → RAISE odds
+    - High 2.0-3.0: DECREASE prob by 12-15% (0.85-0.88) → RAISE odds
+    - Extreme >3.0: DECREASE slightly (0.88-0.91) → slight raise in odds
 
-    Favorites are consistently underestimated across ALL ratios.
+    Favorites are consistently underpriced (odds too low) across ALL ratios.
+    Need to DECREASE probability to INCREASE odds.
     """
     if ratio <= 1.0:
         return 1.0
 
     if ratio <= 1.5:
-        # Balanced to slight: INCREASE probability by 18-20%
-        # We're underestimating favorites by 18%
-        return 1.18 + 0.02 * (ratio - 1.0) / 0.5
+        # Balanced: DECREASE probability by 15-18% → RAISE odds (fix underpricing)
+        # Bias -18%, so decrease prob by 15-18%
+        return 0.85 - 0.03 * (ratio - 1.0) / 0.5  # 0.85 → 0.82
     elif ratio <= 2.0:
-        # Moderate: INCREASE probability (1.20 -> 1.23)
-        # We're underestimating by 23%
-        return 1.20 + 0.03 * (ratio - 1.5) / 0.5
+        # Moderate: DECREASE probability (0.82 → 0.77) → RAISE odds
+        # Bias -23% (worst), need more aggressive correction
+        return 0.82 - 0.05 * (ratio - 1.5) / 0.5
     elif ratio <= 3.0:
-        # High: INCREASE probability (1.23 -> 1.15)
-        # Still underestimating by 15%
-        return 1.23 - 0.08 * (ratio - 2.0) / 1.0
+        # High: DECREASE probability (0.77 → 0.85) → RAISE odds
+        # Bias -15%, transition back towards neutral
+        return 0.77 + 0.08 * (ratio - 2.0) / 1.0
     else:
-        # Extreme: INCREASE slightly (1.15 -> 1.09)
-        # Underestimating by 9%
+        # Extreme: DECREASE slightly (0.85 → 0.91) → slight raise
+        # Bias -9%, lightest correction
         ratio_scaled = min((ratio - 3.0) / 3.0, 1.0)
-        return 1.15 - 0.06 * ratio_scaled
+        return 0.85 + 0.06 * ratio_scaled
 
 
 def correct_1up_probabilities(
