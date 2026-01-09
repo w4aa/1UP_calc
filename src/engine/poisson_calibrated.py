@@ -68,82 +68,85 @@ def get_underdog_correction(ratio: float) -> float:
     """
     Get the probability correction factor for underdog based on lambda ratio.
 
-    VERSION 4 - 2026-01-09: AGGRESSIVE corrections based on 351-match analysis.
+    VERSION 5 - 2026-01-09: CORRECT direction (V4 was inverted disaster).
 
-    V3 RESULTS (351 matches vs Sportybet & Bet9ja de-vigged):
-    - Balanced <1.15 (49 matches): UNDERPRICING -9.8% / -9.1%
-    - Slight 1.15-1.5 (102 matches): SEVERE UNDERPRICING -11.4% / -12.3%
-    - Moderate 1.5-2.0 (116 matches): Slight underpricing -4.6% / -6.8%
-    - High 2.0-3.0 (61 matches): SEVERE OVERPRICING +19.6% / +10.1%
-    - Extreme >3.0 (23 matches): CATASTROPHIC +107% / +76% !!!
+    V4 DISASTER (117 pawa vs de-vigged):
+    - V4 was 48% WORSE than V3 due to INVERTED correction direction
+    - Balanced <1.5: -25% to -30% underpricing (V3 was -10%, V4 made it WORSE!)
+    - Extreme >3.0: Still +2 to +3 overpricing (not fixed)
 
-    V4 CHANGES - DRASTIC:
-    - Ratio <1.5: INCREASE underdog odds (1.10-1.15 multiplier)
-    - Ratio 1.5-2.0: Light correction only
-    - Ratio 2.0-3.0: MUCH MORE aggressive (0.70-0.75 vs 0.82)
-    - Ratio >3.0: DRASTIC correction (0.40-0.50) for catastrophic cases
+    CORRECT LOGIC:
+    - LOWER probability → HIGHER odds → Fix underpricing
+    - HIGHER probability → LOWER odds → Fix overpricing
 
-    The correction REDUCES the underdog's 1UP probability to match market.
+    V5 CORRECTIONS:
+    - Balanced <1.5: DECREASE prob by 10-13% (increase odds to fix underpricing)
+    - Moderate 1.5-2.0: Minimal adjustment (0.87-0.92)
+    - High 2.0-3.0: INCREASE prob by 8-30% (decrease odds to fix overpricing)
+    - Extreme >3.0: MASSIVE INCREASE prob by 30-80% (slash odds dramatically)
+
+    The correction multiplies raw probability to adjust final odds.
     """
     if ratio <= 1.0:
         return 1.0
 
-    # V4: INCREASE for balanced, DRASTIC reduction for extreme
-    if ratio <= 1.15:
-        # Balanced: INCREASE underdog probability (we're underpricing)
-        # V3 underpriced by 10%, so increase by 12-15%
-        return 1.0 + 0.15 * (ratio - 1.0) / 0.15
-    elif ratio <= 1.5:
-        # Slight imbalance: INCREASE (we're still underpricing by 11-12%)
-        # Gradual transition from 1.15 down to 1.0
-        return 1.15 - 0.15 * (ratio - 1.15) / 0.35
+    # V5: CORRECT direction
+    if ratio <= 1.5:
+        # Balanced/Slight: DECREASE probability → INCREASE odds
+        # V3 underpriced by 10-12%, so decrease prob by 10-13%
+        return 1.0 - 0.13 * (ratio - 1.0) / 0.5
     elif ratio <= 2.0:
-        # Moderate: light correction (1.0 -> 0.92)
-        # V3 underpriced by 4-7%, so just light correction
-        return 1.0 - 0.08 * (ratio - 1.5) / 0.5
+        # Moderate: transition (0.87 → 0.92)
+        # V3 underpriced by 5-7%, light adjustment
+        return 0.87 + 0.05 * (ratio - 1.5) / 0.5
     elif ratio <= 3.0:
-        # High: VERY AGGRESSIVE correction (0.92 -> 0.70)
-        # V3 OVERPRICED by 10-20%, need DRASTIC reduction
-        return 0.92 - 0.22 * (ratio - 2.0) / 1.0
+        # High: INCREASE probability → DECREASE odds
+        # V3 overpriced by 10-20%, increase prob by 8-30%
+        return 0.92 + 0.38 * (ratio - 2.0) / 1.0
     else:
-        # Extreme: CATASTROPHIC correction (0.70 -> 0.45)
-        # V3 had +76-107% overpricing - need to cut probability in HALF
+        # Extreme: MASSIVE INCREASE → slash odds
+        # V3 overpriced by 76-107%, double/triple probability
         ratio_scaled = min((ratio - 3.0) / 3.0, 1.0)
-        return 0.70 - 0.25 * ratio_scaled
+        return 1.30 + 0.50 * ratio_scaled
 
 
 def get_favorite_correction(ratio: float) -> float:
     """
     Get the probability correction factor for favorite based on lambda ratio.
 
-    VERSION 4 - 2026-01-09: INCREASE for balanced, based on 351-match analysis.
+    VERSION 5 - 2026-01-09: CORRECT direction (V4 was inverted disaster).
 
-    V3 RESULTS (351 matches):
-    - Favorites SEVERELY underpriced across ALL ratio bins
-    - Favorite bias: -9% to -10% across all ratios
-    - V3 correction (0.97-1.00) was STILL too strong
+    V4 DISASTER (117 pawa matches):
+    - V4 INCREASED favorite probability (made underpricing WORSE)
+    - Balanced <1.5: -25% to -30% underpricing (V3 was -10%, V4 made it WORSE!)
+    - V4 was 48% WORSE than V3 overall
 
-    V4 CHANGES:
-    - Ratio <1.5: INCREASE favorite probability (we're underpricing by 10%)
-    - Ratio 1.5-2.5: Minimal correction
-    - Ratio >2.5: Light correction only
+    CORRECT LOGIC:
+    - LOWER probability → HIGHER odds → Fix underpricing
+    - HIGHER probability → LOWER odds → Fix overpricing
 
-    Markets show favorites need HIGHER probabilities, not lower.
+    V5 CORRECTIONS:
+    - Balanced <1.5: DECREASE prob by 10% (increase odds to fix underpricing)
+    - Moderate 1.5-2.5: Minimal adjustment (0.90-0.95)
+    - High >2.5: Continue gentle decrease (favorites less dominant in blowouts)
+
+    The correction multiplies raw probability to adjust final odds.
     """
     if ratio <= 1.0:
         return 1.0
 
     if ratio <= 1.5:
-        # Balanced to slight: INCREASE (we're underpricing by 9-10%)
-        # Need to boost favorite probability by ~10%
-        return 1.0 + 0.10 * (ratio - 1.0) / 0.5
+        # Balanced/Slight: DECREASE probability → INCREASE odds
+        # V3 underpriced favorites by 9-10%, so decrease prob by 10%
+        return 1.0 - 0.10 * (ratio - 1.0) / 0.5
     elif ratio <= 2.5:
-        # Moderate: transition from boost to neutral (1.10 -> 1.0)
-        return 1.10 - 0.10 * (ratio - 1.5) / 1.0
+        # Moderate: transition (0.90 → 0.95)
+        # Light adjustment as favorites remain underpriced
+        return 0.90 + 0.05 * (ratio - 1.5) / 1.0
     else:
-        # High/Extreme: very light correction (1.0 -> 0.98)
-        # Favorites in extreme mismatches need slight reduction
-        return 1.0 - 0.02 * min((ratio - 2.5) / 2.0, 1.0)
+        # High/Extreme: gentle decrease (0.95 → 0.92)
+        # Favorites in extreme mismatches are less dominant than expected
+        return 0.95 - 0.03 * min((ratio - 2.5) / 2.0, 1.0)
 
 
 def correct_1up_probabilities(
