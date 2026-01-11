@@ -39,7 +39,7 @@ The 1UP Calculator performs the following:
 4. **Compares** calculated odds vs actual bookmaker odds
    - Identifies value bets
    - Analyzes engine performance (MAE, probability errors, log-odds errors)
-   - Generates comprehensive reports (CSV/HTML)
+   - Generates detailed CSV analysis reports
 
 ---
 
@@ -89,12 +89,6 @@ python analyze_engines.py --engine FTS-Calibrated-DP
 
 # Apply margin to fair odds
 python analyze_engines.py --margin 0.06
-
-# Compare engines side-by-side
-python compare_engines.py
-
-# Generate HTML/CSV reports
-python generate_engine_report.py
 ```
 
 ---
@@ -138,7 +132,7 @@ python generate_engine_report.py
 │  • MAE (probability and odds scales)                             │
 │  • Log-odds errors                                               │
 │  • Engine comparison                                             │
-│  • Report generation                                             │
+│  • CSV export                                                    │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
@@ -235,9 +229,6 @@ Only scrapes when 1X2 odds change:
 │
 ├── main.py                  # Main entry point
 ├── analyze_engines.py       # Engine analysis tool
-├── compare_engines.py       # Engine comparison
-├── generate_engine_report.py  # Report generator
-├── sanity_check.py          # DB validation
 └── requirements.txt         # Python dependencies
 ```
 
@@ -290,7 +281,7 @@ Sportybet          Betpawa      Bet9ja         Tournaments
               └─────────────────────────────┘
                               ↓
 ┌─────────────────────────────────────────────────────────────────┐
-│  PHASE 3: ANALYSIS (analyze_engines.py, compare_engines.py)    │
+│  PHASE 3: ANALYSIS (analyze_engines.py)                         │
 └─────────────────────────────────────────────────────────────────┘
                               ↓
               Analysis Metrics:
@@ -299,7 +290,7 @@ Sportybet          Betpawa      Bet9ja         Tournaments
               • Error by lambda bins
               • Engine comparison
                               ↓
-              Reports (CSV/HTML)
+              Reports (CSV)
 ```
 
 ### Market Data Preparation
@@ -454,25 +445,6 @@ python analyze_engines.py --no-csv       # Don't save CSV
 python analyze_engines.py --output-dir reports  # Custom output dir
 ```
 
-#### compare_engines.py
-
-```bash
-# Compare all engines
-python compare_engines.py
-
-# Compare specific bookmaker
-python compare_engines.py --bookmaker sporty
-```
-
-#### generate_engine_report.py
-
-```bash
-# Generate HTML/CSV reports
-python generate_engine_report.py
-
-# Custom output directory
-python generate_engine_report.py --output-dir reports
-```
 
 ### Programmatic Usage
 
@@ -597,36 +569,6 @@ python tests/test_system.py
 python tests/test_runner.py
 ```
 
-### Validation
-
-```bash
-# Database integrity check
-python sanity_check.py
-```
-
-Expected output:
-```
-======================================================================
-  SANITY CHECK - 1UP CALCULATOR
-======================================================================
-
-[1] DATABASE STATISTICS
-----------------------------------------------------------------------
-  Total Events:          145
-  Matched Events:        145
-  Total Markets:         6031
-  Matched Markets:       2551
-
-[2] ENGINE CALCULATIONS
-----------------------------------------------------------------------
-  Total Calculations:    5516
-  With Session ID:       5516 (100.0%)
-
-[3] DATA CONSISTENCY CHECKS
-----------------------------------------------------------------------
-  Orphaned Calculations: 0 ✓
-  Orphaned Snapshots:    0 ✓
-```
 
 ---
 

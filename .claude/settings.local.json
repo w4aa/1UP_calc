@@ -27,7 +27,8 @@
       "Bash(del \"c:\\\\Users\\\\loren\\\\Desktop\\\\betpawa\\\\1UP_calc\\\\src\\\\engine\\\\calibrated_supremacy_poisson.py\")",
       "Bash(rm:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(ls:*)"
     ],
     "additionalDirectories": [
       "c:\\Users\\loren\\Desktop\\betpawa\\1UP_calc"
