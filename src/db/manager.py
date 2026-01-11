@@ -648,6 +648,58 @@ class DatabaseManager:
             WHERE sportradar_id = ?
         """, (sportradar_id,))
     
+    def get_latest_snapshot_1x2_odds(
+        self,
+        sportradar_id: str,
+        bookmaker: str,
+    ) -> tuple:
+        """
+        Get the most recent 1X2 odds for an event from market_snapshots.
+
+        Args:
+            sportradar_id: Event ID
+            bookmaker: 'sporty', 'pawa', or 'bet9ja'
+
+        Returns:
+            Tuple of (home_odds, draw_odds, away_odds) or None if no snapshots exist
+        """
+        cursor = self.conn.cursor()
+
+        # Map bookmaker to column prefixes
+        if bookmaker == "sporty":
+            prefix = "sporty"
+        elif bookmaker == "pawa":
+            prefix = "pawa"
+        elif bookmaker == "bet9ja":
+            prefix = "bet9ja"
+        else:
+            return None
+
+        # Query latest snapshot for 1X2 market (market_name='1X2', specifier='')
+        # Join with scraping_history to get most recent snapshot by scraped_at
+        cursor.execute(f"""
+            SELECT ms.{prefix}_outcome_1_odds, ms.{prefix}_outcome_2_odds, ms.{prefix}_outcome_3_odds
+            FROM market_snapshots ms
+            JOIN scraping_history sh ON ms.scraping_history_id = sh.id
+            WHERE ms.sportradar_id = ?
+              AND ms.market_name = '1X2'
+              AND ms.specifier = ''
+            ORDER BY sh.scraped_at DESC
+            LIMIT 1
+        """, (sportradar_id,))
+
+        row = cursor.fetchone()
+        if not row:
+            return None
+
+        home_odds, draw_odds, away_odds = row
+
+        # Return None if any odds are missing
+        if home_odds is None or draw_odds is None or away_odds is None:
+            return None
+
+        return (home_odds, draw_odds, away_odds)
+
     def check_1x2_odds_changed(
         self,
         sportradar_id: str,
@@ -659,47 +711,34 @@ class DatabaseManager:
     ) -> bool:
         """
         Check if 1X2 odds have changed for an event.
-        
+        Uses market_snapshots as source of truth instead of events table cache.
+
         Args:
             sportradar_id: Event ID
-            bookmaker: 'sporty' or 'pawa'
+            bookmaker: 'sporty', 'pawa', or 'bet9ja'
             home_odds: New home win odds
             draw_odds: New draw odds
             away_odds: New away win odds
             tolerance: Minimum change to consider as changed
-            
+
         Returns:
             True if odds changed, False if same
         """
-        cursor = self.conn.cursor()
-        
-        if bookmaker == "sporty":
-            cursor.execute("""
-                SELECT sporty_1x2_home, sporty_1x2_draw, sporty_1x2_away
-                FROM events WHERE sportradar_id = ?
-            """, (sportradar_id,))
-        else:
-            cursor.execute("""
-                SELECT pawa_1x2_home, pawa_1x2_draw, pawa_1x2_away
-                FROM events WHERE sportradar_id = ?
-            """, (sportradar_id,))
-        
-        row = cursor.fetchone()
-        if not row:
-            return True  # New event, always scrape
-        
-        old_home, old_draw, old_away = row
-        
-        # If no previous odds, consider changed
-        if old_home is None or old_draw is None or old_away is None:
+        # Get latest snapshot odds
+        snapshot_odds = self.get_latest_snapshot_1x2_odds(sportradar_id, bookmaker)
+
+        # If no previous snapshot, always scrape (first time or no data)
+        if snapshot_odds is None:
             return True
-        
+
+        old_home, old_draw, old_away = snapshot_odds
+
         # Check if any odds changed beyond tolerance
         if (abs(home_odds - old_home) > tolerance or
             abs(draw_odds - old_draw) > tolerance or
             abs(away_odds - old_away) > tolerance):
             return True
-        
+
         return False
     
     def update_1x2_odds(
