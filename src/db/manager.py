@@ -1086,7 +1086,7 @@ class DatabaseManager:
                 pawa_outcome_2_name, pawa_outcome_2_odds, pawa_outcome_3_name, pawa_outcome_3_odds,
                 bet9ja_market_id, bet9ja_outcome_1_name, bet9ja_outcome_1_odds,
                 bet9ja_outcome_2_name, bet9ja_outcome_2_odds, bet9ja_outcome_3_name, bet9ja_outcome_3_odds
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ON CONFLICT(scraping_history_id, sportradar_id, market_name, specifier) DO UPDATE SET
                 sporty_market_id = COALESCE(excluded.sporty_market_id, sporty_market_id),
                 sporty_outcome_1_name = COALESCE(excluded.sporty_outcome_1_name, sporty_outcome_1_name),
