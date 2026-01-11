@@ -16,7 +16,7 @@ tournaments:
     category_id: "sr:category:4"
     pawa_category_id: "2"           # Football
     pawa_competition_id: "15598"    # AFCON
-    bet9ja_group_id: "1966396"
+    bet9ja_group_id: "2029909"
     enabled: true
 
   - id: "sr:tournament:295"

@@ -16,7 +16,21 @@
       "Bash(del \"c:\\\\Users\\\\loren\\\\Desktop\\\\betpawa\\\\1UP_calc\\\\scripts\\\\query_first_team.py\")",
       "Bash(del \"c:\\\\Users\\\\loren\\\\Desktop\\\\betpawa\\\\1UP_calc\\\\scripts\\\\check_first_team_bet9ja.py\")",
       "Bash(del \"c:\\\\Users\\\\loren\\\\Desktop\\\\betpawa\\\\1UP_calc\\\\datas.db\")",
-      "Bash(python:*)"
+      "Bash(python:*)",
+      "Bash(git checkout:*)",
+      "Bash(del \"c:\\\\Users\\\\loren\\\\Desktop\\\\betpawa\\\\1UP_calc\\\\src\\\\engine\\\\lead1_calibrated.py\")",
+      "Bash(del \"c:\\\\Users\\\\loren\\\\Desktop\\\\betpawa\\\\1UP_calc\\\\src\\\\engine\\\\btts.py\")",
+      "Bash(del \"c:\\\\Users\\\\loren\\\\Desktop\\\\betpawa\\\\1UP_calc\\\\src\\\\engine\\\\first_goal.py\")",
+      "Bash(del \"c:\\\\Users\\\\loren\\\\Desktop\\\\betpawa\\\\1UP_calc\\\\src\\\\engine\\\\handicap.py\")",
+      "Bash(del \"c:\\\\Users\\\\loren\\\\Desktop\\\\betpawa\\\\1UP_calc\\\\src\\\\engine\\\\poisson.py\")",
+      "Bash(del \"c:\\\\Users\\\\loren\\\\Desktop\\\\betpawa\\\\1UP_calc\\\\src\\\\engine\\\\supremacy_poisson.py\")",
+      "Bash(del \"c:\\\\Users\\\\loren\\\\Desktop\\\\betpawa\\\\1UP_calc\\\\src\\\\engine\\\\calibrated_supremacy_poisson.py\")",
+      "Bash(rm:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
+    ],
+    "additionalDirectories": [
+      "c:\\Users\\loren\\Desktop\\betpawa\\1UP_calc"
     ]
   }
 }

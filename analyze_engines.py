@@ -2,15 +2,24 @@
 1UP Engine Analysis Script
 
 Analyzes engine calculation results stored in the database.
-For each event/engine with bookmaker='pawa':
-- Get fair odds (fair_home, fair_away, fair_draw)
-- Apply margins from engine.yaml config to calculate 1UP odds
-- Compare with actual Sportybet 1UP odds
+For each event/engine:
+- Select correct REFERENCE bookmaker odds based on calculation bookmaker
+- Compare engine fair probabilities with reference IMPLIED probabilities
+- Report MAE in probability space (primary KPI)
+- Apply per-selection margins to fair odds for bookmaker simulation
+
+IMPORTANT:
+1. 1UP is NOT a complementary market (Home1UP and Away1UP can both happen)
+2. Reference odds selection:
+   - For pawa/sporty calculations → use Sporty odds as reference
+   - For bet9ja calculations → use Bet9ja odds as reference
+3. All errors computed vs REFERENCE odds only
 
 Usage:
     python analyze_engines.py                    # Full analysis with all margins
     python analyze_engines.py --margin 0.06      # Specific margin (6%)
     python analyze_engines.py --engine poisson   # Specific engine
+    python analyze_engines.py --bookmaker pawa   # Specific bookmaker
     python analyze_engines.py --output reports   # Custom output folder
 """
 
@@ -21,9 +30,10 @@ import sys
 from datetime import datetime
 import json
 from pathlib import Path
-from typing import Optional, Dict, List
+from typing import Optional, Dict, List, Tuple
 import statistics
 import re
+import math
 
 # Add src to path
 PROJECT_ROOT = Path(__file__).parent
@@ -31,7 +41,6 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 from src.db.manager import DatabaseManager
 from src.config import ConfigLoader
-from src.engine.base import devig_two_way
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(
@@ -40,13 +49,47 @@ logging.basicConfig(
 )
 
 
+def odds_to_implied_prob(odds: float) -> Optional[float]:
+    """
+    Convert odds to implied probability (no normalization).
+
+    Args:
+        odds: Decimal odds (e.g., 2.0)
+
+    Returns:
+        Implied probability or None if invalid
+    """
+    if not odds or odds <= 1.0:
+        return None
+    return 1.0 / odds
+
+
+def select_reference_bookmaker(calculation_bookmaker: str) -> str:
+    """
+    Select which bookmaker's actual odds to use as reference for this calculation.
+
+    Args:
+        calculation_bookmaker: The bookmaker this calculation is pricing for
+
+    Returns:
+        Reference bookmaker name ('sporty' or 'bet9ja')
+    """
+    if calculation_bookmaker in ('pawa', 'sporty'):
+        return 'sporty'
+    elif calculation_bookmaker == 'bet9ja':
+        return 'bet9ja'
+    else:
+        # Default fallback
+        return 'sporty'
+
+
 class EngineAnalyzer:
-    """Analyzes engine calculations with margin application."""
-    
+    """Analyzes engine calculations with proper reference-based metrics."""
+
     def __init__(self, db: DatabaseManager, config: ConfigLoader, margins: Optional[List[float]] = None):
         """
         Initialize analyzer.
-        
+
         Args:
             db: Connected database manager
             config: Config loader with engine settings
@@ -54,68 +97,43 @@ class EngineAnalyzer:
         """
         self.db = db
         self.config = config
-        
+
         # Use margins from config if not explicitly provided
         if margins is not None:
             self.margins = margins
         else:
             self.margins = config.get_engine_test_margins()
-    
-    def _apply_margin_to_1up(self, p_home_1up: float, p_away_1up: float, margin: float) -> tuple:
+
+    def _apply_margin_to_1up(self, p_home_1up: float, p_away_1up: float, margin: float) -> Tuple[float, float, float, float]:
         """
-        Apply margin to 1UP probabilities (2-way market: home/away only).
-        
+        Apply per-selection margin to 1UP probabilities.
+
+        Uses odds-side margin: odds_with_margin = fair_odds * (1 - margin)
+
         Args:
             p_home_1up: Fair probability of home 1UP
             p_away_1up: Fair probability of away 1UP
             margin: Target margin (e.g., 0.05 for 5%)
-            
+
         Returns:
-            Tuple of (home_odds, away_odds) with margin applied
+            Tuple of (home_odds, away_odds, home_prob_offer, away_prob_offer)
         """
         if not p_home_1up or not p_away_1up or p_home_1up <= 0 or p_away_1up <= 0:
-            return None, None
-        
-        # Total fair probability (should be ~1.0 for complementary outcomes)
-        total_fair = p_home_1up + p_away_1up
-        
-        # Target total with margin
-        target_total = 1.0 + margin
-        
-        # Scale probabilities to include margin
-        scale_factor = target_total / total_fair
-        p_home_margin = p_home_1up * scale_factor
-        p_away_margin = p_away_1up * scale_factor
-        
-        # Convert to odds
-        home_odds = 1.0 / p_home_margin if p_home_margin > 0 else None
-        away_odds = 1.0 / p_away_margin if p_away_margin > 0 else None
-        
-        return home_odds, away_odds
-    
-    def _actual_to_fair(self, actual_home: float, actual_away: float) -> tuple:
-        """
-        Convert actual odds (with margin) to fair odds (2-way market only).
+            return None, None, None, None
 
-        Args:
-            actual_home: Actual home odds with margin
-            actual_away: Actual away odds with margin
+        # Convert to fair odds
+        fair_home_odds = 1.0 / p_home_1up
+        fair_away_odds = 1.0 / p_away_1up
 
-        Returns:
-            Tuple of (fair_home, fair_away) odds
-        """
-        if not actual_home or not actual_away or actual_home <= 0 or actual_away <= 0:
-            return None, None
+        # Apply margin on odds side (reduces odds, increases bookie edge)
+        home_odds_with_margin = fair_home_odds * (1 - margin)
+        away_odds_with_margin = fair_away_odds * (1 - margin)
 
-        # Use centralized de-vigging function from base.py
-        fair_prob_home = devig_two_way(actual_home, actual_away)
-        fair_prob_away = 1.0 - fair_prob_home
+        # Compute offered implied probs
+        home_prob_offer = odds_to_implied_prob(home_odds_with_margin) if home_odds_with_margin and home_odds_with_margin > 1.0 else None
+        away_prob_offer = odds_to_implied_prob(away_odds_with_margin) if away_odds_with_margin and away_odds_with_margin > 1.0 else None
 
-        # Convert back to odds
-        fair_home = 1.0 / fair_prob_home if fair_prob_home > 0 else None
-        fair_away = 1.0 / fair_prob_away if fair_prob_away > 0 else None
-
-        return fair_home, fair_away
+        return home_odds_with_margin, away_odds_with_margin, home_prob_offer, away_prob_offer
 
     def _get_bet9ja_1up_odds(self, sportradar_id: str, scraping_history_id: int = None) -> Optional[Dict]:
         """
@@ -219,19 +237,20 @@ class EngineAnalyzer:
             params.append(engine_filter)
 
         query += " ORDER BY ec.bookmaker, ec.sportradar_id, ec.engine_name"
-        
+
         cursor.execute(query, params)
         calculations = cursor.fetchall()
-        
+
         results = []
-        
+
         # Prepare margin columns for later use
         self._margin_columns = []
         for margin in self.margins:
             pct = int(round(margin * 100))
             self._margin_columns.extend([
-                f'pawa_{pct}_home', f'pawa_{pct}_away',
-                f'pawa_{pct}_home_diff', f'pawa_{pct}_away_diff',
+                f'offer_{pct}_home', f'offer_{pct}_away',
+                f'offer_{pct}_home_prob', f'offer_{pct}_away_prob',
+                f'offer_{pct}_home_diff', f'offer_{pct}_away_diff',
             ])
 
         for calc in calculations:
@@ -257,15 +276,43 @@ class EngineAnalyzer:
                 actual_sporty_draw
             ) = calc
 
-            actual_fair_home, actual_fair_away = self._actual_to_fair(actual_sporty_home, actual_sporty_away)
+            # STEP 1: Select reference bookmaker for this calculation
+            ref_bookmaker = select_reference_bookmaker(bookmaker)
 
-            # Also fetch Bet9ja actual 1UP for dual comparison
-            bet9ja_1up = self._get_bet9ja_1up_odds(sportradar_id, scraping_history_id)
-            bet9ja_actual_home = bet9ja_1up['home'] if bet9ja_1up else None
-            bet9ja_actual_away = bet9ja_1up['away'] if bet9ja_1up else None
-            bet9ja_actual_draw = bet9ja_1up['draw'] if bet9ja_1up else None
-            bet9ja_fair_home, bet9ja_fair_away = self._actual_to_fair(bet9ja_actual_home, bet9ja_actual_away)
+            # STEP 2: Get reference actual odds
+            if ref_bookmaker == 'sporty':
+                ref_home_odds = actual_sporty_home
+                ref_away_odds = actual_sporty_away
+                ref_draw_odds = actual_sporty_draw
+            elif ref_bookmaker == 'bet9ja':
+                bet9ja_1up = self._get_bet9ja_1up_odds(sportradar_id, scraping_history_id)
+                ref_home_odds = bet9ja_1up['home'] if bet9ja_1up else None
+                ref_away_odds = bet9ja_1up['away'] if bet9ja_1up else None
+                ref_draw_odds = bet9ja_1up['draw'] if bet9ja_1up else None
+            else:
+                ref_home_odds = None
+                ref_away_odds = None
+                ref_draw_odds = None
 
+            # STEP 3: Compute implied probabilities from REFERENCE odds only
+            ref_imp_home = odds_to_implied_prob(ref_home_odds)
+            ref_imp_away = odds_to_implied_prob(ref_away_odds)
+
+            # STEP 4: Compute probability errors vs REFERENCE (primary KPI)
+            err_prob_home_ref = (p_home_1up - ref_imp_home) if (p_home_1up and ref_imp_home) else None
+            err_prob_away_ref = (p_away_1up - ref_imp_away) if (p_away_1up and ref_imp_away) else None
+            abs_err_prob_home_ref = abs(err_prob_home_ref) if err_prob_home_ref is not None else None
+            abs_err_prob_away_ref = abs(err_prob_away_ref) if err_prob_away_ref is not None else None
+
+            # STEP 5: Compute log-odds errors vs REFERENCE (stable metric)
+            logodds_err_home_ref = None
+            logodds_err_away_ref = None
+            if fair_home and ref_home_odds and fair_home > 1.0 and ref_home_odds > 1.0:
+                logodds_err_home_ref = abs(math.log(fair_home) - math.log(ref_home_odds))
+            if fair_away and ref_away_odds and fair_away > 1.0 and ref_away_odds > 1.0:
+                logodds_err_away_ref = abs(math.log(fair_away) - math.log(ref_away_odds))
+
+            # STEP 6: Build result dict with reference-based metrics
             result = {
                 'sportradar_id': sportradar_id,
                 'scraping_history_id': scraping_history_id,
@@ -282,35 +329,52 @@ class EngineAnalyzer:
                 'p_away_1up': round(p_away_1up, 4) if p_away_1up else None,
                 'fair_home': round(fair_home, 3) if fair_home else None,
                 'fair_away': round(fair_away, 3) if fair_away else None,
-                'pawa_draw': round(fair_draw, 3) if fair_draw else None,
-                # Sportybet actual 1UP comparison
-                'sporty_h_1up': round(actual_sporty_home, 3) if actual_sporty_home else None,
-                'sporty_a_1up': round(actual_sporty_away, 3) if actual_sporty_away else None,
-                'draw': round(actual_sporty_draw, 3) if actual_sporty_draw else None,
-                'sporty_fair_h': round(actual_fair_home, 3) if actual_fair_home else None,
-                'sporty_fair_a': round(actual_fair_away, 3) if actual_fair_away else None,
-                'home_fair_diff': round(fair_home - actual_fair_home, 3) if fair_home and actual_fair_home else None,
-                'away_fair_diff': round(fair_away - actual_fair_away, 3) if fair_away and actual_fair_away else None,
-                # Bet9ja actual 1UP comparison
-                'bet9ja_h_1up': round(bet9ja_actual_home, 3) if bet9ja_actual_home else None,
-                'bet9ja_a_1up': round(bet9ja_actual_away, 3) if bet9ja_actual_away else None,
-                'bet9ja_draw': round(bet9ja_actual_draw, 3) if bet9ja_actual_draw else None,
-                'bet9ja_fair_h': round(bet9ja_fair_home, 3) if bet9ja_fair_home else None,
-                'bet9ja_fair_a': round(bet9ja_fair_away, 3) if bet9ja_fair_away else None,
-                'bet9ja_home_diff': round(fair_home - bet9ja_fair_home, 3) if fair_home and bet9ja_fair_home else None,
-                'bet9ja_away_diff': round(fair_away - bet9ja_fair_away, 3) if fair_away and bet9ja_fair_away else None,
+                'fair_draw': round(fair_draw, 3) if fair_draw else None,
+                # REFERENCE odds (used for all error calculations)
+                'ref_bookmaker': ref_bookmaker,
+                'ref_home_odds': round(ref_home_odds, 3) if ref_home_odds else None,
+                'ref_away_odds': round(ref_away_odds, 3) if ref_away_odds else None,
+                'ref_draw_odds': round(ref_draw_odds, 3) if ref_draw_odds else None,
+                'ref_imp_home': round(ref_imp_home, 4) if ref_imp_home else None,
+                'ref_imp_away': round(ref_imp_away, 4) if ref_imp_away else None,
+                # REFERENCE-based errors (primary metrics)
+                'err_prob_home_ref': round(err_prob_home_ref, 4) if err_prob_home_ref is not None else None,
+                'err_prob_away_ref': round(err_prob_away_ref, 4) if err_prob_away_ref is not None else None,
+                'abs_err_prob_home_ref': round(abs_err_prob_home_ref, 4) if abs_err_prob_home_ref else None,
+                'abs_err_prob_away_ref': round(abs_err_prob_away_ref, 4) if abs_err_prob_away_ref else None,
+                'logodds_err_home_ref': round(logodds_err_home_ref, 4) if logodds_err_home_ref else None,
+                'logodds_err_away_ref': round(logodds_err_away_ref, 4) if logodds_err_away_ref else None,
             }
 
-            # For each margin, apply to fair probabilities and add columns
+            # STEP 7: Optional - include other bookmaker odds for reference (not used in errors)
+            # Only include if filter allows
+            if not bookmaker_filter or bookmaker_filter in ('pawa', 'sporty'):
+                result['other_sporty_home'] = round(actual_sporty_home, 3) if actual_sporty_home else None
+                result['other_sporty_away'] = round(actual_sporty_away, 3) if actual_sporty_away else None
+                result['other_sporty_draw'] = round(actual_sporty_draw, 3) if actual_sporty_draw else None
+
+            if not bookmaker_filter or bookmaker_filter == 'bet9ja':
+                bet9ja_1up = self._get_bet9ja_1up_odds(sportradar_id, scraping_history_id)
+                if bet9ja_1up:
+                    result['other_bet9ja_home'] = round(bet9ja_1up['home'], 3) if bet9ja_1up['home'] else None
+                    result['other_bet9ja_away'] = round(bet9ja_1up['away'], 3) if bet9ja_1up['away'] else None
+                    result['other_bet9ja_draw'] = round(bet9ja_1up['draw'], 3) if bet9ja_1up['draw'] else None
+
+            # STEP 8: Apply margins to fair odds and compute diffs vs REFERENCE
             for margin in self.margins:
                 pct = int(round(margin * 100))
-                pawa_home, pawa_away = self._apply_margin_to_1up(p_home_1up, p_away_1up, margin)
-                result[f'pawa_{pct}_home'] = round(pawa_home, 3) if pawa_home else None
-                result[f'pawa_{pct}_away'] = round(pawa_away, 3) if pawa_away else None
-                result[f'pawa_{pct}_home_diff'] = round((pawa_home - actual_sporty_home), 3) if pawa_home and actual_sporty_home else None
-                result[f'pawa_{pct}_away_diff'] = round((pawa_away - actual_sporty_away), 3) if pawa_away and actual_sporty_away else None
+                offer_home, offer_away, offer_home_prob, offer_away_prob = self._apply_margin_to_1up(p_home_1up, p_away_1up, margin)
 
-            # Pivot market snapshots into per-row columns (market_specifier_1_odd, _2_odd, _3_odd)
+                result[f'offer_{pct}_home'] = round(offer_home, 3) if offer_home else None
+                result[f'offer_{pct}_away'] = round(offer_away, 3) if offer_away else None
+                result[f'offer_{pct}_home_prob'] = round(offer_home_prob, 4) if offer_home_prob else None
+                result[f'offer_{pct}_away_prob'] = round(offer_away_prob, 4) if offer_away_prob else None
+
+                # Diff vs REFERENCE odds (not always Sporty!)
+                result[f'offer_{pct}_home_diff'] = round((offer_home - ref_home_odds), 3) if offer_home and ref_home_odds else None
+                result[f'offer_{pct}_away_diff'] = round((offer_away - ref_away_odds), 3) if offer_away and ref_away_odds else None
+
+            # STEP 9: Pivot market snapshots into per-row columns (optional - for detailed analysis)
             try:
                 if scraping_history_id:
                     snaps = self.db.get_snapshots_for_event(sportradar_id, scraping_history_id)
@@ -344,109 +408,160 @@ class EngineAnalyzer:
                     col1 = f"{base}_1_odd"
                     col2 = f"{base}_2_odd"
                     col3 = f"{base}_3_odd"
-                    # Add pawa odds (may be None). Many specifier markets (OU lines) only have 2 outcomes,
-                    # so only include the 3rd column when a 3rd outcome exists.
-                    o1 = s.get('pawa_outcome_1_odds')
-                    o2 = s.get('pawa_outcome_2_odds')
-                    o3 = s.get('pawa_outcome_3_odds')
+
+                    # Use bookmaker-specific odds based on calculation target
+                    if bookmaker == 'pawa':
+                        o1 = s.get('pawa_outcome_1_odds')
+                        o2 = s.get('pawa_outcome_2_odds')
+                        o3 = s.get('pawa_outcome_3_odds')
+                    elif bookmaker == 'sporty':
+                        o1 = s.get('sporty_outcome_1_odds')
+                        o2 = s.get('sporty_outcome_2_odds')
+                        o3 = s.get('sporty_outcome_3_odds')
+                    elif bookmaker == 'bet9ja':
+                        o1 = s.get('bet9ja_outcome_1_odds')
+                        o2 = s.get('bet9ja_outcome_2_odds')
+                        o3 = s.get('bet9ja_outcome_3_odds')
+                    else:
+                        o1 = o2 = o3 = None
+
                     result[col1] = round(o1, 3) if o1 else None
                     result[col2] = round(o2, 3) if o2 else None
                     if o3 is not None:
                         result[col3] = round(o3, 3) if o3 else None
 
             results.append(result)
-        
+
         return results
-    
+
     def export_to_csv(self, results: List[Dict], output_path: Path) -> Path:
         """Export analysis results to CSV file."""
         if not results:
             logger.warning("No results to export")
             return None
-        
+
         output_path.parent.mkdir(parents=True, exist_ok=True)
-        
-        # Build ordered fieldnames: core fields, dynamically discovered market columns, then margin columns
+
+        # Build ordered fieldnames: core fields, reference fields, error fields, margin fields, other fields
         core_fields = [
             'sportradar_id', 'scraping_history_id', 'engine_name', 'bookmaker',
             'start_time', 'tournament_name', 'home_team', 'away_team',
             'lambda_home', 'lambda_away', 'lambda_total',
-            'p_home_1up', 'p_away_1up', 'fair_home', 'fair_away', 'pawa_draw',
-            # Sportybet actual 1UP comparison
-            'sporty_h_1up', 'sporty_a_1up', 'draw', 'sporty_fair_h', 'sporty_fair_a',
-            'home_fair_diff', 'away_fair_diff',
-            # Bet9ja actual 1UP comparison
-            'bet9ja_h_1up', 'bet9ja_a_1up', 'bet9ja_draw', 'bet9ja_fair_h', 'bet9ja_fair_a',
-            'bet9ja_home_diff', 'bet9ja_away_diff'
+            'p_home_1up', 'p_away_1up', 'fair_home', 'fair_away', 'fair_draw',
+        ]
+
+        reference_fields = [
+            'ref_bookmaker', 'ref_home_odds', 'ref_away_odds', 'ref_draw_odds',
+            'ref_imp_home', 'ref_imp_away',
+        ]
+
+        error_fields = [
+            'err_prob_home_ref', 'err_prob_away_ref',
+            'abs_err_prob_home_ref', 'abs_err_prob_away_ref',
+            'logodds_err_home_ref', 'logodds_err_away_ref',
         ]
 
         margin_cols = getattr(self, '_margin_columns', [])
 
-        # Discover extra market columns created from snapshots
+        # Discover extra columns (other bookmaker odds, market snapshots)
         all_keys = set()
         for r in results:
             all_keys.update(r.keys())
 
-        # Only keep pivoted pawa market columns (they end with _1_odd/_2_odd/_3_odd)
-        extra_cols = sorted(
-            [
-                k for k in all_keys
-                if k not in core_fields and k not in margin_cols and re.search(r"_(1|2|3)_odd$", k)
-            ]
-        )
+        other_book_cols = sorted([k for k in all_keys if k.startswith('other_')])
+        market_cols = sorted([k for k in all_keys if k not in core_fields and k not in reference_fields
+                             and k not in error_fields and k not in margin_cols and k not in other_book_cols
+                             and re.search(r"_(1|2|3)_odd$", k)])
 
-        fieldnames = core_fields + extra_cols + margin_cols
-        
+        fieldnames = core_fields + reference_fields + error_fields + margin_cols + other_book_cols + market_cols
+
         with open(output_path, 'w', newline='', encoding='utf-8') as f:
             writer = csv.DictWriter(f, fieldnames=fieldnames)
             writer.writeheader()
             writer.writerows(results)
-        
+
         logger.info(f"Results exported to {output_path}")
         return output_path
-    
-    def print_summary(self, results: List[Dict]):
+
+    def print_summary(self, results: List[Dict], bookmaker_filter: Optional[str] = None):
         """Print analysis summary to terminal."""
         if not results:
-            print("\n⚠️  No analysis results available\n")
+            print("\n[WARNING] No analysis results available\n")
             return
-        
+
         print("\n" + "=" * 80)
         print("  1UP ENGINE ANALYSIS SUMMARY")
         print("=" * 80)
-        
+
         unique_events = len(set(r['sportradar_id'] for r in results))
         unique_engines = len(set(r['engine_name'] for r in results))
-        
-        print(f"\n📊 Dataset Overview:")
+
+        print(f"\n[Dataset Overview]")
         print(f"  Events analyzed: {unique_events}")
         print(f"  Engines tested: {unique_engines}")
         print(f"  Total records: {len(results):,}")
-        
-        # Fair diff by engine
-        print(f"\n📈 Fair Odds Difference by Engine (fair - actual_fair):")
-        print(f"  {'Engine':<20} {'Avg Home Diff':>14} {'Avg Away Diff':>14} {'Records':>10}")
-        print(f"  {'-'*60}")
-        
+
+        # Determine reference description
+        if bookmaker_filter == 'pawa':
+            ref_note = " (reference: Sporty odds - same provider)"
+        elif bookmaker_filter == 'sporty':
+            ref_note = " (reference: Sporty odds)"
+        elif bookmaker_filter == 'bet9ja':
+            ref_note = " (reference: Bet9ja odds)"
+        else:
+            ref_note = " (reference: per-row - Sporty for pawa/sporty, Bet9ja for bet9ja)"
+
+        # Probability MAE by engine (primary KPI) - using REFERENCE errors only
+        print(f"\n[Probability MAE by Engine]{ref_note}:")
+        print(f"  {'Engine':<25} {'Home MAE':>12} {'Away MAE':>12} {'Records':>10}")
+        print(f"  {'-'*65}")
+
         by_engine = {}
         for r in results:
             engine = r['engine_name']
             if engine not in by_engine:
-                by_engine[engine] = {'home': [], 'away': []}
-            
-            if r.get('home_fair_diff') is not None:
-                by_engine[engine]['home'].append(r['home_fair_diff'])
-            if r.get('away_fair_diff') is not None:
-                by_engine[engine]['away'].append(r['away_fair_diff'])
-        
+                by_engine[engine] = {'home_ref': [], 'away_ref': []}
+
+            # Reference errors only
+            if r.get('abs_err_prob_home_ref') is not None:
+                by_engine[engine]['home_ref'].append(r['abs_err_prob_home_ref'])
+            if r.get('abs_err_prob_away_ref') is not None:
+                by_engine[engine]['away_ref'].append(r['abs_err_prob_away_ref'])
+
         for engine in sorted(by_engine.keys()):
-            home_diffs = by_engine[engine]['home']
-            away_diffs = by_engine[engine]['away']
-            avg_home = statistics.mean(home_diffs) if home_diffs else 0
-            avg_away = statistics.mean(away_diffs) if away_diffs else 0
-            count = len(home_diffs)
-            print(f"  {engine:<20} {avg_home:>14.4f} {avg_away:>14.4f} {count:>10}")
-        
+            data = by_engine[engine]
+            home_errors = data['home_ref']
+            away_errors = data['away_ref']
+
+            mae_home = statistics.mean(home_errors) if home_errors else 0
+            mae_away = statistics.mean(away_errors) if away_errors else 0
+            count = len(home_errors)
+            print(f"  {engine:<25} {mae_home:>12.4f} {mae_away:>12.4f} {count:>10}")
+
+        # Log-odds MAE (stable metric, less sensitive to longshots)
+        print(f"\n[Log-Odds MAE by Engine]{ref_note}:")
+        print(f"  {'Engine':<25} {'Home Log-MAE':>15} {'Away Log-MAE':>15} {'Records':>10}")
+        print(f"  {'-'*70}")
+
+        by_engine_log = {}
+        for r in results:
+            engine = r['engine_name']
+            if engine not in by_engine_log:
+                by_engine_log[engine] = {'home': [], 'away': []}
+
+            if r.get('logodds_err_home_ref') is not None:
+                by_engine_log[engine]['home'].append(r['logodds_err_home_ref'])
+            if r.get('logodds_err_away_ref') is not None:
+                by_engine_log[engine]['away'].append(r['logodds_err_away_ref'])
+
+        for engine in sorted(by_engine_log.keys()):
+            home_log = by_engine_log[engine]['home']
+            away_log = by_engine_log[engine]['away']
+            mae_home_log = statistics.mean(home_log) if home_log else 0
+            mae_away_log = statistics.mean(away_log) if away_log else 0
+            count_log = len(home_log)
+            print(f"  {engine:<25} {mae_home_log:>15.4f} {mae_away_log:>15.4f} {count_log:>10}")
+
         print("\n" + "=" * 80 + "\n")
 
 
@@ -466,14 +581,14 @@ Examples:
   python analyze_engines.py -o reports                 # Custom output folder
     """
     )
-    
+
     parser.add_argument(
         '--margin',
         type=float,
         default=None,
         help='Analyze specific margin, e.g. 0.06 for 6 percent'
     )
-    
+
     parser.add_argument(
         '--engine',
         type=str,
@@ -516,19 +631,19 @@ Examples:
 
         # Analyze all events
         bookmaker_msg = f" (bookmaker: {args.bookmaker})" if args.bookmaker else " (all bookmakers)"
-        print(f"\n🔍 Analyzing events{bookmaker_msg}...")
+        print(f"\n[Analyzing events]{bookmaker_msg}...")
         results = analyzer.analyze_all_events(engine_filter=args.engine, bookmaker_filter=args.bookmaker)
-        
+
         # Export to CSV
         if not args.no_csv and results:
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             output_file = f"analysis_{timestamp}.csv"
             output_path = Path(args.output) / output_file
             analyzer.export_to_csv(results, output_path)
-        
+
         # Print summary
-        analyzer.print_summary(results)
-        
+        analyzer.print_summary(results, bookmaker_filter=args.bookmaker)
+
     finally:
         db.close()
 
