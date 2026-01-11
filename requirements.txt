@@ -1,4 +1,7 @@
 numpy
 pyyaml
-# optional (for optimizer): scipy
+playwright
+httpx
+
+# Optional (for optimizer)
 # scipy
