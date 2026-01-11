@@ -14,14 +14,7 @@ from typing import Optional
 
 from src.db.manager import DatabaseManager
 from src.config import ConfigLoader
-from src.engine import (
-    PoissonEngine,
-    CalibratedPoissonEngine,
-    Lead1CalibratedEngine,
-    FirstGoalEngine,
-    HandicapEngine,
-    BTTSEngine,
-)
+from src.engine import CalibratedPoissonEngine, FTSCalibratedDPEngine
 
 logger = logging.getLogger(__name__)
 
@@ -32,60 +25,43 @@ DEFAULT_WORKERS = max(2, os.cpu_count() or 4)
 class EngineRunner:
     """
     Runs all 1UP pricing engines on scraped events.
-    
+
     Usage:
         runner = EngineRunner(db)
         runner.run_all_events()  # Process all matched events
         runner.run_event(sportradar_id)  # Process single event
     """
-    
+
     def __init__(self, db: DatabaseManager, config: ConfigLoader = None):
         """
         Initialize engine runner.
-        
+
         Args:
             db: Database manager instance (must be connected)
             config: Config loader (optional, will create if not provided)
         """
         self.db = db
         self.config = config or ConfigLoader()
-        
+
         # Load simulation settings
         sim_config = self.config.get_engine_simulation_settings()
-        
+
         # Initialize engines with no margin (compute fair odds)
         engine_params = {
             'n_sims': sim_config['n_sims'],
             'match_minutes': sim_config['match_minutes'],
             'margin_pct': 0.0,  # Fair odds - no margin
         }
-        
 
+        # Initialize both engines for comparison
+        self.engines = [
+            CalibratedPoissonEngine(**engine_params),
+            FTSCalibratedDPEngine(**engine_params),
+        ]
 
-        from src.engine import (
-            PoissonEngine,
-            CalibratedPoissonEngine,
-            Lead1CalibratedEngine,
-            FirstGoalEngine,
-            HandicapEngine,
-            BTTSEngine,
-            SupremacyPoissonEngine,
-            CalibratedSupremacyPoissonEngine,
-        )
-        all_engines = {
-            'PoissonEngine': PoissonEngine,
-            'CalibratedPoissonEngine': CalibratedPoissonEngine,
-            'Lead1CalibratedEngine': Lead1CalibratedEngine,
-            'FirstGoalEngine': FirstGoalEngine,
-            'HandicapEngine': HandicapEngine,
-            'BTTSEngine': BTTSEngine,
-            'SupremacyPoissonEngine': SupremacyPoissonEngine,
-            'CalibratedSupremacyPoissonEngine': CalibratedSupremacyPoissonEngine,
-        }
-        enabled_engine_names = self.config.get_enabled_engines()
-        self.engines = [all_engines[name](**engine_params) for name in enabled_engine_names if name in all_engines]
-        
-        logger.info(f"EngineRunner initialized with {len(self.engines)} engines")
+        logger.info(f"EngineRunner initialized with {len(self.engines)} engine(s)")
+        for engine in self.engines:
+            logger.info(f"  - {engine.name}")
         logger.info(f"  Simulations: {sim_config['n_sims']:,}")
     
     def _compute_event(self, markets_raw: list, sportradar_id: str) -> list:
@@ -502,10 +478,13 @@ class EngineRunner:
         away_line, away_over, away_under = self._find_ou_market(markets, "Away O/U", bookmaker, 0.5)
         home_lead1_yes, home_lead1_no = self._get_lead1_odds(markets, 'home')
         away_lead1_yes, away_lead1_no = self._get_lead1_odds(markets, 'away')
-        fg_home, fg_no_goal, fg_away = self._get_first_goal_odds(markets, bookmaker)
+
+        # Get FTS odds from ALL bookmakers (for provider-aware selection)
+        fts_all = self._get_first_goal_all_bookmakers(markets)
+
         btts_yes, btts_no = self._get_btts_odds(markets, bookmaker)
         asian_handicap = self._get_asian_handicap_odds(markets, bookmaker)
-        
+
         return {
             '1x2': (home_1x2, draw_1x2, away_1x2),
             'total_ou': (total_line, total_over, total_under),
@@ -513,7 +492,7 @@ class EngineRunner:
             'away_ou': (away_line, away_over, away_under),
             'home_lead1': (home_lead1_yes, home_lead1_no),
             'away_lead1': (away_lead1_yes, away_lead1_no),
-            'first_goal': (fg_home, fg_no_goal, fg_away),
+            'first_goal': fts_all,  # Dict with 'sporty' and 'bet9ja' keys
             'btts': (btts_yes, btts_no),
             'asian_handicap': asian_handicap,
         }
@@ -633,18 +612,54 @@ class EngineRunner:
                 continue
             if line is None:
                 continue
-            
+
             if bookmaker == 'sporty':
                 home_odds = m['sporty_outcome_1_odds']
                 away_odds = m['sporty_outcome_2_odds']
             else:
                 home_odds = m['pawa_outcome_1_odds']
                 away_odds = m['pawa_outcome_2_odds']
-            
+
             if home_odds and away_odds:
                 result[line] = (home_odds, away_odds)
-        
+
         return result if result else None
+
+    def _get_first_goal_all_bookmakers(self, markets: list[dict]) -> dict:
+        """
+        Get First Team to Score odds from ALL bookmakers.
+
+        Critical for FTS-Calibrated engine which needs provider-aware FTS selection:
+        - Betpawa uses Sporty FTS (same odds provider)
+        - Bet9ja uses its own FTS
+
+        Returns:
+            Dict with 'sporty' and 'bet9ja' keys, each containing (fg_home, fg_nog, fg_away) or None
+        """
+        m = self._get_market_odds(markets, "First Team to Score", "1")
+        if not m:
+            return {'sporty': None, 'bet9ja': None}
+
+        sporty_fts = None
+        if m['sporty']['outcome_1'] and m['sporty']['outcome_2'] and m['sporty']['outcome_3']:
+            sporty_fts = (
+                m['sporty']['outcome_1'],  # Home
+                m['sporty']['outcome_2'],  # No Goal
+                m['sporty']['outcome_3']   # Away
+            )
+
+        bet9ja_fts = None
+        if m['bet9ja']['outcome_1'] and m['bet9ja']['outcome_2'] and m['bet9ja']['outcome_3']:
+            bet9ja_fts = (
+                m['bet9ja']['outcome_1'],  # Home
+                m['bet9ja']['outcome_2'],  # No Goal
+                m['bet9ja']['outcome_3']   # Away
+            )
+
+        return {
+            'sporty': sporty_fts,
+            'bet9ja': bet9ja_fts
+        }
 
 
 def run_engines_on_all_events(db_path: str = None) -> dict:
