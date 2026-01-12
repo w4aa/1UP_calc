@@ -14,6 +14,16 @@ engines:
 # Settings for the early payout pricing calculator
 
 # ============================================
+# Calibration Settings
+# ============================================
+calibration:
+  # Probability adjustments applied to calculated 1UP probabilities
+  # Positive values increase probability, negative values decrease
+  # Range: ±0.10000 (±10 percentage points)
+  home_skew: 0.00000
+  away_skew: 0.00000
+
+# ============================================
 # Margin Settings
 # ============================================
 margin:

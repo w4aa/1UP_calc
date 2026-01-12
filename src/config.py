@@ -217,7 +217,7 @@ class ConfigLoader:
     def get_engine_output_settings(self) -> dict:
         """
         Get output formatting settings.
-        
+
         Returns:
             Dict with 'odds_precision' and 'prob_precision'
         """
@@ -226,6 +226,20 @@ class ConfigLoader:
         return {
             "odds_precision": output.get("odds_precision", 2),
             "prob_precision": output.get("prob_precision", 1),
+        }
+
+    def get_engine_calibration_skew(self) -> dict:
+        """
+        Get probability skew calibration settings for engines.
+
+        Returns:
+            Dict with 'home_skew' and 'away_skew' float values
+        """
+        config = self.load_engine_config()
+        calibration = config.get("calibration", {})
+        return {
+            "home_skew": float(calibration.get("home_skew", 0.0)),
+            "away_skew": float(calibration.get("away_skew", 0.0)),
         }
 
 
