@@ -199,16 +199,17 @@ class UnifiedScraper:
             # Print final stats
             self._print_stats()
             
-            # Run 1UP pricing engines on all matched events
+            # Run 1UP pricing engines on new snapshots
             if run_engines:
                 logger.info("\n" + "=" * 60)
-                logger.info("RUNNING 1UP PRICING ENGINES")
+                logger.info("RUNNING 1UP PRICING ENGINES ON NEW SNAPSHOTS")
                 logger.info("=" * 60)
-                
+
                 runner = EngineRunner(self.db, self.config)
-                engine_results = runner.run_all_events()
-                
+                engine_results = runner.run_new_snapshots()
+
                 logger.info(f"\nEngine calculations complete:")
+                logger.info(f"  Sessions processed: {engine_results.get('sessions', 0)}")
                 logger.info(f"  Events processed: {engine_results['events']}")
                 logger.info(f"  Total calculations: {engine_results['calculations']}")
             
