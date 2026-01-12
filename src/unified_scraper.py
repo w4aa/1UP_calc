@@ -214,6 +214,108 @@ class UnifiedScraper:
         finally:
             self.db.close()
 
+    async def _check_betpawa_changes_for_tournament(self, tournament: dict, force: bool) -> dict:
+        """
+        Check BetPawa 1x2 odds for all events in tournament and identify changed events.
+
+        This method fetches BetPawa events and 1x2 odds, then checks which events have
+        changed 1x2 odds compared to the last market snapshot. Only changed events are
+        returned for full multi-bookmaker scraping.
+
+        Args:
+            tournament: Tournament dict with pawa_competition_id
+            force: If True, return all events regardless of change status
+
+        Returns:
+            Dict mapping sportradar_id -> {
+                'home_odds': float,
+                'draw_odds': float,
+                'away_odds': float,
+                'event': PawaEvent object
+            }
+        """
+        logger.info(f"\n--- BetPawa Change Detection [{tournament['name']}] ---")
+
+        changed_events = {}
+
+        if not tournament.get("pawa_competition_id"):
+            logger.warning(f"No BetPawa competition ID for {tournament['name']}, skipping change detection")
+            return changed_events
+
+        try:
+            async with BetpawaEventsScraper() as events_scraper:
+                # Fetch events
+                tourney = await events_scraper.fetch_competition_events(
+                    competition_id=tournament["pawa_competition_id"],
+                    category_id=tournament.get("pawa_category_id", "2"),
+                    competition_name=tournament["name"],
+                )
+
+                if not tourney or not tourney.events:
+                    logger.warning(f"No BetPawa events found for {tournament['name']}")
+                    return changed_events
+
+                logger.info(f"[BetPawa Change Detection] Found {len(tourney.events)} events")
+
+                # Fetch 1x2 markets for each event to check for changes
+                async with BetpawaMarketsScraper(enabled_market_ids=["3743"]) as markets_scraper:
+                    for event in tourney.events:
+                        if not event.sportradar_id:
+                            continue
+
+                        # Fetch 1x2 market (market_type_id = 3743)
+                        markets = await markets_scraper.fetch_event_markets(event.event_id)
+
+                        # Extract 1x2 odds
+                        odds_1x2 = None
+                        for market in markets:
+                            if market.market_type_id == "3743" and not market.handicap:
+                                if len(market.prices) >= 3:
+                                    odds_1x2 = (
+                                        market.prices[0].price,
+                                        market.prices[1].price,
+                                        market.prices[2].price,
+                                    )
+                                    break
+
+                        if not odds_1x2:
+                            continue
+
+                        # Check if odds changed (thread-safe)
+                        async with self._db_lock:
+                            if force:
+                                # Force mode: include all events
+                                changed_events[event.sportradar_id] = {
+                                    'home_odds': odds_1x2[0],
+                                    'draw_odds': odds_1x2[1],
+                                    'away_odds': odds_1x2[2],
+                                    'event': event,
+                                }
+                            else:
+                                # Check if 1x2 odds changed from last snapshot
+                                changed = self.db.check_1x2_odds_changed(
+                                    sportradar_id=event.sportradar_id,
+                                    bookmaker="pawa",
+                                    home_odds=odds_1x2[0],
+                                    draw_odds=odds_1x2[1],
+                                    away_odds=odds_1x2[2],
+                                )
+
+                                if changed:
+                                    changed_events[event.sportradar_id] = {
+                                        'home_odds': odds_1x2[0],
+                                        'draw_odds': odds_1x2[1],
+                                        'away_odds': odds_1x2[2],
+                                        'event': event,
+                                    }
+
+                logger.info(f"[BetPawa Change Detection] {len(tourney.events)} events found, {len(changed_events)} have 1x2 changes")
+
+        except Exception as e:
+            logger.error(f"BetPawa change detection error [{tournament['name']}]: {e}")
+
+        return changed_events
+
     async def _process_tournament(self, tournament: dict, scrape_sporty: bool, scrape_pawa: bool, force: bool):
         """Process a single tournament - scrape both bookmakers in parallel."""
         logger.info(f"\n{'='*60}")
