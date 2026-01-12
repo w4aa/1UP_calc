@@ -11,7 +11,7 @@ None
 ## Phases
 
 - [x] **Phase 1: Change Detection Foundation** - Implement 1x2 odds comparison logic
-- [ ] **Phase 2: Integrated Scraping Flow** - Connect change detection to scraping pipeline
+- [x] **Phase 2: Integrated Scraping Flow** - Connect change detection to scraping pipeline
 - [ ] **Phase 3: Engine Configuration & Validation** - Add calibration config and verify execution
 - [ ] **Phase 4: End-to-End Data Flow** - Complete tournament to storage pipeline
 - [ ] **Phase 5: Data Quality Validation** - Ensure scrapers run smoothly
@@ -30,7 +30,8 @@ None
 **Goal**: Connect change detection to multi-bookmaker scraping pipeline so scraping only happens when 1x2 odds change
 **Depends on**: Phase 1
 **Research**: Unlikely (existing scrapers, just connecting the flow)
-**Plans**: TBD
+**Plans**: 1/1 complete
+**Status**: Complete (2026-01-12)
 
 ### Phase 3: Engine Configuration & Validation
 **Goal**: Add config system for engine probability skew (home/away adjustments with ±#.###0 precision), verify automatic execution works correctly, and ensure engines only calculate new snapshots (skip if sportradar_id + history_id already exists in engine_calculations)
@@ -61,7 +62,7 @@ None
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Change Detection Foundation | 1/1 | Complete | 2026-01-11 |
-| 2. Integrated Scraping Flow | 0/TBD | Not started | - |
+| 2. Integrated Scraping Flow | 1/1 | Complete | 2026-01-12 |
 | 3. Engine Configuration & Validation | 0/TBD | Not started | - |
 | 4. End-to-End Data Flow | 0/TBD | Not started | - |
 | 5. Data Quality Validation | 0/TBD | Not started | - |
