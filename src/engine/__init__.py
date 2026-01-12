@@ -4,7 +4,6 @@
 Contains engines for calculating 1UP 1X2 markets.
 
 Engines:
-- CalibratedPoissonEngine: Poisson with empirical underdog correction
 - FTSCalibratedDPEngine: FTS-anchored DP with post-FTS calibration (provider-aware)
 """
 
@@ -15,7 +14,6 @@ from .base import (
     simulate_1up_probabilities,
     fit_lambda_from_ou_lines,
 )
-from .poisson_calibrated import CalibratedPoissonEngine
 from .fts_calibrated_dp import FTSCalibratedDPEngine
 
 __all__ = [
@@ -24,6 +22,5 @@ __all__ = [
     'poisson_sample',
     'simulate_1up_probabilities',
     'fit_lambda_from_ou_lines',
-    'CalibratedPoissonEngine',
     'FTSCalibratedDPEngine',
 ]

@@ -14,7 +14,7 @@ from typing import Optional
 
 from src.db.manager import DatabaseManager
 from src.config import ConfigLoader
-from src.engine import CalibratedPoissonEngine, FTSCalibratedDPEngine
+from src.engine import FTSCalibratedDPEngine
 
 logger = logging.getLogger(__name__)
 
@@ -46,22 +46,19 @@ class EngineRunner:
         # Load simulation settings
         sim_config = self.config.get_engine_simulation_settings()
 
-        # Initialize engines with no margin (compute fair odds)
+        # Initialize engine with no margin (compute fair odds)
         engine_params = {
             'n_sims': sim_config['n_sims'],
             'match_minutes': sim_config['match_minutes'],
             'margin_pct': 0.0,  # Fair odds - no margin
         }
 
-        # Initialize both engines for comparison
+        # Initialize FTS-Calibrated-DP engine (only engine used)
         self.engines = [
-            CalibratedPoissonEngine(**engine_params),
             FTSCalibratedDPEngine(**engine_params),
         ]
 
-        logger.info(f"EngineRunner initialized with {len(self.engines)} engine(s)")
-        for engine in self.engines:
-            logger.info(f"  - {engine.name}")
+        logger.info(f"EngineRunner initialized with FTS-Calibrated-DP engine")
         logger.info(f"  Simulations: {sim_config['n_sims']:,}")
     
     def _compute_event(self, markets_raw: list, sportradar_id: str, scraping_history_id: int = None) -> list:
@@ -74,18 +71,11 @@ class EngineRunner:
         Args:
             markets_raw: Market data for the event
             sportradar_id: Event ID
-            scraping_history_id: Scraping session ID (for duplicate checking)
+            scraping_history_id: Scraping session ID (for record keeping)
 
         Returns:
             List of calculation result dicts ready for DB insertion
         """
-        # Check if calculations already exist for this snapshot
-        if scraping_history_id:
-            existing = self.db.get_calculation_for_snapshot(sportradar_id, scraping_history_id)
-            if existing:
-                logger.debug(f"Skipping {sportradar_id} - calculations already exist for history_id {scraping_history_id}")
-                return []
-
         if not markets_raw:
             return []
 
@@ -141,6 +131,13 @@ class EngineRunner:
         Returns:
             Number of calculations stored
         """
+        # Check if calculations already exist for this snapshot
+        if scraping_history_id:
+            existing = self.db.get_calculation_for_snapshot(sportradar_id, scraping_history_id)
+            if existing:
+                logger.debug(f"Skipping {sportradar_id} - calculations already exist for history_id {scraping_history_id}")
+                return 0
+
         # Get markets for this event
         markets_raw = self.db.get_markets_for_event(sportradar_id)
 
@@ -259,12 +256,20 @@ class EngineRunner:
         event_data = []
         for row in events:
             sportradar_id = row['sportradar_id']
-            markets_raw = self.db.get_markets_for_event(sportradar_id)
-            
+
             # Get latest scraping session for this event
             latest_session = self.db.get_latest_match_session(sportradar_id)
             session_id = latest_session['id'] if latest_session else None
-            
+
+            # Check if calculations already exist for this snapshot
+            if session_id:
+                existing = self.db.get_calculation_for_snapshot(sportradar_id, session_id)
+                if existing:
+                    logger.debug(f"Skipping {sportradar_id} - calculations already exist")
+                    continue
+
+            markets_raw = self.db.get_markets_for_event(sportradar_id)
+
             event_data.append({
                 'sportradar_id': sportradar_id,
                 'home_team': row['home_team'],
@@ -408,9 +413,17 @@ class EngineRunner:
         session_data = []
         for session in sessions:
             sportradar_id = session['sportradar_id']
+            session_id = session['id']
+
+            # Check if calculations already exist for this snapshot
+            existing = self.db.get_calculation_for_snapshot(sportradar_id, session_id)
+            if existing:
+                logger.debug(f"Skipping session {session_id} - calculations already exist")
+                continue
+
             markets_raw = self.db.get_markets_for_event(sportradar_id)
             session_data.append({
-                'session_id': session['id'],
+                'session_id': session_id,
                 'sportradar_id': sportradar_id,
                 'home_team': session.get('home_team', 'Unknown'),
                 'away_team': session.get('away_team', 'Unknown'),

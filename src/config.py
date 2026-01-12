@@ -166,40 +166,6 @@ class ConfigLoader:
         path = self.config_dir / "engine.yaml"
         return self._load_yaml(path)
     
-    def get_engine_margin(self) -> dict:
-        """
-        Get margin settings for 1UP engine.
-        
-        Returns:
-            Dict with 'default', 'home', 'draw', 'away' margin values
-        """
-        config = self.load_engine_config()
-        margin = config.get("margin", {})
-        default = margin.get("default", 0.05)
-        return {
-            "default": default,
-            "home": margin.get("home") if margin.get("home") is not None else default,
-            "draw": margin.get("draw") if margin.get("draw") is not None else default,
-            "away": margin.get("away") if margin.get("away") is not None else default,
-        }
-    
-    def get_engine_test_margins(self) -> list[float]:
-        """
-        Get list of margin values to test for optimization.
-        
-        Returns:
-            List of margin values (e.g., [0.03, 0.04, 0.05, 0.06])
-        """
-        config = self.load_engine_config()
-        margin = config.get("margin", {})
-        test_values = margin.get("test_values")
-        
-        if test_values and isinstance(test_values, list):
-            return [float(v) for v in test_values]
-        
-        # Fallback to just the default value
-        return [margin.get("default", 0.05)]
-    
     def get_engine_simulation_settings(self) -> dict:
         """
         Get simulation settings for 1UP engine.

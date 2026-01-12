@@ -1,17 +1,11 @@
-# ============================================
-# Engine Enable/Disable
-# ============================================
-engines:
-  PoissonEngine: false
-  CalibratedPoissonEngine: true
-  Lead1CalibratedEngine: false
-  FirstGoalEngine: false
-  HandicapEngine: false
-  BTTSEngine: false
-  SupremacyPoissonEngine: false
-  CalibratedSupremacyPoissonEngine: false
 # 1UP Engine Configuration
 # Settings for the early payout pricing calculator
+
+# ============================================
+# Active Engine
+# ============================================
+# FTS-Calibrated-DP: FTS-anchored DP with post-FTS calibration (provider-aware)
+active_engine: FTSCalibratedDPEngine
 
 # ============================================
 # Calibration Settings
@@ -22,31 +16,6 @@ calibration:
   # Range: ±0.10000 (±10 percentage points)
   home_skew: 0.00000
   away_skew: 0.00000
-
-# ============================================
-# Margin Settings
-# ============================================
-margin:
-  # Default margin to apply (used when test_values not specified)
-  default: 0.05
-  
-  # Multiple margin values to test for optimization
-  # Each engine will run with each of these margins
-  test_values:
-    - 0.03
-    - 0.04
-    - 0.05
-    - 0.06
-    - 0.07
-    - 0.08
-    - 0.09
-    - 0.10
-  
-  # Per-outcome margins (optional, overrides default)
-  # Leave null to use default for all outcomes
-  home: null
-  draw: null  # Note: Draw odds are unchanged from original 1X2
-  away: null
 
 # ============================================
 # Simulation Settings

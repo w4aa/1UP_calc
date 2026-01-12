@@ -6,7 +6,6 @@ For each event/engine:
 - Select correct REFERENCE bookmaker odds based on calculation bookmaker
 - Compare engine fair probabilities with reference IMPLIED probabilities
 - Report MAE in probability space (primary KPI)
-- Apply per-selection margins to fair odds for bookmaker simulation
 
 IMPORTANT:
 1. 1UP is NOT a complementary market (Home1UP and Away1UP can both happen)
@@ -16,11 +15,10 @@ IMPORTANT:
 3. All errors computed vs REFERENCE odds only
 
 Usage:
-    python analyze_engines.py                    # Full analysis with all margins
-    python analyze_engines.py --margin 0.06      # Specific margin (6%)
-    python analyze_engines.py --engine poisson   # Specific engine
-    python analyze_engines.py --bookmaker pawa   # Specific bookmaker
-    python analyze_engines.py --output reports   # Custom output folder
+    python analyze_engines.py                            # Full analysis
+    python analyze_engines.py --engine FTS-Calibrated-DP # Specific engine
+    python analyze_engines.py --bookmaker pawa           # Specific bookmaker
+    python analyze_engines.py --output reports           # Custom output folder
 """
 
 import argparse
@@ -86,54 +84,17 @@ def select_reference_bookmaker(calculation_bookmaker: str) -> str:
 class EngineAnalyzer:
     """Analyzes engine calculations with proper reference-based metrics."""
 
-    def __init__(self, db: DatabaseManager, config: ConfigLoader, margins: Optional[List[float]] = None):
+    def __init__(self, db: DatabaseManager, config: ConfigLoader):
         """
         Initialize analyzer.
 
         Args:
             db: Connected database manager
             config: Config loader with engine settings
-            margins: List of margins to analyze (default: from engine.yaml config)
         """
         self.db = db
         self.config = config
 
-        # Use margins from config if not explicitly provided
-        if margins is not None:
-            self.margins = margins
-        else:
-            self.margins = config.get_engine_test_margins()
-
-    def _apply_margin_to_1up(self, p_home_1up: float, p_away_1up: float, margin: float) -> Tuple[float, float, float, float]:
-        """
-        Apply per-selection margin to 1UP probabilities.
-
-        Uses odds-side margin: odds_with_margin = fair_odds * (1 - margin)
-
-        Args:
-            p_home_1up: Fair probability of home 1UP
-            p_away_1up: Fair probability of away 1UP
-            margin: Target margin (e.g., 0.05 for 5%)
-
-        Returns:
-            Tuple of (home_odds, away_odds, home_prob_offer, away_prob_offer)
-        """
-        if not p_home_1up or not p_away_1up or p_home_1up <= 0 or p_away_1up <= 0:
-            return None, None, None, None
-
-        # Convert to fair odds
-        fair_home_odds = 1.0 / p_home_1up
-        fair_away_odds = 1.0 / p_away_1up
-
-        # Apply margin on odds side (reduces odds, increases bookie edge)
-        home_odds_with_margin = fair_home_odds * (1 - margin)
-        away_odds_with_margin = fair_away_odds * (1 - margin)
-
-        # Compute offered implied probs
-        home_prob_offer = odds_to_implied_prob(home_odds_with_margin) if home_odds_with_margin and home_odds_with_margin > 1.0 else None
-        away_prob_offer = odds_to_implied_prob(away_odds_with_margin) if away_odds_with_margin and away_odds_with_margin > 1.0 else None
-
-        return home_odds_with_margin, away_odds_with_margin, home_prob_offer, away_prob_offer
 
     def _get_bet9ja_1up_odds(self, sportradar_id: str, scraping_history_id: int = None) -> Optional[Dict]:
         """
@@ -243,16 +204,6 @@ class EngineAnalyzer:
 
         results = []
 
-        # Prepare margin columns for later use
-        self._margin_columns = []
-        for margin in self.margins:
-            pct = int(round(margin * 100))
-            self._margin_columns.extend([
-                f'offer_{pct}_home', f'offer_{pct}_away',
-                f'offer_{pct}_home_prob', f'offer_{pct}_away_prob',
-                f'offer_{pct}_home_diff', f'offer_{pct}_away_diff',
-            ])
-
         for calc in calculations:
             (
                 sportradar_id,
@@ -360,21 +311,7 @@ class EngineAnalyzer:
                     result['other_bet9ja_away'] = round(bet9ja_1up['away'], 3) if bet9ja_1up['away'] else None
                     result['other_bet9ja_draw'] = round(bet9ja_1up['draw'], 3) if bet9ja_1up['draw'] else None
 
-            # STEP 8: Apply margins to fair odds and compute diffs vs REFERENCE
-            for margin in self.margins:
-                pct = int(round(margin * 100))
-                offer_home, offer_away, offer_home_prob, offer_away_prob = self._apply_margin_to_1up(p_home_1up, p_away_1up, margin)
-
-                result[f'offer_{pct}_home'] = round(offer_home, 3) if offer_home else None
-                result[f'offer_{pct}_away'] = round(offer_away, 3) if offer_away else None
-                result[f'offer_{pct}_home_prob'] = round(offer_home_prob, 4) if offer_home_prob else None
-                result[f'offer_{pct}_away_prob'] = round(offer_away_prob, 4) if offer_away_prob else None
-
-                # Diff vs REFERENCE odds (not always Sporty!)
-                result[f'offer_{pct}_home_diff'] = round((offer_home - ref_home_odds), 3) if offer_home and ref_home_odds else None
-                result[f'offer_{pct}_away_diff'] = round((offer_away - ref_away_odds), 3) if offer_away and ref_away_odds else None
-
-            # STEP 9: Pivot market snapshots into per-row columns (optional - for detailed analysis)
+            # STEP 8: Pivot market snapshots into per-row columns (optional - for detailed analysis)
             try:
                 if scraping_history_id:
                     snaps = self.db.get_snapshots_for_event(sportradar_id, scraping_history_id)
@@ -461,8 +398,6 @@ class EngineAnalyzer:
             'logodds_err_home_ref', 'logodds_err_away_ref',
         ]
 
-        margin_cols = getattr(self, '_margin_columns', [])
-
         # Discover extra columns (other bookmaker odds, market snapshots)
         all_keys = set()
         for r in results:
@@ -470,10 +405,10 @@ class EngineAnalyzer:
 
         other_book_cols = sorted([k for k in all_keys if k.startswith('other_')])
         market_cols = sorted([k for k in all_keys if k not in core_fields and k not in reference_fields
-                             and k not in error_fields and k not in margin_cols and k not in other_book_cols
+                             and k not in error_fields and k not in other_book_cols
                              and re.search(r"_(1|2|3)_odd$", k)])
 
-        fieldnames = core_fields + reference_fields + error_fields + margin_cols + other_book_cols + market_cols
+        fieldnames = core_fields + reference_fields + error_fields + other_book_cols + market_cols
 
         with open(output_path, 'w', newline='', encoding='utf-8') as f:
             writer = csv.DictWriter(f, fieldnames=fieldnames)
@@ -575,18 +510,10 @@ Examples:
   python analyze_engines.py --bookmaker pawa           # Analyze Betpawa calculations only
   python analyze_engines.py --bookmaker sporty         # Analyze Sportybet calculations only
   python analyze_engines.py --bookmaker bet9ja         # Analyze Bet9ja calculations only
-  python analyze_engines.py --margin 0.06              # Single margin (6%)
-  python analyze_engines.py --engine poisson           # Single engine
-  python analyze_engines.py --engine poisson --bookmaker bet9ja  # Engine + bookmaker filter
+  python analyze_engines.py --engine FTS-Calibrated-DP # Single engine
+  python analyze_engines.py --engine FTS-Calibrated-DP --bookmaker bet9ja  # Engine + bookmaker filter
   python analyze_engines.py -o reports                 # Custom output folder
     """
-    )
-
-    parser.add_argument(
-        '--margin',
-        type=float,
-        default=None,
-        help='Analyze specific margin, e.g. 0.06 for 6 percent'
     )
 
     parser.add_argument(
@@ -626,8 +553,7 @@ Examples:
 
     try:
         # Create analyzer
-        margins = [args.margin] if args.margin else None
-        analyzer = EngineAnalyzer(db, config, margins=margins)
+        analyzer = EngineAnalyzer(db, config)
 
         # Analyze all events
         bookmaker_msg = f" (bookmaker: {args.bookmaker})" if args.bookmaker else " (all bookmakers)"

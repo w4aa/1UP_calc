@@ -28,7 +28,14 @@
       "Bash(rm:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(powershell -Command:*)",
+      "Bash(git rev-parse:*)",
+      "Bash(if [ ! -f .planning/agent-history.json ])",
+      "Bash(then echo '{\"\"version\"\":\"\"1.0\"\",\"\"max_entries\"\":50,\"\"entries\"\":[]}')",
+      "Bash(fi)",
+      "Bash(git show:*)",
+      "Bash(pip install:*)"
     ],
     "additionalDirectories": [
       "c:\\Users\\loren\\Desktop\\betpawa\\1UP_calc"
