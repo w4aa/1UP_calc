@@ -11,6 +11,7 @@ import asyncio
 import logging
 import sys
 from pathlib import Path
+from typing import Optional
 
 # Add project root to path
 PROJECT_ROOT = Path(__file__).parent.parent
@@ -426,35 +427,42 @@ class UnifiedScraper:
             if session_ids:
                 logger.info(f"[{tournament['name']}] Created {len(session_ids)} match snapshots")
 
-    async def _scrape_sportybet(self, tournament: dict, force: bool = False):
-        """Scrape events and markets from Sportybet using shared browser."""
+    async def _scrape_sportybet(self, tournament: dict, force: bool = False, filter_sportradar_ids: Optional[set] = None):
+        """
+        Scrape events and markets from Sportybet using shared browser.
+
+        Args:
+            tournament: Tournament dict
+            force: Force scrape (unused, kept for compatibility)
+            filter_sportradar_ids: If provided, only scrape events with these sportradar IDs
+        """
         logger.info(f"\n--- Scraping Sportybet [{tournament['name']}] ---")
-        
+
         events_to_scrape = []
         tourney = None
-        
+
         try:
             # Create a new page for events scraping from shared browser
             events_page = await self._browser_manager.new_page()
-            
+
             try:
                 events_scraper = SportybetEventsScraper(page=events_page)
                 await events_scraper.start()
-                
+
                 # Fetch events
                 tourney = await events_scraper.fetch_tournament_events(
                     tournament_id=tournament["id"],
                     sport=tournament.get("sport", "football"),
                     category_id=tournament.get("category_id", "sr:category:4"),
                 )
-                
+
                 if not tourney or not tourney.events:
                     logger.warning(f"No Sportybet events found for {tournament['name']}")
                     return
-                
+
                 logger.info(f"[Sporty {tournament['name']}] Found {len(tourney.events)} events")
-                
-                # Store events (thread-safe)
+
+                # Store events and apply filter (thread-safe)
                 async with self._db_lock:
                     for event in tourney.events:
                         self.db.upsert_sporty_event(
@@ -467,20 +475,28 @@ class UnifiedScraper:
                             sporty_tournament_id=tournament["id"],
                             market_count=event.market_count,
                         )
-                        events_to_scrape.append(event)
+
+                        # Apply filter: only scrape events in filter set
+                        if filter_sportradar_ids is None or event.sportradar_id in filter_sportradar_ids:
+                            events_to_scrape.append(event)
+
+                # Log filtering if applied
+                if filter_sportradar_ids is not None:
+                    logger.info(f"[Sporty {tournament['name']}] Filtering to {len(events_to_scrape)} changed events (from BetPawa trigger)")
+
             finally:
                 # Close the events page
                 await self._browser_manager.close_page(events_page)
-            
+
             # Fetch markets for events
             if not events_to_scrape:
                 logger.info(f"[Sporty {tournament['name']}] No events need market scraping")
                 return {'source': 'sporty', 'events_found': len(tourney.events) if tourney else 0, 'events_scraped': 0, 'markets_saved': 0}
-            
+
             # Fetch markets in parallel using page pool
-            results = await self._fetch_sporty_markets_parallel(events_to_scrape, tournament['name'], force)
+            results = await self._fetch_sporty_markets_parallel(events_to_scrape, tournament['name'])
             return {'source': 'sporty', 'events_found': len(tourney.events) if tourney else 0, 'events_scraped': len(events_to_scrape), 'markets_saved': results.get('markets_scraped', 0)}
-            
+
         except Exception as e:
             logger.error(f"Sportybet scraping error [{tournament['name']}]: {e}")
             return {'source': 'sporty', 'events_found': 0, 'events_scraped': 0, 'markets_saved': 0}
@@ -500,32 +516,29 @@ class UnifiedScraper:
                         pass
         return None
 
-    async def _fetch_sporty_markets_parallel(self, events: list, tournament_name: str, force: bool = False) -> dict:
+    async def _fetch_sporty_markets_parallel(self, events: list, tournament_name: str) -> dict:
         """
         Fetch markets for multiple events in parallel using page pool.
-        
+
         Args:
-            events: List of events to fetch markets for
+            events: List of events to fetch markets for (already filtered)
             tournament_name: Name of the tournament (for logging)
-            force: Force scrape even if 1X2 unchanged
-            
+
         Returns:
-            Dict with markets_scraped, markets_updated, markets_unchanged counts
+            Dict with markets_scraped count
         """
         results = {
             'markets_scraped': 0,
-            'markets_updated': 0,
-            'markets_unchanged': 0,
         }
         results_lock = asyncio.Lock()
-        
+
         async def fetch_single_event(event):
             """Fetch markets for a single event using a page from the pool."""
             nonlocal results
-            
+
             # Acquire a page from the pool
             page = await self._browser_manager.acquire_page()
-            
+
             try:
                 # Create scraper for this page
                 scraper = SportybetMarketsScraper(
@@ -533,47 +546,17 @@ class UnifiedScraper:
                     page=page
                 )
                 await scraper.start()
-                
+
                 logger.info(f"[Sporty] Fetching: {event.home_team} vs {event.away_team}")
-                
+
                 markets = await scraper.fetch_event_markets(event.event_id)
-                
+
                 if not markets:
                     logger.warning(f"[Sporty] No markets found for {event.home_team}")
                     return
-                
-                # Only log mapped/saved markets (not raw market count)
-                
-                # Extract 1X2 odds for change detection
-                odds_1x2 = self._extract_sporty_1x2_odds(markets)
-                
-                # Check if 1X2 odds changed (thread-safe)
+
+                # Store each market in markets table (thread-safe)
                 async with self._db_lock:
-                    if odds_1x2 and not force:
-                        changed = self.db.check_1x2_odds_changed(
-                            sportradar_id=event.sportradar_id,
-                            bookmaker="sporty",
-                            home_odds=odds_1x2[0],
-                            draw_odds=odds_1x2[1],
-                            away_odds=odds_1x2[2],
-                        )
-                        
-                        if not changed:
-                            logger.info(f"[Sporty] {event.home_team}: 1X2 unchanged, skipping")
-                            async with results_lock:
-                                results['markets_unchanged'] += 1
-                            return
-                        
-                        # Update cached 1X2 odds
-                        self.db.update_1x2_odds(
-                            sportradar_id=event.sportradar_id,
-                            bookmaker="sporty",
-                            home_odds=odds_1x2[0],
-                            draw_odds=odds_1x2[1],
-                            away_odds=odds_1x2[2],
-                        )
-                    
-                    # Store each market in markets table (latest view)
                     event_markets_count = 0
                     for market in markets:
                         market_info = self.market_mapping.get(str(market.id))
@@ -599,10 +582,9 @@ class UnifiedScraper:
                         )
                         
                         event_markets_count += 1
-                
+
                 async with results_lock:
                     results['markets_scraped'] += event_markets_count
-                    results['markets_updated'] += 1
 
                 # Log only the mapped/saved market count for this event
                 logger.info(f"[Sporty] {event.home_team}: mapped & saved {event_markets_count} markets")
@@ -619,12 +601,19 @@ class UnifiedScraper:
         
         return results
 
-    async def _scrape_betpawa(self, tournament: dict, force: bool = False):
-        """Scrape events and markets from Betpawa with parallel HTTP requests."""
+    async def _scrape_betpawa(self, tournament: dict, force: bool = False, filter_sportradar_ids: Optional[set] = None):
+        """
+        Scrape events and markets from Betpawa with parallel HTTP requests.
+
+        Args:
+            tournament: Tournament dict
+            force: Force scrape (unused, kept for compatibility)
+            filter_sportradar_ids: If provided, only scrape events with these sportradar IDs
+        """
         logger.info(f"\n--- Scraping Betpawa [{tournament['name']}] ---")
-        
+
         events_to_scrape = []
-        
+
         try:
             async with BetpawaEventsScraper() as events_scraper:
                 # Fetch events
@@ -633,20 +622,20 @@ class UnifiedScraper:
                     category_id=tournament.get("pawa_category_id", "2"),
                     competition_name=tournament["name"],
                 )
-                
+
                 if not tourney or not tourney.events:
                     logger.warning(f"No Betpawa events found for {tournament['name']}")
                     return {'source': 'pawa', 'events_found': 0, 'events_scraped': 0, 'markets_saved': 0}
-                
+
                 logger.info(f"[Pawa {tournament['name']}] Found {len(tourney.events)} events")
-                
-                # Store events (thread-safe)
+
+                # Store events and apply filter (thread-safe)
                 async with self._db_lock:
                     for event in tourney.events:
                         if not event.sportradar_id:
                             logger.warning(f"  Event without Sportradar ID: {event.name}")
                             continue
-                        
+
                         self.db.upsert_pawa_event(
                             sportradar_id=event.sportradar_id,
                             home_team=event.home_team,
@@ -657,8 +646,16 @@ class UnifiedScraper:
                             pawa_competition_id=tournament["pawa_competition_id"],
                             market_count=event.total_market_count,
                         )
-                        events_to_scrape.append(event)
+
+                        # Apply filter: only scrape events in filter set
+                        if filter_sportradar_ids is None or event.sportradar_id in filter_sportradar_ids:
+                            events_to_scrape.append(event)
+
                     events_found = len(tourney.events)
+
+                # Log filtering if applied
+                if filter_sportradar_ids is not None:
+                    logger.info(f"[Pawa {tournament['name']}] Filtering to {len(events_to_scrape)} changed events (from BetPawa trigger)")
             
             # Fetch markets for all events IN PARALLEL
             async with BetpawaMarketsScraper(
@@ -675,47 +672,18 @@ class UnifiedScraper:
                     nonlocal saved_total
                     if not event.sportradar_id:
                         return
-                    
+
                     async with sem:
                         logger.info(f"[Pawa] Fetching: {event.home_team} vs {event.away_team}")
-                        
+
                         markets = await markets_scraper.fetch_event_markets(event.event_id)
-                        
+
                         if not markets:
                             logger.warning(f"[Pawa] No markets for {event.home_team}")
                             return
-                        
-                        # Only log mapped/saved markets for Pawa
-                        
-                        # Extract 1X2 odds for change detection
-                        odds_1x2 = self._extract_pawa_1x2_odds(markets)
-                        
-                        # Thread-safe DB operations
+
+                        # Store each market in markets table (thread-safe)
                         async with self._db_lock:
-                            # Check if 1X2 odds changed
-                            if odds_1x2 and not force:
-                                changed = self.db.check_1x2_odds_changed(
-                                    sportradar_id=event.sportradar_id,
-                                    bookmaker="pawa",
-                                    home_odds=odds_1x2[0],
-                                    draw_odds=odds_1x2[1],
-                                    away_odds=odds_1x2[2],
-                                )
-                                
-                                if not changed:
-                                    logger.info(f"[Pawa] {event.home_team}: 1X2 unchanged, skipping")
-                                    return
-                                
-                                # Update cached 1X2 odds
-                                self.db.update_1x2_odds(
-                                    sportradar_id=event.sportradar_id,
-                                    bookmaker="pawa",
-                                    home_odds=odds_1x2[0],
-                                    draw_odds=odds_1x2[1],
-                                    away_odds=odds_1x2[2],
-                                )
-                            
-                            # Store each market in markets table (snapshots created after scraping completes)
                             saved_count = 0
                             for market in markets:
                                 market_info = self._get_market_info_by_pawa_id(market.market_type_id)
@@ -763,8 +731,15 @@ class UnifiedScraper:
             logger.error(f"Betpawa scraping error [{tournament['name']}]: {e}")
             return {'source': 'pawa', 'events_found': 0, 'events_scraped': 0, 'markets_saved': 0}
 
-    async def _scrape_bet9ja(self, tournament: dict, force: bool = False):
-        """Scrape events from Bet9ja and upsert using EXTID as sportradar_id."""
+    async def _scrape_bet9ja(self, tournament: dict, force: bool = False, filter_sportradar_ids: Optional[set] = None):
+        """
+        Scrape events from Bet9ja and upsert using EXTID as sportradar_id.
+
+        Args:
+            tournament: Tournament dict
+            force: Force scrape (unused, kept for compatibility)
+            filter_sportradar_ids: If provided, only scrape events with these sportradar IDs
+        """
         logger.info(f"\n--- Scraping Bet9ja [{tournament['name']}] ---")
 
         group_id = tournament.get("bet9ja_group_id")
@@ -777,7 +752,6 @@ class UnifiedScraper:
 
             async with Bet9jaEventsScraper() as scraper:
                 tourney = await scraper.fetch_group_events(str(group_id))
-
 
                 if not tourney or not tourney.events:
                     logger.warning(f"No Bet9ja events found for {tournament['name']}")
@@ -805,7 +779,14 @@ class UnifiedScraper:
                             bet9ja_group_id=str(group_id),
                             market_count=ev.market_count,
                         )
-                        events_to_scrape.append(ev)
+
+                        # Apply filter: only scrape events in filter set
+                        if filter_sportradar_ids is None or sportradar_id in filter_sportradar_ids:
+                            events_to_scrape.append(ev)
+
+                # Log filtering if applied
+                if filter_sportradar_ids is not None:
+                    logger.info(f"[Bet9ja {tournament['name']}] Filtering to {len(events_to_scrape)} changed events (from BetPawa trigger)")
 
             # Fetch markets for all events IN PARALLEL
             async with Bet9jaMarketsScraper() as markets_scraper:
