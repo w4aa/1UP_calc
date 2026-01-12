@@ -52,10 +52,11 @@ def run_engines():
     
     try:
         runner = EngineRunner(db, config)
-        
+
         # Check for unprocessed sessions
+        print("\nChecking for new snapshots to calculate...")
         unprocessed = db.get_unprocessed_sessions()
-        
+
         if unprocessed:
             print(f"\nProcessing {len(unprocessed)} new match snapshots...")
             result = runner.run_new_snapshots()
@@ -63,8 +64,7 @@ def run_engines():
             print(f"  Sessions processed: {result.get('sessions', 0)}")
             print(f"  Calculations stored: {result['calculations']}")
         else:
-            print("\nNo new snapshots to process.")
-            print("All scraping sessions have been processed.")
+            print("\nNo new snapshots found - all calculations up to date")
     
     finally:
         db.close()

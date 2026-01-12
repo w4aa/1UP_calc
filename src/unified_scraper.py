@@ -170,7 +170,9 @@ class UnifiedScraper:
             # Get enabled tournaments
             tournaments = self.config.get_enabled_tournaments()
             logger.info(f"Enabled tournaments: {len(tournaments)}")
-            
+
+            logger.info("\nSTAGE 1: Tournament Processing")
+
             # Start shared browser for Sportybet (if needed)
             if scrape_sporty:
                 self._browser_manager = SharedBrowserManager()
@@ -198,9 +200,10 @@ class UnifiedScraper:
             
             # Print final stats
             self._print_stats()
-            
+
             # Run 1UP pricing engines on new snapshots
             if run_engines:
+                logger.info("\nSTAGE 2: Engine Calculations")
                 logger.info("\n" + "=" * 60)
                 logger.info("RUNNING 1UP PRICING ENGINES ON NEW SNAPSHOTS")
                 logger.info("=" * 60)
@@ -364,6 +367,7 @@ class UnifiedScraper:
                 pawa_competition_id=tournament.get("pawa_competition_id"),
                 enabled=tournament.get("enabled", True),
             )
+            logger.info(f"Tournament synced to database: {tournament['name']}")
 
         # PHASE 1: BetPawa Change Detection (runs first)
         changed_events = await self._check_betpawa_changes_for_tournament(tournament, force)
@@ -1089,7 +1093,7 @@ class UnifiedScraper:
     def _print_stats(self):
         """Print database statistics."""
         stats = self.db.get_stats()
-        
+
         logger.info("\n" + "=" * 60)
         logger.info("DATABASE STATISTICS")
         logger.info("=" * 60)
@@ -1098,14 +1102,18 @@ class UnifiedScraper:
         logger.info(f"  Matched Events (both bookmakers): {stats['matched_events']}")
         logger.info(f"  Total Markets: {stats['total_markets']}")
         logger.info(f"  Markets with Both Odds: {stats['matched_markets']}")
-        
+
         logger.info("\n  Match Sessions & Snapshots:")
         logger.info(f"    Match Sessions: {stats['total_sessions']}")
         logger.info(f"    Market Snapshots: {stats['total_snapshots']}")
-        
+
         logger.info("\n  Markets by Type:")
         for market_name, count in stats['markets_by_type'].items():
             logger.info(f"    {market_name}: {count}")
+
+        # Pipeline summary
+        logger.info(f"\nPipeline complete: {stats['total_tournaments']} tournaments, "
+                   f"{stats['total_events']} events, {stats['total_snapshots']} snapshots")
 
 
 async def main():
