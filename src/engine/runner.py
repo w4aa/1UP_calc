@@ -64,16 +64,28 @@ class EngineRunner:
             logger.info(f"  - {engine.name}")
         logger.info(f"  Simulations: {sim_config['n_sims']:,}")
     
-    def _compute_event(self, markets_raw: list, sportradar_id: str) -> list:
+    def _compute_event(self, markets_raw: list, sportradar_id: str, scraping_history_id: int = None) -> list:
         """
         Compute engine results for a single event (no DB operations).
 
         Calculates 1UP odds using market data from all 3 bookmakers (sporty, pawa, bet9ja).
         Stores appropriate actual 1UP odds based on bookmaker source.
 
+        Args:
+            markets_raw: Market data for the event
+            sportradar_id: Event ID
+            scraping_history_id: Scraping session ID (for duplicate checking)
+
         Returns:
             List of calculation result dicts ready for DB insertion
         """
+        # Check if calculations already exist for this snapshot
+        if scraping_history_id:
+            existing = self.db.get_calculation_for_snapshot(sportradar_id, scraping_history_id)
+            if existing:
+                logger.debug(f"Skipping {sportradar_id} - calculations already exist for history_id {scraping_history_id}")
+                return []
+
         if not markets_raw:
             return []
 
@@ -131,13 +143,13 @@ class EngineRunner:
         """
         # Get markets for this event
         markets_raw = self.db.get_markets_for_event(sportradar_id)
-        
+
         if not markets_raw:
             logger.debug(f"No markets found for event {sportradar_id}")
             return 0
-        
+
         # Compute results
-        results = self._compute_event(markets_raw, sportradar_id)
+        results = self._compute_event(markets_raw, sportradar_id, scraping_history_id)
         
         # Store to DB
         for calc in results:
@@ -266,7 +278,7 @@ class EngineRunner:
         all_results = []
         
         def compute_one(data):
-            results = self._compute_event(data['markets'], data['sportradar_id'])
+            results = self._compute_event(data['markets'], data['sportradar_id'], data['scraping_history_id'])
             return {
                 'sportradar_id': data['sportradar_id'],
                 'home_team': data['home_team'],
@@ -410,7 +422,7 @@ class EngineRunner:
         all_results = []
         
         def compute_one(data):
-            results = self._compute_event(data['markets'], data['sportradar_id'])
+            results = self._compute_event(data['markets'], data['sportradar_id'], data['session_id'])
             return {
                 'session_id': data['session_id'],
                 'sportradar_id': data['sportradar_id'],

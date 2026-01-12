@@ -1486,10 +1486,30 @@ class DatabaseManager:
             params.append(engine_name)
         
         query += " ORDER BY sportradar_id, engine_name, bookmaker"
-        
+
         cursor.execute(query, params)
         return [dict(row) for row in cursor.fetchall()]
-    
+
+    def get_calculation_for_snapshot(self, sportradar_id: str, scraping_history_id: int) -> Optional[dict]:
+        """
+        Check if calculation already exists for a specific snapshot.
+
+        Args:
+            sportradar_id: Event ID
+            scraping_history_id: Scraping session ID
+
+        Returns:
+            First matching calculation or None
+        """
+        cursor = self.conn.cursor()
+        cursor.execute("""
+            SELECT id FROM engine_calculations
+            WHERE sportradar_id = ? AND scraping_history_id = ?
+            LIMIT 1
+        """, (sportradar_id, scraping_history_id))
+        row = cursor.fetchone()
+        return dict(row) if row else None
+
     def get_engine_accuracy_stats(self, margin: float = 0.06) -> list[dict]:
         """
         Calculate accuracy statistics for each engine at a given margin.
