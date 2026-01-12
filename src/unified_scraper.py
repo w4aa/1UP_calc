@@ -317,7 +317,14 @@ class UnifiedScraper:
         return changed_events
 
     async def _process_tournament(self, tournament: dict, scrape_sporty: bool, scrape_pawa: bool, force: bool):
-        """Process a single tournament - scrape both bookmakers in parallel."""
+        """
+        Process a single tournament with BetPawa-first sequential flow.
+
+        Flow:
+        1. BetPawa change detection: Check 1x2 odds for all events
+        2. If no changes (and not force): Skip tournament
+        3. If changes: Scrape all bookmakers for changed events only
+        """
         logger.info(f"\n{'='*60}")
         logger.info(f"Tournament: {tournament['name']}")
         logger.info(f"  Sporty ID: {tournament['id']}")
@@ -343,7 +350,7 @@ class UnifiedScraper:
             bj_enabled = []
         logger.info(f"  Bet9ja enabled mapped markets ({len(bj_enabled)}): {', '.join(bj_enabled) if bj_enabled else 'none'}")
         logger.info(f"{'='*60}")
-        
+
         # Save tournament to DB (thread-safe)
         async with self._db_lock:
             self.db.upsert_tournament(
@@ -355,19 +362,41 @@ class UnifiedScraper:
                 pawa_competition_id=tournament.get("pawa_competition_id"),
                 enabled=tournament.get("enabled", True),
             )
-        
-        # Build list of tasks to run in parallel and collect summaries
+
+        # PHASE 1: BetPawa Change Detection (runs first)
+        changed_events = await self._check_betpawa_changes_for_tournament(tournament, force)
+
+        # Early return if no changes detected
+        if not changed_events and not force:
+            logger.info(f"[{tournament['name']}] No BetPawa 1x2 changes, skipping tournament")
+            return
+
+        # Update BetPawa cached 1x2 odds in DB for all changed events
+        async with self._db_lock:
+            for sportradar_id, event_data in changed_events.items():
+                self.db.update_1x2_odds(
+                    sportradar_id=sportradar_id,
+                    bookmaker="pawa",
+                    home_odds=event_data['home_odds'],
+                    draw_odds=event_data['draw_odds'],
+                    away_odds=event_data['away_odds'],
+                )
+
+        # PHASE 2: Conditional Multi-Bookmaker Scraping (only for changed events)
+        changed_sportradar_ids = set(changed_events.keys())
+        logger.info(f"[{tournament['name']}] Triggering multi-bookmaker scraping for {len(changed_sportradar_ids)} changed events")
+
+        # Build list of tasks to run in parallel with filter
         tasks = []
-        # Keep mapping of source->coroutine for summary aggregation
         if scrape_sporty:
-            tasks.append(self._scrape_sportybet(tournament, force=force))
+            tasks.append(self._scrape_sportybet(tournament, force=force, filter_sportradar_ids=changed_sportradar_ids))
 
         if scrape_pawa and tournament.get("pawa_competition_id"):
-            tasks.append(self._scrape_betpawa(tournament, force=force))
+            tasks.append(self._scrape_betpawa(tournament, force=force, filter_sportradar_ids=changed_sportradar_ids))
 
         # Bet9ja scraping (use EXTID as sportradar equivalent)
         if tournament.get("bet9ja_group_id"):
-            tasks.append(self._scrape_bet9ja(tournament, force=force))
+            tasks.append(self._scrape_bet9ja(tournament, force=force, filter_sportradar_ids=changed_sportradar_ids))
 
         summaries = []
         if tasks:
@@ -390,8 +419,8 @@ class UnifiedScraper:
             logger.info(f"  Sporty: events_found={sporty.get('events_found',0)}, events_scraped={sporty.get('events_scraped',0)}, markets_saved={sporty.get('markets_saved',0)}")
             logger.info(f"  Pawa:   events_found={pawa.get('events_found',0)}, events_scraped={pawa.get('events_scraped',0)}, markets_saved={pawa.get('markets_saved',0)}")
             logger.info(f"  Bet9ja: events_found={bet9ja.get('events_found',0)}, events_scraped={bet9ja.get('events_scraped',0)}, markets_saved={bet9ja.get('markets_saved',0)}")
-        
-        # After both scrapers complete, create snapshots for matched events
+
+        # PHASE 3: Snapshot creation (unchanged)
         async with self._db_lock:
             session_ids = self.db.create_snapshots_for_matched_events(tournament["id"])
             if session_ids:
